@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Photography Archive — a collection of photographs by Chel Gadores."
+    />
+    <meta name="theme-color" content="#030712" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <title>Photography Archive — Chel Gadores</title>
+    <link rel="preload" href="assets/live/gallery/img-01.jpg" as="image" />
+    <link
+      rel="preload"
+      href="assets/fonts/dm-serif-display-regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/dm-serif-display-italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="pages.css" />
+  </head>
+
+  <body class="inner-body">
+    <div class="landing inner-page">
+      <canvas class="star-field" aria-hidden="true"></canvas>
+      <div class="aurora" aria-hidden="true"></div>
+      <div class="dot-grid dot-grid--left" aria-hidden="true"></div>
+      <div class="dot-grid dot-grid--right" aria-hidden="true"></div>
+
+      <header class="inner-header">
+        <a class="wordmark" href="index.html" aria-label="Chel, home">chel.</a>
+
+        <nav class="inner-nav" id="inner-navigation" data-inner-nav aria-label="Primary navigation">
+          <a href="index.html#about">About</a>
+          <a href="work.html">Work</a>
+          <a href="projects.html">Projects</a>
+          <a href="gallery.html" aria-current="page">Gallery</a>
+        </nav>
+
+        <div class="header-tools">
+          <button class="command-trigger" type="button" data-command-trigger aria-label="Open quick navigation">
+            Ctrl K
+          </button>
+          <button class="motion-toggle" type="button" aria-label="Pause star animation" aria-pressed="false">
+            <span aria-hidden="true"></span>
+          </button>
+          <button
+            class="menu-trigger"
+            type="button"
+            data-menu-toggle
+            aria-controls="inner-navigation"
+            aria-expanded="false"
+          >
+            Menu
+          </button>
+        </div>
+      </header>
+
+      <main class="page-main">
+        <section class="inner-shell page-hero page-hero--wide" aria-labelledby="gallery-title">
+          <div class="reveal">
+            <p class="page-kicker">Photography Archive</p>
+            <h1 class="page-title" id="gallery-title">
+              <span>Photograph</span>
+              <span>— Gallery</span>
+              <em>in orbit.</em>
+            </h1>
+            <p class="page-lead">
+              A photo collection by Chel Gadores. Thirteen observations of light, place, texture, and the
+              quiet details that ask to be remembered.
+            </p>
+            <div class="action-row">
+              <a class="page-button page-button--primary" href="#archive-grid">Explore the archive <span aria-hidden="true">↓</span></a>
+            </div>
+          </div>
+
+          <figure class="glass-panel portrait-orbit-card reveal" aria-label="Featured photograph from Chel's archive">
+            <div class="orbit-stage">
+              <div class="orbit-ring" aria-hidden="true"></div>
+              <div class="orbit-core" aria-hidden="true"></div>
+              <img
+                class="about-portrait"
+                src="assets/live/gallery/img-01.jpg"
+                alt="Featured photograph from Chel Gadores' archive"
+              />
+              <span class="orbit-tag orbit-tag--one">Frame 01</span>
+              <span class="orbit-tag orbit-tag--two">Light study</span>
+              <span class="orbit-tag orbit-tag--three">13 frames</span>
+              <span class="orbit-tag orbit-tag--four">General Santos City</span>
+            </div>
+          </figure>
+        </section>
+
+        <section class="page-section page-section--compact" id="archive-grid" aria-labelledby="archive-title">
+          <div class="inner-shell">
+            <div class="section-heading reveal">
+              <p class="panel-label">Archive / 01</p>
+              <h2 class="section-title" id="archive-title">Collected <em>frames.</em></h2>
+              <p class="section-intro">
+                Browse the complete photography archive, filter by orientation, and open any frame for a
+                distraction-free view.
+              </p>
+            </div>
+
+            <div class="filter-rail reveal" data-filter-rail="gallery" role="group" aria-label="Filter photography archive">
+              <button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All</button>
+              <button class="filter-chip" type="button" data-filter="landscape" aria-pressed="false">Landscape</button>
+              <button class="filter-chip" type="button" data-filter="portrait" aria-pressed="false">Portrait</button>
+            </div>
+
+            <div class="gallery-grid">
+              <button
+                class="media-tile media-tile--wide reveal"
+                type="button"
+                data-filter-group="gallery"
+                data-category="landscape"
+                data-lightbox-item
+                data-full="assets/live/gallery/img-01.jpg"
+                data-title="Archive Frame 01"
+                data-meta="Landscape · Photography Archive"
+                aria-label="View Archive Frame 01"
+              >
+                <img src="assets/live/gallery/img-01.jpg" alt="Archive photograph 01 by Chel Gadores" />
+                <span class="media-caption"><strong>Frame 01</strong><span>Landscape</span></span>
+              </button>
+
+              <button
+                class="media-tile media-tile--medium reveal"
+                type="button"
+                data-filter-group="gallery"
+                data-category="landscape"
+                data-lightbox-item
+                data-full="assets/live/gallery/img-02.jpg"
+                data-title="Archive Frame 02"
+                data-meta="Landscape · Photography Archive"
+                aria-label="View Archive Frame 02"
+              >
+                <img src="assets/live/gallery/img-02.jpg" alt="Archive photograph 02 by Chel Gadores" loading="lazy" />
+                <span class="media-caption"><strong>Frame 02</strong><span>Landscape</span></span>
+              </button>
+
+              <button
+                class="media-tile reveal"
+                type="button"
+                data-filter-group="gallery"
+                data-category="landscape"
+                data-lightbox-item
+                data-full="assets/live/gallery/img-03.jpg"
+                data-title="Archive Frame 03"
+                data-meta="Landscape · Photography Archive"
+                aria-label="View Archive Frame 03"
+              >
+                <img src="assets/live/gallery/img-03.jpg" alt="Archive photograph 03 by Chel Gadores" loading="lazy" />
+                <span class="media-caption"><strong>Frame 03</strong><span>Landscape</span></span>
+              </button>
+
+              <button
+                class="media-tile media-tile--large reveal"
+                type="button"
+                data-filter-group="gallery"
+                data-category="landscape"
+                data-lightbox-item
+                data-full="assets/live/gallery/img-04.jpg"
+                data-title="Archive Frame 04"
+                data-meta="Landscape · Photography Archive"
+                aria-label="View Archive Frame 04"
+              >
+                <img src="assets/live/gallery/img-04.jpg" alt="Archive photograph 04 by Chel Gadores" loading="lazy" />
+                <span class="media-caption"><strong>Frame 04</strong><span>Landscape</span></span>
+              </button>
+
+              <button
+                class="media-tile media-tile--wide reveal"
+                type="button"
+                data-filter-group="gallery"
+                data-category="landscape"
+                data-lightbox-item
+                data-full="assets/live/gallery/img-05.jpg"
+                data-title="Archive Frame 05"
+                data-meta="Landscape · Photography Archive"
+                aria-label="View Archive Frame 05"
+              >
+                <img src="assets/live/gallery/img-05.jpg" alt="Archive photograph 05 by Chel Gadores" loading="lazy" />
+                <span class="media-caption"><strong>Frame 05</strong><span>Landscape</span></span>
+              </button>
+
+              <button
+                class="media-tile media-tile--portrait reveal"
+                type="button"
+                data-filter-group="gallery"
+                data-category="portrait"
+                data-lightbox-item
+                data-full="assets/live/gallery/img-06.jpg"
+                data-title="Archive Frame 06"
+                data-meta="Portrait · Photography Archive"
+                aria-label="View Archive Frame 06"
+              >
+                <img src="assets/live/gallery/img-06.jpg" alt="Archive photograph 06 by Chel Gadores" loading="lazy" />
+                <span class="media-caption"><strong>Frame 06</strong><span>Portrait</span></span>
+              </button>
+
+              <button
+                class="media-tile media-tile--medium reveal"
+                type="button"
+                data-filter-group="gallery"
+                data-category="landscape"
+                data-lightbox-item
+                data-full="assets/live/gallery/img-07.png"
+                data-title="Archive Frame 07"
+                data-meta="Landscape · Photography Archive"
+                aria-label="View Archive Frame 07"
+              >
+                <img src="assets/live/gallery/img-07.png" alt="Archive photograph 07 by Chel Gadores" loading="lazy" />
+                <span class="media-caption"><strong>Frame 07</strong><span>Landscape</span></span>
+              </button>
+
+              <button
+                class="media-tile media-tile--large reveal"
+                type="button"
+                data-filter-group="gallery"
+                data-category="landscape"
+                data-lightbox-item
+                data-full="assets/live/gallery/img-08.jpg"
+                data-title="Archive Frame 08"
+                data-meta="Landscape · Photography Archive"
+                aria-label="View Archive Frame 08"
+              >
+                <img src="assets/live/gallery/img-08.jpg" alt="Archive photograph 08 by Chel Gadores" loading="lazy" />
+                <span class="media-caption"><strong>Frame 08</strong><span>Landscape</span></span>
+              </button>
+
+              <button
+                class="media-tile media-tile--portrait reveal"
+                type="button"
+                data-filter-group="gallery"
+                data-category="portrait"
+                data-lightbox-item
+                data-full="assets/live/gallery/img-09.jpg"
+                data-title="Archive Frame 09"
+                data-meta="Portrait · Photography Archive"
+                aria-label="View Archive Frame 09"
+              >
+                <img src="assets/live/gallery/img-09.jpg" alt="Archive photograph 09 by Chel Gadores" loading="lazy" />
+                <span class="media-caption"><strong>Frame 09</strong><span>Portrait</span></span>
+              </button>
+
+              <button
+                class="media-tile media-tile--wide reveal"
+                type="button"
+                data-filter-group="gallery"
+                data-category="landscape"
+                data-lightbox-item
+                data-full="assets/live/gallery/img-10.jpg"
+                data-title="Archive Frame 10"
+                data-meta="Landscape · Photography Archive"
+                aria-label="View Archive Frame 10"
+              >
+                <img src="assets/live/gallery/img-10.jpg" alt="Archive photograph 10 by Chel Gadores" loading="lazy" />
+                <span class="media-caption"><strong>Frame 10</strong><span>Landscape</span></span>
+              </button>
+
+              <button
+                class="media-tile media-tile--portrait reveal"
+                type="button"
+                data-filter-group="gallery"
+                data-category="portrait"
+                data-lightbox-item
+                data-full="assets/live/gallery/img-12.png"
+                data-title="Archive Frame 12"
+                data-meta="Portrait · Photography Archive"
+                aria-label="View Archive Frame 12"
+              >
+                <img src="assets/live/gallery/img-12.png" alt="Archive photograph 12 by Chel Gadores" loading="lazy" />
+                <span class="media-caption"><strong>Frame 12</strong><span>Portrait</span></span>
+              </button>
+
+              <button
+                class="media-tile media-tile--portrait reveal"
+                type="button"
+                data-filter-group="gallery"
+                data-category="portrait"
+                data-lightbox-item
+                data-full="assets/live/gallery/img-13.png"
+                data-title="Archive Frame 13"
+                data-meta="Portrait · Photography Archive"
+                aria-label="View Archive Frame 13"
+              >
+                <img src="assets/live/gallery/img-13.png" alt="Archive photograph 13 by Chel Gadores" loading="lazy" />
+                <span class="media-caption"><strong>Frame 13</strong><span>Portrait</span></span>
+              </button>
+
+              <button
+                class="media-tile media-tile--large reveal"
+                type="button"
+                data-filter-group="gallery"
+                data-category="landscape"
+                data-lightbox-item
+                data-full="assets/live/gallery/img-14.jpg"
+                data-title="Archive Frame 14"
+                data-meta="Landscape · Photography Archive"
+                aria-label="View Archive Frame 14"
+              >
+                <img src="assets/live/gallery/img-14.jpg" alt="Archive photograph 14 by Chel Gadores" loading="lazy" />
+                <span class="media-caption"><strong>Frame 14</strong><span>Landscape</span></span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <footer class="site-footer"><div class="site-footer__inner"><p class="site-footer__copy"><span>© <span data-current-year>2026</span> /</span><strong>Chel Gadores</strong></p><nav class="site-footer__links" aria-label="Contact and social links"><a class="footer-icon-link" href="https://github.com/Wysi-Chel" target="_blank" rel="noreferrer" aria-label="GitHub" data-tooltip="GitHub"><svg aria-hidden="true"><use href="assets/footer-icons.svg#github"></use></svg></a><a class="footer-icon-link" href="https://www.linkedin.com/in/rachelle-gadores-589840248/" target="_blank" rel="noreferrer" aria-label="LinkedIn" data-tooltip="LinkedIn"><svg aria-hidden="true"><use href="assets/footer-icons.svg#linkedin"></use></svg></a><a class="footer-icon-link" href="mailto:iam.chel1021@gmail.com" aria-label="Email" data-tooltip="Email"><svg aria-hidden="true"><use href="assets/footer-icons.svg#email"></use></svg></a><a class="footer-icon-link" href="assets/live/profile/gadores-resume.pdf" download="gadores-resume.pdf" aria-label="Download résumé" data-tooltip="Résumé"><svg aria-hidden="true"><use href="assets/footer-icons.svg#resume"></use></svg></a></nav></div></footer>
+
+      <dialog class="lightbox" data-lightbox aria-label="Photography archive viewer">
+        <div class="lightbox-layout">
+          <div class="lightbox-media">
+            <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer">×</button>
+            <button
+              class="lightbox-nav lightbox-nav--prev"
+              type="button"
+              data-lightbox-prev
+              aria-label="View previous image"
+            >
+              ←
+            </button>
+            <img data-lightbox-image src="assets/live/gallery/img-01.jpg" alt="Archive Frame 01" />
+            <button
+              class="lightbox-nav lightbox-nav--next"
+              type="button"
+              data-lightbox-next
+              aria-label="View next image"
+            >
+              →
+            </button>
+          </div>
+          <div class="lightbox-meta">
+            <div>
+              <h2 data-lightbox-title>Archive Frame 01</h2>
+              <p data-lightbox-meta>Landscape · Photography Archive</p>
+            </div>
+            <p data-lightbox-count aria-live="polite">01 / 13</p>
+          </div>
+        </div>
+      </dialog>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="pages.js"></script>
+  </body>
+</html>

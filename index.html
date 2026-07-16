@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Chel — a General Santos City-based layout artist, developer, photographer, and IT technical support professional."
+    />
+    <meta name="theme-color" content="#030712" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <title>Chel — Layout Artist &amp; Developer</title>
+    <link rel="preload" href="assets/chel-portrait.png" as="image" />
+    <link
+      rel="preload"
+      href="assets/fonts/dm-serif-display-regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/dm-serif-display-italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="pages.css" />
+  </head>
+
+  <body class="home-body">
+    <main id="main-content">
+      <section class="landing" aria-labelledby="home-title">
+        <canvas class="star-field" aria-hidden="true"></canvas>
+        <div class="aurora" aria-hidden="true"></div>
+        <div class="dot-grid dot-grid--left" aria-hidden="true"></div>
+        <div class="dot-grid dot-grid--right" aria-hidden="true"></div>
+
+        <div class="scene">
+          <header class="site-header">
+            <a class="wordmark" href="#home" aria-label="Chel, home">chel.</a>
+
+            <nav class="primary-nav" aria-label="Primary navigation">
+              <a href="#about">About</a>
+              <a href="work.html">Work</a>
+              <a href="projects.html">Projects</a>
+              <a href="gallery.html">Gallery</a>
+            </nav>
+
+            <button class="motion-toggle" type="button" aria-label="Pause star animation" aria-pressed="false">
+              <span aria-hidden="true"></span>
+            </button>
+          </header>
+
+          <div class="hero" id="home">
+            <div class="hero-copy">
+              <div class="at-mark" aria-hidden="true">@</div>
+              <p class="eyebrow">Layout Artist &amp; Developer</p>
+
+              <h1 id="home-title">
+                <span>Designing</span>
+                <span>systems, stories,</span>
+                <span>and digital</span>
+                <em>experiences.</em>
+              </h1>
+
+              <p class="intro">
+                I build thoughtful interfaces and immersive systems<br />
+                that live at the intersection of design, code,<br />
+                and human emotion.
+              </p>
+
+              <div class="hero-actions">
+                <a class="button button--filled" href="#about">
+                  <span>About Chel</span>
+                  <span class="button-arrow" aria-hidden="true">↓</span>
+                </a>
+                <a class="button button--outline" href="projects.html">
+                  <span>View projects</span>
+                  <span class="button-arrow" aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="portrait-composition" aria-label="Portrait of Chel">
+              <div class="portrait-orbit" aria-hidden="true"></div>
+              <img
+                class="portrait"
+                src="assets/chel-portrait.png"
+                alt="Chel wearing black glasses and a dark blazer"
+                width="1254"
+                height="1254"
+              />
+            </div>
+
+            <aside class="profile-note" aria-label="Current profile details">
+              <div class="profile-group">
+                <p class="profile-label">Current focus</p>
+                <p>Design Systems</p>
+                <p class="focus-list"><span>AI</span><span>Motion</span><span>Code</span></p>
+              </div>
+
+              <div class="profile-group profile-location">
+                <p class="profile-label">Based in</p>
+                <p class="location-line">
+                  <span>Philippines</span>
+                  <svg class="flag" role="img" aria-label="Philippines flag" viewBox="0 0 30 20">
+                    <path fill="#0d4da1" d="M0 0h30v10H0z" />
+                    <path fill="#ce2028" d="M0 10h30v10H0z" />
+                    <path fill="#fff" d="M0 0l14.5 10L0 20z" />
+                    <circle cx="5.2" cy="10" r="2.15" fill="#f5c81b" />
+                    <g fill="#f5c81b">
+                      <circle cx="2.1" cy="3.25" r="0.8" />
+                      <circle cx="2.1" cy="16.75" r="0.8" />
+                      <circle cx="11.15" cy="10" r="0.8" />
+                    </g>
+                  </svg>
+                </p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="inner-page home-about" id="about" aria-labelledby="about-title">
+        <div class="page-main">
+          <section class="home-about-intro inner-shell">
+            <div>
+              <p class="page-kicker">01 / About</p>
+              <h2 class="home-about-title" id="about-title">
+                Creative rigor.
+                <em>Technical care.</em>
+              </h2>
+            </div>
+            <div class="home-about-summary">
+              <p>
+                Chel Gadores is a General Santos City-based photo editor, web developer, and photographer
+                with a passion for design, layout, and software development. A Computer Engineering graduate,
+                she works where visual communication and practical technology meet.
+              </p>
+              <a
+                class="page-button page-button--primary"
+                href="assets/live/profile/gadores-resume.pdf"
+                download="gadores-resume.pdf"
+              >
+                Download résumé <span aria-hidden="true">↓</span>
+              </a>
+            </div>
+          </section>
+
+          <div class="metric-rail inner-shell" aria-label="Profile overview">
+            <div class="metric"><strong>General Santos</strong><span>Home base</span></div>
+            <div class="metric"><strong>English + Tagalog</strong><span>Languages</span></div>
+            <div class="metric"><strong>Computer Engineering</strong><span>Foundation</span></div>
+            <div class="metric"><strong>Design + Development</strong><span>Practice</span></div>
+          </div>
+
+          <section class="page-section inner-shell" aria-labelledby="practice-title">
+            <div class="section-heading">
+              <p class="panel-label">Practice map</p>
+              <h2 class="section-title" id="practice-title">One practice, <em>many lenses.</em></h2>
+              <p class="section-intro">
+                Chel combines visual craft, front-end thinking, photography, and hands-on technical support
+                in a practice shaped by curiosity and useful outcomes.
+              </p>
+            </div>
+
+            <div class="discipline-grid">
+              <article class="discipline-card glass-panel">
+                <p class="card-index">01 / Visual</p>
+                <h3>Layout &amp; Graphic Design</h3>
+                <p>Editorial composition, image-led storytelling, and clear visual hierarchy.</p>
+              </article>
+              <article class="discipline-card glass-panel">
+                <p class="card-index">02 / Digital</p>
+                <h3>Web Development</h3>
+                <p>Responsive interfaces and practical applications built for the browser.</p>
+              </article>
+              <article class="discipline-card glass-panel">
+                <p class="card-index">03 / Image</p>
+                <h3>Photography &amp; Retouching</h3>
+                <p>Observing light and place, then refining images with a natural finish.</p>
+              </article>
+              <article class="discipline-card glass-panel">
+                <p class="card-index">04 / Technical</p>
+                <h3>IT Technical Support</h3>
+                <p>A practical, people-focused approach to solving technical difficulties.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="page-section page-section--compact inner-shell" aria-labelledby="skills-title">
+            <div class="section-heading">
+              <p class="panel-label">Working toolkit</p>
+              <h2 class="section-title" id="skills-title">Tools for <em>making.</em></h2>
+              <p class="section-intro">
+                A compact toolkit spanning visual design, prototyping, and interface development.
+              </p>
+            </div>
+
+            <div class="skills-grid">
+              <article class="skill-card glass-panel"><p class="card-index">01 / Design</p><h3>Adobe Creative Suite</h3><p>Image editing and visual production.</p></article>
+              <article class="skill-card glass-panel"><p class="card-index">02 / Design</p><h3>Canva</h3><p>Fast, adaptable creative layouts.</p></article>
+              <article class="skill-card glass-panel"><p class="card-index">03 / Prototype</p><h3>Figma</h3><p>Interface concepts and prototypes.</p></article>
+              <article class="skill-card glass-panel"><p class="card-index">04 / Code</p><h3>JavaScript</h3><p>Interactive experiences for the web.</p></article>
+              <article class="skill-card glass-panel"><p class="card-index">05 / Interface</p><h3>ReactJS</h3><p>Component-based user interfaces.</p></article>
+              <article class="skill-card glass-panel"><p class="card-index">06 / Code</p><h3>TypeScript</h3><p>Structured, maintainable application code.</p></article>
+            </div>
+          </section>
+
+          <section class="page-section inner-shell" aria-labelledby="education-title">
+            <div class="section-heading">
+              <p class="panel-label">Education</p>
+              <h2 class="section-title" id="education-title">Learning and <em>leadership.</em></h2>
+              <p class="section-intro">
+                Computer engineering, technical servicing, and sustained student leadership form the
+                foundation of Chel's multidisciplinary work.
+              </p>
+            </div>
+
+            <div class="studies-grid">
+              <article class="study-card">
+                <p class="card-index">01 / Computer Engineering</p>
+                <h3>Holy Trinity College of General Santos City</h3>
+                <p>
+                  Computer Engineering graduate and Leadership Award recipient after leading the ICpEP.se
+                  engineering program for two consecutive years.
+                </p>
+              </article>
+              <article class="study-card">
+                <p class="card-index">02 / Technical-Vocational</p>
+                <h3>The Heritage Academy of the Philippines</h3>
+                <p>Computer Systems Servicing — TVL graduate and class valedictorian.</p>
+              </article>
+            </div>
+
+            <div class="home-about-actions">
+              <a class="page-button page-button--primary" href="work.html">View career <span aria-hidden="true">↗</span></a>
+              <a class="page-button" href="projects.html">Explore projects <span aria-hidden="true">↗</span></a>
+            </div>
+          </section>
+        </div>
+
+        <footer class="site-footer">
+          <div class="site-footer__inner">
+            <p class="site-footer__copy">
+              <span>© <span data-current-year>2026</span> /</span><strong>Chel Gadores</strong>
+            </p>
+            <nav class="site-footer__links" aria-label="Contact and social links">
+              <a class="footer-icon-link" href="https://github.com/Wysi-Chel" target="_blank" rel="noreferrer" aria-label="GitHub" data-tooltip="GitHub">
+                <svg aria-hidden="true"><use href="assets/footer-icons.svg#github"></use></svg>
+              </a>
+              <a class="footer-icon-link" href="https://www.linkedin.com/in/rachelle-gadores-589840248/" target="_blank" rel="noreferrer" aria-label="LinkedIn" data-tooltip="LinkedIn">
+                <svg aria-hidden="true"><use href="assets/footer-icons.svg#linkedin"></use></svg>
+              </a>
+              <a class="footer-icon-link" href="mailto:iam.chel1021@gmail.com" aria-label="Email" data-tooltip="Email">
+                <svg aria-hidden="true"><use href="assets/footer-icons.svg#email"></use></svg>
+              </a>
+              <a class="footer-icon-link" href="assets/live/profile/gadores-resume.pdf" download="gadores-resume.pdf" aria-label="Download résumé" data-tooltip="Résumé">
+                <svg aria-hidden="true"><use href="assets/footer-icons.svg#resume"></use></svg>
+              </a>
+            </nav>
+          </div>
+        </footer>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="github" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12 .8a11.2 11.2 0 0 0-3.54 21.83c.56.1.77-.24.77-.54v-2.14c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.39-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.54 0-1.22.44-2.22 1.16-3-.12-.28-.5-1.43.11-2.97 0 0 .95-.3 3.08 1.14a10.7 10.7 0 0 1 5.62 0c2.14-1.45 3.08-1.14 3.08-1.14.61 1.54.23 2.69.11 2.97.72.78 1.16 1.78 1.16 3 0 4.3-2.63 5.25-5.14 5.53.4.35.76 1.04.76 2.09v3.14c0 .3.2.65.78.54A11.2 11.2 0 0 0 12 .8Z"/>
+  </symbol>
+  <symbol id="linkedin" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M5.3 7.9H1.7V22h3.6V7.9ZM5.6 3.6a2.1 2.1 0 1 0-4.2 0 2.1 2.1 0 0 0 4.2 0ZM22.6 14c0-4.25-2.27-6.23-5.3-6.23-2.44 0-3.54 1.34-4.15 2.28V7.9H9.56V22h3.59v-6.98c0-1.84.35-3.63 2.64-3.63 2.26 0 2.29 2.11 2.29 3.75V22h3.59l.93-8Z"/>
+  </symbol>
+  <symbol id="email" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M3.5 5.5h17v13h-17zM4.5 6.5 12 12.6l7.5-6.1"/>
+  </symbol>
+  <symbol id="resume" viewBox="0 0 24 24">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M7.5 3.5h7l4 4v13h-11zM14.5 3.5v4h4M10.5 12h5M10.5 15.5h5"/>
+  </symbol>
+</svg>

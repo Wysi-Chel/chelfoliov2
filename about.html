@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Meet Chel Gadores, a General Santos City-based photo editor, web developer, photographer, graphic artist, and IT technical support professional."
+    />
+    <meta name="theme-color" content="#030712" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <title>About Chel Gadores</title>
+    <link rel="preload" href="assets/chel-portrait.png" as="image" />
+    <link
+      rel="preload"
+      href="assets/fonts/dm-serif-display-regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/dm-serif-display-italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="pages.css" />
+    <style>
+      @media (max-width: 540px) {
+        .about-page .portrait-orbit-card {
+          min-height: 450px;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="inner-body about-page">
+    <div class="landing inner-page">
+      <canvas class="star-field" aria-hidden="true"></canvas>
+      <div class="aurora" aria-hidden="true"></div>
+      <div class="dot-grid dot-grid--left" aria-hidden="true"></div>
+      <div class="dot-grid dot-grid--right" aria-hidden="true"></div>
+
+      <header class="inner-header">
+        <a class="wordmark" href="index.html" aria-label="Chel, home">chel.</a>
+
+        <nav class="inner-nav" data-inner-nav aria-label="Primary navigation">
+          <a href="index.html#about" aria-current="page">About</a>
+          <a href="work.html">Work</a>
+          <a href="projects.html">Projects</a>
+          <a href="gallery.html">Gallery</a>
+        </nav>
+
+        <div class="header-tools">
+          <button class="command-trigger" type="button" data-command-trigger aria-label="Open quick navigation">
+            Navigate&nbsp; <span aria-hidden="true">Ctrl K</span>
+          </button>
+          <button
+            class="motion-toggle"
+            type="button"
+            aria-label="Pause star animation"
+            aria-pressed="false"
+          >
+            <span aria-hidden="true"></span>
+          </button>
+          <button
+            class="menu-trigger"
+            type="button"
+            data-menu-toggle
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+          >
+            Menu
+          </button>
+        </div>
+      </header>
+
+      <main class="page-main" id="main-content">
+        <div class="inner-shell">
+          <section class="page-hero" aria-labelledby="about-title">
+            <div class="reveal">
+              <p class="page-kicker">01 / About</p>
+              <h1 class="page-title" id="about-title">
+                <span>Meet Chel</span>
+                <em>Gadores.</em>
+              </h1>
+              <p class="page-lead">
+                A General Santos City-based photo editor, web developer, and photographer with a passion for
+                design, layout, and software development. Chel is a Computer Engineering graduate working across
+                creative and technical disciplines.
+              </p>
+              <div class="action-row">
+                <a class="page-button page-button--primary" href="mailto:iam.chel1021@gmail.com">
+                  Email Chel <span aria-hidden="true">&#8599;</span>
+                </a>
+                <a
+                  class="page-button"
+                  href="assets/live/profile/gadores-resume.pdf"
+                  download="gadores-resume.pdf"
+                >
+                  Download resume <span aria-hidden="true">&#8595;</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="glass-panel portrait-orbit-card reveal" aria-label="Portrait and areas of practice">
+              <div class="orbit-stage">
+                <div class="orbit-ring" aria-hidden="true"></div>
+                <div class="orbit-core" aria-hidden="true"></div>
+                <img
+                  class="about-portrait"
+                  src="assets/chel-portrait.png"
+                  alt="Chel Gadores wearing black glasses and a dark blazer"
+                  width="1254"
+                  height="1254"
+                />
+                <span class="orbit-tag orbit-tag--one">Photo editing</span>
+                <span class="orbit-tag orbit-tag--two">Web development</span>
+                <span class="orbit-tag orbit-tag--three">Photography</span>
+                <span class="orbit-tag orbit-tag--four">Design &amp; layout</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="metric-rail reveal" aria-label="Profile overview">
+            <div class="metric">
+              <strong>06</strong>
+              <span>Work entries</span>
+            </div>
+            <div class="metric">
+              <strong>06</strong>
+              <span>Technical skills</span>
+            </div>
+            <div class="metric">
+              <strong>02</strong>
+              <span>Languages</span>
+            </div>
+            <div class="metric">
+              <strong>02</strong>
+              <span>Study records</span>
+            </div>
+          </div>
+
+          <section class="page-section" aria-labelledby="story-title">
+            <div class="section-heading reveal">
+              <p class="panel-label">Profile signal</p>
+              <h2 class="section-title" id="story-title">A creative and <em>technical</em> practice.</h2>
+              <p class="section-intro">
+                Chel’s live portfolio describes a practice spanning visual design, software, photography, and
+                hands-on technical support.
+              </p>
+            </div>
+
+            <div class="story-grid">
+              <nav class="glass-panel story-index reveal" aria-label="About page chapters">
+                <a href="#base">01 / Base</a>
+                <a href="#practice">02 / Practice</a>
+                <a href="#direction">03 / Direction</a>
+              </nav>
+
+              <div class="story-copy">
+                <article class="story-chapter reveal" id="base">
+                  <p class="micro-label">01 / Base</p>
+                  <h3>General Santos City, Philippines</h3>
+                  <p>
+                    Chel is based in General Santos City in the Asia/Manila time zone. She speaks English and
+                    Tagalog.
+                  </p>
+                </article>
+
+                <article class="story-chapter reveal" id="practice">
+                  <p class="micro-label">02 / Practice</p>
+                  <h3>Images, interfaces, and support</h3>
+                  <p>
+                    Her portfolio identifies her as a layout and graphic artist, developer, and IT technical
+                    support professional. It also highlights photo editing, photography, web development, design,
+                    layout, and software development as core interests.
+                  </p>
+                </article>
+
+                <blockquote class="pull-quote reveal">
+                  “I try to find fun experiences and useful information in life.”
+                </blockquote>
+
+                <article class="story-chapter reveal" id="direction">
+                  <p class="micro-label">03 / Direction</p>
+                  <h3>Ready to contribute</h3>
+                  <p>
+                    As a Computer Engineering graduate, Chel aspires to work in an environment where she can
+                    contribute and help address difficulties.
+                  </p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="page-section page-section--compact" aria-labelledby="skills-title">
+            <div class="section-heading reveal">
+              <p class="panel-label">Capability map</p>
+              <h2 class="section-title" id="skills-title">Technical <em>skills.</em></h2>
+              <p class="section-intro">
+                Tools and technologies named on Chel’s live portfolio, presented as an evolving creative toolkit.
+              </p>
+            </div>
+
+            <div class="skills-grid">
+              <article class="glass-panel skill-card reveal">
+                <p class="card-index">01 / Design</p>
+                <h3>Adobe Creative Suite</h3>
+                <p>Chel has made herself familiar with Adobe’s design software as a design enthusiast.</p>
+              </article>
+              <article class="glass-panel skill-card reveal">
+                <p class="card-index">02 / Design</p>
+                <h3>Canva</h3>
+                <p>A convenient part of her process for developing creative illustrations.</p>
+              </article>
+              <article class="glass-panel skill-card reveal">
+                <p class="card-index">03 / Prototype</p>
+                <h3>Figma</h3>
+                <p>Chel is continuously learning to prototype in Figma.</p>
+              </article>
+              <article class="glass-panel skill-card reveal">
+                <p class="card-index">04 / Code</p>
+                <h3>JavaScript</h3>
+                <p>Used in her continuing work building applications for the web.</p>
+              </article>
+              <article class="glass-panel skill-card reveal">
+                <p class="card-index">05 / Interface</p>
+                <h3>ReactJS</h3>
+                <p>Part of her ongoing learning in UI and UX design.</p>
+              </article>
+              <article class="glass-panel skill-card reveal">
+                <p class="card-index">06 / Code</p>
+                <h3>TypeScript</h3>
+                <p>Used in a module that dynamically manages and renders social links, icons, and actions.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="page-section" aria-labelledby="experience-title">
+            <div class="section-heading reveal">
+              <p class="panel-label">Career timeline</p>
+              <h2 class="section-title" id="experience-title">Work <em>experience.</em></h2>
+              <p class="section-intro">
+                A factual timeline of the roles and dates published on Chel’s live portfolio.
+              </p>
+            </div>
+
+            <div class="section-frame reveal">
+              <p class="panel-label">Experience / 2020–present</p>
+              <div class="career-timeline">
+                <article class="timeline-entry">
+                  <p class="timeline-date">2026 — Present</p>
+                  <div class="timeline-content">
+                    <h3>MICEI General Santos City</h3>
+                    <p class="timeline-role">IT Technical Support</p>
+                  </div>
+                </article>
+                <article class="timeline-entry">
+                  <p class="timeline-date">2024 — Present</p>
+                  <div class="timeline-content">
+                    <h3>Upwork</h3>
+                    <p class="timeline-role">Freelancer</p>
+                  </div>
+                </article>
+                <article class="timeline-entry">
+                  <p class="timeline-date">2024 — Present</p>
+                  <div class="timeline-content">
+                    <h3>Self-Employed</h3>
+                    <p class="timeline-role">Crafter</p>
+                  </div>
+                </article>
+                <article class="timeline-entry">
+                  <p class="timeline-date">2024 — 2025</p>
+                  <div class="timeline-content">
+                    <h3>Thai Student</h3>
+                    <p class="timeline-role">Tutor</p>
+                  </div>
+                </article>
+                <article class="timeline-entry">
+                  <p class="timeline-date">April — May 2024</p>
+                  <div class="timeline-content">
+                    <h3>Internship Trainee</h3>
+                    <p class="timeline-role">Technical Assistant</p>
+                  </div>
+                </article>
+                <article class="timeline-entry">
+                  <p class="timeline-date">Nov 2020 — Feb 2021</p>
+                  <div class="timeline-content">
+                    <h3>Hiwinstar Restaurant</h3>
+                    <p class="timeline-role">Service Crew</p>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="page-section page-section--compact" aria-labelledby="studies-title">
+            <div class="section-heading reveal">
+              <p class="panel-label">Studies</p>
+              <h2 class="section-title" id="studies-title">Learning and <em>leadership.</em></h2>
+              <p class="section-intro">
+                Chel’s academic record combines computer engineering, technical servicing, and student leadership.
+              </p>
+            </div>
+
+            <div class="studies-grid">
+              <article class="study-card reveal">
+                <p class="card-index">01 / Computer Engineering</p>
+                <h3>Holy Trinity College of General Santos City</h3>
+                <p>
+                  Studied Computer Engineering and graduated with a Leadership Award after leading the college’s
+                  engineering program in the Institute of Computer Engineers of the Philippines Student Edition
+                  (ICpEP.se) for two consecutive years.
+                </p>
+              </article>
+              <article class="study-card reveal">
+                <p class="card-index">02 / TVL</p>
+                <h3>The Heritage Academy of the Philippines</h3>
+                <p>Studied Computer Systems Servicing — TVL and graduated as class valedictorian.</p>
+              </article>
+            </div>
+          </section>
+
+        </div>
+      </main>
+
+      <footer class="site-footer"><div class="site-footer__inner"><p class="site-footer__copy"><span>© <span data-current-year>2026</span> /</span><strong>Chel Gadores</strong></p><nav class="site-footer__links" aria-label="Contact and social links"><a class="footer-icon-link" href="https://github.com/Wysi-Chel" target="_blank" rel="noreferrer" aria-label="GitHub" data-tooltip="GitHub"><svg aria-hidden="true"><use href="assets/footer-icons.svg#github"></use></svg></a><a class="footer-icon-link" href="https://www.linkedin.com/in/rachelle-gadores-589840248/" target="_blank" rel="noreferrer" aria-label="LinkedIn" data-tooltip="LinkedIn"><svg aria-hidden="true"><use href="assets/footer-icons.svg#linkedin"></use></svg></a><a class="footer-icon-link" href="mailto:iam.chel1021@gmail.com" aria-label="Email" data-tooltip="Email"><svg aria-hidden="true"><use href="assets/footer-icons.svg#email"></use></svg></a><a class="footer-icon-link" href="assets/live/profile/gadores-resume.pdf" download="gadores-resume.pdf" aria-label="Download résumé" data-tooltip="Résumé"><svg aria-hidden="true"><use href="assets/footer-icons.svg#resume"></use></svg></a></nav></div></footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="pages.js"></script>
+  </body>
+</html>
