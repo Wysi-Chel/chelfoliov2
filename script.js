@@ -306,9 +306,6 @@
     navigationObserver.observe(aboutSection);
   }
 
-  var pointerMedia = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 821px)");
-  if (!pointerMedia.matches) return;
-
   var landing = document.querySelector(".landing:not(.inner-page)");
   var pointerFrame = 0;
   var pointerX = window.innerWidth / 2;
@@ -320,6 +317,8 @@
   var activeCard = null;
   var nextButton = null;
   var activeButton = null;
+  var nextGlassTarget = null;
+  var activeGlassTarget = null;
 
   var auraLayers = [];
   Array.prototype.slice.call(document.querySelectorAll(".landing, .inner-page")).forEach(function (surface) {
@@ -351,6 +350,12 @@
     button.style.setProperty("--magnetic-y", "0px");
   }
 
+  function resetGlassTarget(target) {
+    if (!target) return;
+    target.style.setProperty("--glass-x", "50%");
+    target.style.setProperty("--glass-y", "50%");
+  }
+
   function resetPointerMotion() {
     if (pointerFrame) {
       window.cancelAnimationFrame(pointerFrame);
@@ -362,10 +367,10 @@
     nextCard = null;
     activeButton = null;
     nextButton = null;
+    resetGlassTarget(activeGlassTarget);
+    activeGlassTarget = null;
+    nextGlassTarget = null;
     pointerDetailsDirty = false;
-    auraLayers.forEach(function (aura) {
-      aura.classList.remove("is-active");
-    });
     if (landing) {
       landing.style.setProperty("--portrait-shift-x", "0px");
       landing.style.setProperty("--portrait-shift-y", "0px");
@@ -375,15 +380,21 @@
   function renderPointerMotion() {
     pointerFrame = 0;
 
-    if (root.classList.contains("motion-paused") || !pointerMedia.matches || document.hidden) {
+    if (document.hidden) {
       resetPointerMotion();
       return;
     }
 
     var deltaX = pointerX - smoothPointerX;
     var deltaY = pointerY - smoothPointerY;
-    smoothPointerX += deltaX * 0.05;
-    smoothPointerY += deltaY * 0.05;
+    var shouldEasePointer = !reduceMotion.matches && !root.classList.contains("motion-paused");
+    if (shouldEasePointer) {
+      smoothPointerX = Math.round(smoothPointerX + deltaX * 0.05);
+      smoothPointerY = Math.round(smoothPointerY + deltaY * 0.05);
+    } else {
+      smoothPointerX = pointerX;
+      smoothPointerY = pointerY;
+    }
     var normalizedX = smoothPointerX / Math.max(window.innerWidth, 1) - 0.5;
     var normalizedY = smoothPointerY / Math.max(window.innerHeight, 1) - 0.5;
 
@@ -401,6 +412,7 @@
     if (pointerDetailsDirty) {
       var cardBounds = nextCard ? nextCard.getBoundingClientRect() : null;
       var buttonBounds = nextButton ? nextButton.getBoundingClientRect() : null;
+      var glassBounds = nextGlassTarget ? nextGlassTarget.getBoundingClientRect() : null;
 
       if (activeCard !== nextCard) resetCard(activeCard);
       activeCard = nextCard;
@@ -420,19 +432,30 @@
         activeButton.style.setProperty("--magnetic-x", String(Math.max(-4, Math.min(4, offsetX))) + "px");
         activeButton.style.setProperty("--magnetic-y", String(Math.max(-3, Math.min(3, offsetY))) + "px");
       }
+
+      if (activeGlassTarget !== nextGlassTarget) resetGlassTarget(activeGlassTarget);
+      activeGlassTarget = nextGlassTarget;
+      if (activeGlassTarget && glassBounds) {
+        activeGlassTarget.style.setProperty("--glass-x", String(pointerX - glassBounds.left) + "px");
+        activeGlassTarget.style.setProperty("--glass-y", String(pointerY - glassBounds.top) + "px");
+      }
       pointerDetailsDirty = false;
     }
 
-    if (Math.abs(deltaX) > 0.5 || Math.abs(deltaY) > 0.5) {
+    if (shouldEasePointer && (Math.abs(deltaX) > 0.5 || Math.abs(deltaY) > 0.5)) {
       pointerFrame = window.requestAnimationFrame(renderPointerMotion);
     }
   }
 
-  document.addEventListener("pointermove", function (event) {
+  document.addEventListener("mousemove", function (event) {
     pointerX = event.clientX;
     pointerY = event.clientY;
     nextCard = event.target.closest ? event.target.closest(".pointer-reactive") : null;
     nextButton = event.target.closest ? event.target.closest(".button, .page-button") : null;
+    nextGlassTarget = event.target.closest ? event.target.closest(
+      ".button, .page-button, .command-trigger, .filter-chip, .project-node, " +
+      ".lightbox-close, .lightbox-nav, .command-head button"
+    ) : null;
     pointerDetailsDirty = true;
     if (!pointerFrame) pointerFrame = window.requestAnimationFrame(renderPointerMotion);
   }, { passive: true });
@@ -444,7 +467,7 @@
   });
 
   document.addEventListener("chel:motionchange", function (event) {
-    if (event.detail && event.detail.paused) {
+    if (event.detail && event.detail.reduced) {
       resetPointerMotion();
     }
   });

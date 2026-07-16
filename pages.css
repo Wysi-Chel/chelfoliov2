@@ -2026,7 +2026,7 @@
   transform: translate(-50%, -50%) scale(1.18);
 }
 
-/* Eased cursor spotlight inspired by the live site's masked background. */
+/* Mouse-revealed background: a stationary field under the live site's eased 75vh mask. */
 .cursor-aura {
   --cursor-aura-x: 50vw;
   --cursor-aura-y: 50vh;
@@ -2036,16 +2036,177 @@
   pointer-events: none;
   opacity: 0;
   background:
-    radial-gradient(circle 28rem at var(--cursor-aura-x) var(--cursor-aura-y), rgba(0, 150, 253, 0.14), rgba(0, 217, 255, 0.035) 42%, transparent 72%),
-    radial-gradient(circle, rgba(112, 208, 252, 0.22) 1px, transparent 1.2px) 0 0 / 24px 24px;
-  -webkit-mask-image: radial-gradient(75vh at var(--cursor-aura-x) var(--cursor-aura-y), #000 0%, rgba(0, 0, 0, 0.88) 34%, transparent 100%);
-  mask-image: radial-gradient(75vh at var(--cursor-aura-x) var(--cursor-aura-y), #000 0%, rgba(0, 0, 0, 0.88) 34%, transparent 100%);
-  transition: opacity 280ms ease;
+    radial-gradient(ellipse 100vw 100vh at 50% 0%, rgba(13, 72, 60, 0.5), transparent 100%),
+    radial-gradient(circle, rgba(8, 169, 124, 0.2) 1px, transparent 1px) 0 0 / 2px 2px;
+  -webkit-mask-image: radial-gradient(75vh at var(--cursor-aura-x) var(--cursor-aura-y), #000 0%, transparent 100%);
+  mask-image: radial-gradient(75vh at var(--cursor-aura-x) var(--cursor-aura-y), #000 0%, transparent 100%);
+  transition: opacity 180ms ease;
+  will-change: opacity, mask-image;
 }
 
-@media (hover: hover) and (pointer: fine) and (min-width: 821px) and (prefers-reduced-motion: no-preference) {
-  .motion-enhanced:not(.motion-paused) .cursor-aura.is-active {
-    opacity: 0.68;
+.motion-enhanced .cursor-aura.is-active {
+  opacity: 1;
+}
+
+.motion-paused .cursor-aura {
+  transition: none;
+}
+
+/* Pointer-positioned glass refraction and a short specular sweep for UI buttons. */
+.button,
+.page-button,
+.command-trigger,
+.filter-chip,
+.command-head button {
+  --glass-x: 50%;
+  --glass-y: 50%;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.project-node,
+.lightbox-close,
+.lightbox-nav {
+  --glass-x: 50%;
+  --glass-y: 50%;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.button--outline,
+.page-button:not(.page-button--primary),
+.command-trigger,
+.filter-chip {
+  -webkit-backdrop-filter: blur(14px) saturate(145%);
+  backdrop-filter: blur(14px) saturate(145%);
+}
+
+.button::before,
+.page-button::before,
+.command-trigger::before,
+.filter-chip::before,
+.project-node::before,
+.lightbox-close::before,
+.lightbox-nav::before,
+.command-head button::before {
+  position: absolute;
+  z-index: 0;
+  inset: -1px;
+  pointer-events: none;
+  content: "";
+  opacity: 0;
+  background: radial-gradient(
+    125px circle at var(--glass-x) var(--glass-y),
+    rgba(255, 255, 255, 0.3),
+    rgba(112, 208, 252, 0.15) 34%,
+    transparent 70%
+  );
+  transform: scale(0.92);
+  transition: opacity 220ms ease, transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.button::after,
+.page-button::after,
+.command-trigger::after,
+.filter-chip::after,
+.project-node::after,
+.lightbox-close::after,
+.lightbox-nav::after,
+.command-head button::after {
+  position: absolute;
+  z-index: 1;
+  top: -55%;
+  left: -65%;
+  width: 45%;
+  height: 210%;
+  pointer-events: none;
+  content: "";
+  opacity: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08) 24%,
+    rgba(230, 248, 255, 0.58) 50%,
+    rgba(112, 208, 252, 0.08) 76%,
+    transparent
+  );
+  filter: blur(0.5px);
+  transform: translate3d(-20%, 0, 0) rotate(17deg);
+}
+
+@media (hover: hover) {
+  .button:hover::before,
+  .page-button:hover::before,
+  .command-trigger:hover::before,
+  .filter-chip:hover::before,
+  .project-node:hover::before,
+  .lightbox-close:hover::before,
+  .lightbox-nav:hover::before,
+  .command-head button:hover::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .button:hover::after,
+  .page-button:hover::after,
+  .command-trigger:hover::after,
+  .filter-chip:hover::after,
+  .project-node:hover::after,
+  .lightbox-close:hover::after,
+  .lightbox-nav:hover::after,
+  .command-head button:hover::after {
+    animation: glass-button-sweep 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+.button:focus-visible::before,
+.page-button:focus-visible::before,
+.command-trigger:focus-visible::before,
+.filter-chip:focus-visible::before,
+.project-node:focus-visible::before,
+.lightbox-close:focus-visible::before,
+.lightbox-nav:focus-visible::before,
+.command-head button:focus-visible::before {
+  opacity: 0.82;
+  transform: scale(1);
+}
+
+@keyframes glass-button-sweep {
+  0% {
+    opacity: 0;
+    transform: translate3d(-20%, 0, 0) rotate(17deg);
+  }
+  18% { opacity: 0.9; }
+  72% { opacity: 0.64; }
+  100% {
+    opacity: 0;
+    transform: translate3d(470%, 0, 0) rotate(17deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-aura,
+  .button::before,
+  .page-button::before,
+  .command-trigger::before,
+  .filter-chip::before,
+  .project-node::before,
+  .lightbox-close::before,
+  .lightbox-nav::before,
+  .command-head button::before {
+    transition: none;
+  }
+
+  .button::after,
+  .page-button::after,
+  .command-trigger::after,
+  .filter-chip::after,
+  .project-node::after,
+  .lightbox-close::after,
+  .lightbox-nav::after,
+  .command-head button::after {
+    display: none;
   }
 }
 
