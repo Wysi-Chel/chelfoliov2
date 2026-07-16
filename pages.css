@@ -281,17 +281,17 @@
 
 .page-button {
   display: inline-flex;
-  min-height: 44px;
+  min-height: 52px;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  padding: 0 19px;
+  gap: 10px;
+  padding: 0 26px;
   color: rgba(238, 247, 255, 0.9);
   border: 1px solid rgba(135, 177, 211, 0.28);
-  border-radius: 10px;
+  border-radius: 12px;
   background: linear-gradient(180deg, rgba(20, 35, 52, 0.82), rgba(8, 19, 32, 0.78));
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.06), 0 8px 24px rgba(0, 0, 0, 0.16);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.025em;
   transition: transform 180ms ease, translate 160ms ease-out, color 180ms ease, border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
@@ -836,7 +836,7 @@
   height: 106px;
   object-fit: cover;
   border-radius: 6px;
-  filter: saturate(0.45) hue-rotate(165deg) brightness(0.7);
+  filter: saturate(0.82) brightness(0.8) contrast(1.04);
 }
 
 .orbit-preview h3 {
@@ -865,8 +865,8 @@
 }
 
 .filter-chip {
-  min-height: 38px;
-  padding: 0 16px;
+  min-height: 44px;
+  padding: 0 18px;
   color: var(--muted-blue);
   border: 1px solid rgba(135, 177, 211, 0.2);
   border-radius: 999px;
@@ -962,12 +962,12 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: saturate(0.3) hue-rotate(165deg) brightness(0.62) contrast(1.12);
+  filter: saturate(0.82) brightness(0.82) contrast(1.04);
   transition: transform 350ms ease, filter 350ms ease;
 }
 
 .project-card:hover .project-cover img {
-  filter: saturate(0.62) hue-rotate(165deg) brightness(0.7) contrast(1.1);
+  filter: saturate(1) brightness(0.94) contrast(1.03);
   transform: scale(1.018);
 }
 
@@ -1828,5 +1828,342 @@
   .scroll-reveal {
     opacity: 1;
     translate: none;
+  }
+}
+
+/* Shared glass navigation dock, adapted from the live chelgadores.tech header. */
+.portfolio-header.site-header,
+.portfolio-header.inner-header {
+  position: fixed;
+  z-index: 100;
+  top: 16px;
+  right: 0;
+  left: 0;
+  display: grid;
+  width: 100%;
+  height: 58px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  padding: 0 20px;
+  overflow: visible;
+  pointer-events: none;
+  border: 0;
+  background: transparent;
+  transform: none;
+}
+
+.portfolio-header::before {
+  position: fixed;
+  z-index: -1;
+  top: -16px;
+  right: 0;
+  left: 0;
+  height: 92px;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(to bottom, rgba(2, 5, 13, 0.94), rgba(2, 5, 13, 0));
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  -webkit-mask-image: linear-gradient(#000 18%, rgba(0, 0, 0, 0.82) 54%, transparent 100%);
+  mask-image: linear-gradient(#000 18%, rgba(0, 0, 0, 0.82) 54%, transparent 100%);
+}
+
+.portfolio-header.inner-header.is-scrolled {
+  border-color: transparent;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.portfolio-brand,
+.portfolio-header__tools,
+.portfolio-nav {
+  pointer-events: auto;
+}
+
+.portfolio-header .portfolio-brand,
+.portfolio-header.inner-header .portfolio-brand {
+  position: relative;
+  top: auto;
+  right: auto;
+  left: auto;
+  justify-self: start;
+  width: max-content;
+  font-size: 31px;
+  letter-spacing: -1.8px;
+  transform: none;
+}
+
+.portfolio-nav.primary-nav,
+.portfolio-nav.inner-nav {
+  position: relative;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  display: flex;
+  width: max-content;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 5px;
+  border: 1px solid rgba(149, 166, 184, 0.28);
+  border-radius: 18px;
+  background: rgba(2, 7, 14, 0.7);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16), 0 8px 14px rgba(0, 0, 0, 0.14), 0 12px 30px rgba(0, 0, 0, 0.2), inset 0 1px rgba(255, 255, 255, 0.045);
+  -webkit-backdrop-filter: blur(16px) saturate(125%);
+  backdrop-filter: blur(16px) saturate(125%);
+}
+
+.portfolio-nav .portfolio-nav__link {
+  position: relative;
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 15px;
+  color: rgba(230, 241, 255, 0.76);
+  border: 1px solid transparent;
+  border-radius: 13px;
+  font-size: 13px;
+  font-weight: 550;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  transition: color 200ms ease-in-out, border-color 200ms ease-in-out, background-color 200ms ease-in-out, box-shadow 200ms ease-in-out, transform 200ms ease-in-out;
+}
+
+.portfolio-nav .portfolio-nav__link::after {
+  display: none;
+}
+
+.portfolio-nav .portfolio-nav__link:hover,
+.portfolio-nav .portfolio-nav__link:focus-visible {
+  color: #fff;
+  border-color: rgba(149, 166, 184, 0.3);
+  background: rgba(149, 166, 184, 0.1);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.05);
+  transform: translateY(-1px);
+}
+
+.portfolio-nav .portfolio-nav__link[aria-current="page"] {
+  color: #fff;
+  border-color: rgba(149, 166, 184, 0.32);
+  background: rgba(149, 166, 184, 0.24);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.08), 0 5px 16px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio-nav .portfolio-nav__link:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 3px;
+}
+
+.portfolio-nav__link svg {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 19px;
+  overflow: visible;
+}
+
+.portfolio-nav__link--home {
+  padding-inline: 12px !important;
+}
+
+.portfolio-nav__link--home .portfolio-nav__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}
+
+.portfolio-nav__divider {
+  width: 1px;
+  height: 28px;
+  margin: 0 3px;
+  background: rgba(149, 166, 184, 0.24);
+}
+
+.portfolio-header__tools {
+  display: flex;
+  justify-self: end;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.portfolio-header .command-trigger {
+  min-height: 40px;
+  padding-inline: 15px;
+  border-radius: 12px;
+}
+
+.portfolio-header .motion-toggle,
+.portfolio-header.inner-header .motion-toggle {
+  position: relative;
+  top: auto;
+  right: auto;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+}
+
+.portfolio-header .motion-toggle span {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.portfolio-header .motion-toggle:hover span,
+.portfolio-header .motion-toggle:focus-visible span {
+  transform: translate(-50%, -50%) scale(1.18);
+}
+
+/* Eased cursor spotlight inspired by the live site's masked background. */
+.cursor-aura {
+  --cursor-aura-x: 50vw;
+  --cursor-aura-y: 50vh;
+  position: fixed;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(circle 28rem at var(--cursor-aura-x) var(--cursor-aura-y), rgba(0, 150, 253, 0.14), rgba(0, 217, 255, 0.035) 42%, transparent 72%),
+    radial-gradient(circle, rgba(112, 208, 252, 0.22) 1px, transparent 1.2px) 0 0 / 24px 24px;
+  -webkit-mask-image: radial-gradient(75vh at var(--cursor-aura-x) var(--cursor-aura-y), #000 0%, rgba(0, 0, 0, 0.88) 34%, transparent 100%);
+  mask-image: radial-gradient(75vh at var(--cursor-aura-x) var(--cursor-aura-y), #000 0%, rgba(0, 0, 0, 0.88) 34%, transparent 100%);
+  transition: opacity 280ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 821px) and (prefers-reduced-motion: no-preference) {
+  .motion-enhanced:not(.motion-paused) .cursor-aura.is-active {
+    opacity: 0.68;
+  }
+}
+
+@media (max-width: 1100px) {
+  .portfolio-header .command-trigger {
+    display: none;
+  }
+
+  .portfolio-nav .portfolio-nav__link {
+    padding-inline: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 20px;
+  }
+
+  :where([id]) {
+    scroll-margin-top: 20px;
+  }
+
+  body {
+    padding-bottom: 92px;
+  }
+
+  .portfolio-header.site-header,
+  .portfolio-header.inner-header {
+    top: auto;
+    right: auto;
+    bottom: 20px;
+    left: 50%;
+    display: block;
+    width: max-content;
+    height: auto;
+    padding: 0;
+    transform: translateX(-50%);
+  }
+
+  .portfolio-header::before,
+  .portfolio-brand,
+  .portfolio-header__tools {
+    display: none;
+  }
+
+  .portfolio-nav.primary-nav,
+  .portfolio-nav.inner-nav,
+  .portfolio-nav.inner-nav.is-open {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    display: flex;
+    width: max-content;
+    grid-template-columns: none;
+    gap: 3px;
+    padding: 5px;
+    border-radius: 18px;
+    background: rgba(2, 7, 14, 0.86);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.48), inset 0 1px rgba(255, 255, 255, 0.055);
+  }
+
+  .portfolio-nav .portfolio-nav__link {
+    width: 46px;
+    min-width: 46px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0 !important;
+    border-bottom: 1px solid transparent;
+  }
+
+  .portfolio-nav__link svg {
+    width: 20px;
+    height: 20px;
+    flex-basis: 20px;
+  }
+
+  .portfolio-nav__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+  }
+
+  .portfolio-nav__divider {
+    height: 28px;
+    margin-inline: 2px;
+  }
+
+  .hero-actions {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-actions .button {
+    min-width: min(100%, 180px);
+    padding-inline: 20px;
+  }
+
+  .page-button {
+    padding-inline: 20px;
+  }
+}
+
+@media (forced-colors: active) {
+  .cursor-aura {
+    display: none;
+  }
+
+  .portfolio-nav.primary-nav,
+  .portfolio-nav.inner-nav {
+    border: 1px solid CanvasText;
   }
 }

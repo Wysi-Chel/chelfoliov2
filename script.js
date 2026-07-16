@@ -285,6 +285,27 @@
     if (event.detail && event.detail.paused) revealHomeItems();
   });
 
+  var homeDock = document.querySelector(".portfolio-nav");
+  var homeDockLink = homeDock ? homeDock.querySelector('a[href="#home"]') : null;
+  var aboutDockLink = homeDock ? homeDock.querySelector('a[href="#about"]') : null;
+  var aboutSection = document.querySelector("#about");
+
+  if (homeDockLink && aboutDockLink && aboutSection && typeof window.IntersectionObserver === "function") {
+    var navigationObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.target !== aboutSection) return;
+        if (entry.isIntersecting) {
+          homeDockLink.removeAttribute("aria-current");
+          aboutDockLink.setAttribute("aria-current", "page");
+        } else if (window.scrollY < aboutSection.offsetTop) {
+          aboutDockLink.removeAttribute("aria-current");
+          homeDockLink.setAttribute("aria-current", "page");
+        }
+      });
+    }, { threshold: 0, rootMargin: "-34% 0px -56% 0px" });
+    navigationObserver.observe(aboutSection);
+  }
+
   var pointerMedia = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 821px)");
   if (!pointerMedia.matches) return;
 
@@ -292,10 +313,22 @@
   var pointerFrame = 0;
   var pointerX = window.innerWidth / 2;
   var pointerY = window.innerHeight / 2;
+  var smoothPointerX = pointerX;
+  var smoothPointerY = pointerY;
+  var pointerDetailsDirty = false;
   var nextCard = null;
   var activeCard = null;
   var nextButton = null;
   var activeButton = null;
+
+  var auraLayers = [];
+  Array.prototype.slice.call(document.querySelectorAll(".landing, .inner-page")).forEach(function (surface) {
+    var aura = document.createElement("div");
+    aura.className = "cursor-aura";
+    aura.setAttribute("aria-hidden", "true");
+    surface.prepend(aura);
+    auraLayers.push(aura);
+  });
 
   var pointerCards = Array.prototype.slice.call(document.querySelectorAll(
     ".project-card, .media-tile, .skill-card, .study-card, .discipline-card"
@@ -329,6 +362,10 @@
     nextCard = null;
     activeButton = null;
     nextButton = null;
+    pointerDetailsDirty = false;
+    auraLayers.forEach(function (aura) {
+      aura.classList.remove("is-active");
+    });
     if (landing) {
       landing.style.setProperty("--portrait-shift-x", "0px");
       landing.style.setProperty("--portrait-shift-y", "0px");
@@ -343,33 +380,51 @@
       return;
     }
 
-    var normalizedX = pointerX / Math.max(window.innerWidth, 1) - 0.5;
-    var normalizedY = pointerY / Math.max(window.innerHeight, 1) - 0.5;
-    var cardBounds = nextCard ? nextCard.getBoundingClientRect() : null;
-    var buttonBounds = nextButton ? nextButton.getBoundingClientRect() : null;
+    var deltaX = pointerX - smoothPointerX;
+    var deltaY = pointerY - smoothPointerY;
+    smoothPointerX += deltaX * 0.05;
+    smoothPointerY += deltaY * 0.05;
+    var normalizedX = smoothPointerX / Math.max(window.innerWidth, 1) - 0.5;
+    var normalizedY = smoothPointerY / Math.max(window.innerHeight, 1) - 0.5;
+
+    auraLayers.forEach(function (aura) {
+      aura.style.setProperty("--cursor-aura-x", String(smoothPointerX) + "px");
+      aura.style.setProperty("--cursor-aura-y", String(smoothPointerY) + "px");
+      aura.classList.add("is-active");
+    });
 
     if (landing) {
       landing.style.setProperty("--portrait-shift-x", String(normalizedX * 14) + "px");
       landing.style.setProperty("--portrait-shift-y", String(normalizedY * 10) + "px");
     }
 
-    if (activeCard !== nextCard) resetCard(activeCard);
-    activeCard = nextCard;
-    if (activeCard && cardBounds) {
-      var localX = (pointerX - cardBounds.left) / Math.max(cardBounds.width, 1);
-      var localY = (pointerY - cardBounds.top) / Math.max(cardBounds.height, 1);
-      activeCard.style.setProperty("--tilt-x", String((0.5 - localY) * 3.2) + "deg");
-      activeCard.style.setProperty("--tilt-y", String((localX - 0.5) * 4.2) + "deg");
-      activeCard.classList.add("is-pointer-active");
+    if (pointerDetailsDirty) {
+      var cardBounds = nextCard ? nextCard.getBoundingClientRect() : null;
+      var buttonBounds = nextButton ? nextButton.getBoundingClientRect() : null;
+
+      if (activeCard !== nextCard) resetCard(activeCard);
+      activeCard = nextCard;
+      if (activeCard && cardBounds) {
+        var localX = (pointerX - cardBounds.left) / Math.max(cardBounds.width, 1);
+        var localY = (pointerY - cardBounds.top) / Math.max(cardBounds.height, 1);
+        activeCard.style.setProperty("--tilt-x", String((0.5 - localY) * 3.2) + "deg");
+        activeCard.style.setProperty("--tilt-y", String((localX - 0.5) * 4.2) + "deg");
+        activeCard.classList.add("is-pointer-active");
+      }
+
+      if (activeButton !== nextButton) resetButton(activeButton);
+      activeButton = nextButton;
+      if (activeButton && buttonBounds) {
+        var offsetX = (pointerX - (buttonBounds.left + buttonBounds.width / 2)) * 0.075;
+        var offsetY = (pointerY - (buttonBounds.top + buttonBounds.height / 2)) * 0.09;
+        activeButton.style.setProperty("--magnetic-x", String(Math.max(-4, Math.min(4, offsetX))) + "px");
+        activeButton.style.setProperty("--magnetic-y", String(Math.max(-3, Math.min(3, offsetY))) + "px");
+      }
+      pointerDetailsDirty = false;
     }
 
-    if (activeButton !== nextButton) resetButton(activeButton);
-    activeButton = nextButton;
-    if (activeButton && buttonBounds) {
-      var offsetX = (pointerX - (buttonBounds.left + buttonBounds.width / 2)) * 0.075;
-      var offsetY = (pointerY - (buttonBounds.top + buttonBounds.height / 2)) * 0.09;
-      activeButton.style.setProperty("--magnetic-x", String(Math.max(-4, Math.min(4, offsetX))) + "px");
-      activeButton.style.setProperty("--magnetic-y", String(Math.max(-3, Math.min(3, offsetY))) + "px");
+    if (Math.abs(deltaX) > 0.5 || Math.abs(deltaY) > 0.5) {
+      pointerFrame = window.requestAnimationFrame(renderPointerMotion);
     }
   }
 
@@ -378,6 +433,7 @@
     pointerY = event.clientY;
     nextCard = event.target.closest ? event.target.closest(".pointer-reactive") : null;
     nextButton = event.target.closest ? event.target.closest(".button, .page-button") : null;
+    pointerDetailsDirty = true;
     if (!pointerFrame) pointerFrame = window.requestAnimationFrame(renderPointerMotion);
   }, { passive: true });
 

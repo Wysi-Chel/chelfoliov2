@@ -30,6 +30,27 @@
   </head>
 
   <body class="home-body">
+    <header class="site-header portfolio-header">
+      <a class="wordmark portfolio-brand" href="#home" aria-label="Chel, home">chel.</a>
+
+      <nav class="primary-nav portfolio-nav" aria-label="Primary navigation">
+        <a class="portfolio-nav__link portfolio-nav__link--home" href="#home" aria-current="page" aria-label="Home">
+          <svg aria-hidden="true"><use href="assets/nav-icons.svg#home"></use></svg><span class="portfolio-nav__label">Home</span>
+        </a>
+        <span class="portfolio-nav__divider" aria-hidden="true"></span>
+        <a class="portfolio-nav__link" href="#about"><svg aria-hidden="true"><use href="assets/nav-icons.svg#about"></use></svg><span class="portfolio-nav__label">About</span></a>
+        <a class="portfolio-nav__link" href="work.html"><svg aria-hidden="true"><use href="assets/nav-icons.svg#work"></use></svg><span class="portfolio-nav__label">Work</span></a>
+        <a class="portfolio-nav__link" href="projects.html"><svg aria-hidden="true"><use href="assets/nav-icons.svg#projects"></use></svg><span class="portfolio-nav__label">Projects</span></a>
+        <a class="portfolio-nav__link" href="gallery.html"><svg aria-hidden="true"><use href="assets/nav-icons.svg#gallery"></use></svg><span class="portfolio-nav__label">Gallery</span></a>
+      </nav>
+
+      <div class="header-tools portfolio-header__tools">
+        <button class="motion-toggle" type="button" aria-label="Pause site motion" aria-pressed="false">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+    </header>
+
     <main id="main-content">
       <section class="landing" aria-labelledby="home-title">
         <canvas class="star-field" aria-hidden="true"></canvas>
@@ -38,21 +59,6 @@
         <div class="dot-grid dot-grid--right" aria-hidden="true"></div>
 
         <div class="scene">
-          <header class="site-header">
-            <a class="wordmark" href="#home" aria-label="Chel, home">chel.</a>
-
-            <nav class="primary-nav" aria-label="Primary navigation">
-              <a href="#about">About</a>
-              <a href="work.html">Work</a>
-              <a href="projects.html">Projects</a>
-              <a href="gallery.html">Gallery</a>
-            </nav>
-
-            <button class="motion-toggle" type="button" aria-label="Pause star animation" aria-pressed="false">
-              <span aria-hidden="true"></span>
-            </button>
-          </header>
-
           <div class="hero" id="home">
             <div class="hero-copy">
               <div class="at-mark" aria-hidden="true">@</div>

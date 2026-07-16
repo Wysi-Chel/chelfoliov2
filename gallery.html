@@ -30,40 +30,29 @@
   </head>
 
   <body class="inner-body">
+    <header class="inner-header portfolio-header">
+      <a class="wordmark portfolio-brand" href="index.html" aria-label="Chel, home">chel.</a>
+
+      <nav class="inner-nav portfolio-nav" aria-label="Primary navigation">
+        <a class="portfolio-nav__link portfolio-nav__link--home" href="index.html" aria-label="Home"><svg aria-hidden="true"><use href="assets/nav-icons.svg#home"></use></svg><span class="portfolio-nav__label">Home</span></a>
+        <span class="portfolio-nav__divider" aria-hidden="true"></span>
+        <a class="portfolio-nav__link" href="index.html#about"><svg aria-hidden="true"><use href="assets/nav-icons.svg#about"></use></svg><span class="portfolio-nav__label">About</span></a>
+        <a class="portfolio-nav__link" href="work.html"><svg aria-hidden="true"><use href="assets/nav-icons.svg#work"></use></svg><span class="portfolio-nav__label">Work</span></a>
+        <a class="portfolio-nav__link" href="projects.html"><svg aria-hidden="true"><use href="assets/nav-icons.svg#projects"></use></svg><span class="portfolio-nav__label">Projects</span></a>
+        <a class="portfolio-nav__link" href="gallery.html" aria-current="page"><svg aria-hidden="true"><use href="assets/nav-icons.svg#gallery"></use></svg><span class="portfolio-nav__label">Gallery</span></a>
+      </nav>
+
+      <div class="header-tools portfolio-header__tools">
+        <button class="command-trigger" type="button" data-command-trigger aria-label="Open quick navigation">Navigate&nbsp; <span aria-hidden="true">Ctrl K</span></button>
+        <button class="motion-toggle" type="button" aria-label="Pause site motion" aria-pressed="false"><span aria-hidden="true"></span></button>
+      </div>
+    </header>
+
     <div class="landing inner-page">
       <canvas class="star-field" aria-hidden="true"></canvas>
       <div class="aurora" aria-hidden="true"></div>
       <div class="dot-grid dot-grid--left" aria-hidden="true"></div>
       <div class="dot-grid dot-grid--right" aria-hidden="true"></div>
-
-      <header class="inner-header">
-        <a class="wordmark" href="index.html" aria-label="Chel, home">chel.</a>
-
-        <nav class="inner-nav" id="inner-navigation" data-inner-nav aria-label="Primary navigation">
-          <a href="index.html#about">About</a>
-          <a href="work.html">Work</a>
-          <a href="projects.html">Projects</a>
-          <a href="gallery.html" aria-current="page">Gallery</a>
-        </nav>
-
-        <div class="header-tools">
-          <button class="command-trigger" type="button" data-command-trigger aria-label="Open quick navigation">
-            Ctrl K
-          </button>
-          <button class="motion-toggle" type="button" aria-label="Pause star animation" aria-pressed="false">
-            <span aria-hidden="true"></span>
-          </button>
-          <button
-            class="menu-trigger"
-            type="button"
-            data-menu-toggle
-            aria-controls="inner-navigation"
-            aria-expanded="false"
-          >
-            Menu
-          </button>
-        </div>
-      </header>
 
       <main class="page-main">
         <section class="inner-shell page-hero page-hero--wide" aria-labelledby="gallery-title">
