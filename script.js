@@ -3,7 +3,7 @@
 
   var landing = document.querySelector(".landing");
   var canvas = document.querySelector(".star-field");
-  var toggle = document.querySelector(".motion-toggle");
+  var toggle = document.querySelector("[data-star-toggle]");
 
   document.querySelectorAll("[data-current-year]").forEach(function (item) {
     item.textContent = String(new Date().getFullYear());
@@ -16,15 +16,18 @@
   var stars = [];
   var animationFrame = 0;
   var isInnerPage = landing.classList.contains("inner-page");
-  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var storedPreference = null;
+  var starsReduced = false;
+
+  root.classList.add("motion-enhanced");
+
   try {
-    storedPreference = window.localStorage.getItem("chel-motion-paused");
+    starsReduced = window.localStorage.getItem("chel-stars-reduced") === "true";
+    window.localStorage.removeItem("chel-stars-amplified");
+    window.localStorage.removeItem("chel-motion-preference");
+    window.localStorage.removeItem("chel-motion-paused");
   } catch (error) {
-    storedPreference = null;
+    starsReduced = false;
   }
-  var userPaused = storedPreference === "true";
-  var isPaused = reducedMotion.matches || userPaused;
   var previousTime = 0;
 
   function getCanvasSize() {
@@ -43,8 +46,9 @@
   }
 
   function makeStars(width, height) {
-    var random = randomFactory(74531);
-    var count = Math.round(Math.min(310, Math.max(160, (width * height) / 5000)));
+    var random = randomFactory(starsReduced ? 75271 : 74531);
+    var baseCount = Math.min(310, Math.max(160, (width * height) / 5000));
+    var count = Math.round(starsReduced ? Math.max(72, baseCount * 0.46) : baseCount);
     var result = [];
 
     for (var index = 0; index < count; index += 1) {
@@ -86,24 +90,29 @@
 
     for (var index = 0; index < stars.length; index += 1) {
       var star = stars[index];
-      var pulse = isPaused ? 0.78 : 0.68 + Math.sin(star.phase + time * star.speed) * 0.28;
-      var opacity = Math.max(0.06, star.alpha * pulse);
+      var energy = starsReduced ? 0.72 : 1;
+      var radius = star.radius * (starsReduced ? 0.88 : 1);
+      var pulseSpeed = starsReduced ? 0.74 : 1;
+      var pulse = 0.68 + Math.sin(star.phase + time * star.speed * pulseSpeed) * 0.28;
+      var opacity = Math.min(1, Math.max(0.06, star.alpha * pulse * energy));
 
-      if (star.radius > 1.35) {
-        var glow = context.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.radius * 4.6);
+      if (radius > 1.35) {
+        var glowRadius = radius * (starsReduced ? 3.8 : 4.6);
+        var glow = context.createRadialGradient(star.x, star.y, 0, star.x, star.y, glowRadius);
         glow.addColorStop(0, "rgba(240,248,255," + Math.min(1, opacity * 1.5) + ")");
         glow.addColorStop(0.22, "rgba(213,235,255," + opacity + ")");
         glow.addColorStop(1, "rgba(112,173,224,0)");
         context.fillStyle = glow;
         context.beginPath();
-        context.arc(star.x, star.y, star.radius * 4.6, 0, Math.PI * 2);
+        context.arc(star.x, star.y, glowRadius, 0, Math.PI * 2);
         context.fill();
+
       } else {
         context.fillStyle = star.blue
           ? "rgba(143,196,235," + opacity + ")"
           : "rgba(228,236,244," + opacity + ")";
         context.beginPath();
-        context.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        context.arc(star.x, star.y, radius, 0, Math.PI * 2);
         context.fill();
       }
     }
@@ -111,7 +120,7 @@
 
   function animate(time) {
     animationFrame = 0;
-    if (isPaused || document.hidden) return;
+    if (document.hidden) return;
 
     if (time - previousTime > 30) {
       drawStars(time);
@@ -127,40 +136,33 @@
   }
 
   function startAnimation() {
-    if (animationFrame || isPaused || document.hidden) return;
+    if (animationFrame || document.hidden) return;
     animationFrame = window.requestAnimationFrame(animate);
   }
 
-  function updateToggle() {
-    isPaused = reducedMotion.matches || userPaused;
-    root.classList.toggle("motion-paused", isPaused);
-    landing.classList.toggle("motion-paused", isPaused);
-    toggle.setAttribute("aria-pressed", String(isPaused));
-    toggle.disabled = reducedMotion.matches;
-    toggle.setAttribute(
-      "aria-label",
-      reducedMotion.matches
-        ? "Site motion follows reduced-motion preference"
-        : isPaused ? "Resume site motion" : "Pause site motion"
-    );
-    drawStars(performance.now());
+  function updateStarToggle() {
+    root.classList.toggle("stars-reduced", starsReduced);
+    landing.classList.toggle("stars-reduced", starsReduced);
+    toggle.setAttribute("aria-pressed", String(starsReduced));
+    var actionLabel = starsReduced ? "Restore standard star field" : "Reduce star field";
+    toggle.setAttribute("aria-label", actionLabel);
+    toggle.title = actionLabel;
 
-    if (isPaused) stopAnimation();
-    else startAnimation();
-
-    document.dispatchEvent(new CustomEvent("chel:motionchange", {
-      detail: { paused: isPaused, reduced: reducedMotion.matches }
+    document.dispatchEvent(new CustomEvent("chel:starchange", {
+      detail: { reduced: starsReduced }
     }));
   }
 
   toggle.addEventListener("click", function () {
-    userPaused = !userPaused;
+    starsReduced = !starsReduced;
     try {
-      window.localStorage.setItem("chel-motion-paused", String(userPaused));
+      window.localStorage.setItem("chel-stars-reduced", String(starsReduced));
     } catch (error) {
-      // Animation control still works when storage is unavailable.
+      // The star-density control still works when storage is unavailable.
     }
-    updateToggle();
+    updateStarToggle();
+    resizeCanvas();
+    startAnimation();
   });
 
   window.addEventListener("resize", resizeCanvas, { passive: true });
@@ -173,21 +175,15 @@
     else startAnimation();
   });
 
-  if (typeof reducedMotion.addEventListener === "function") {
-    reducedMotion.addEventListener("change", updateToggle);
-  } else if (typeof reducedMotion.addListener === "function") {
-    reducedMotion.addListener(updateToggle);
-  }
-
+  updateStarToggle();
   resizeCanvas();
-  updateToggle();
+  startAnimation();
 })();
 
 (function () {
   "use strict";
 
   var root = document.documentElement;
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   root.classList.add("motion-enhanced");
 
@@ -235,11 +231,6 @@
   }
 
   function observeHomeItems() {
-    if (root.classList.contains("motion-paused") || reduceMotion.matches) {
-      revealHomeItems();
-      return;
-    }
-
     if (typeof window.IntersectionObserver !== "function") {
       revealHomeItems();
       return;
@@ -267,23 +258,37 @@
   });
 
   var scrollFrame = 0;
+  var targetScroll = window.scrollY || document.documentElement.scrollTop || 0;
+  var renderedScroll = targetScroll;
 
-  function updateScrollMotion() {
-    var scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+  function applyScrollMotion(scrollTop) {
+    var scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
     root.style.setProperty("--scroll-parallax", String((scrollTop * 0.075) % 72) + "px");
     root.style.setProperty("--hero-scroll-lift", String(Math.max(scrollTop * -0.035, -24)) + "px");
-    scrollFrame = 0;
+    root.style.setProperty("--aurora-scroll-y", String(Math.max(scrollTop * -0.018, -80)) + "px");
+    root.style.setProperty("--inner-copy-scroll-y", String(Math.max(scrollTop * -0.024, -32)) + "px");
+    root.style.setProperty("--inner-visual-scroll-y", String(Math.max(scrollTop * -0.04, -52)) + "px");
+    root.style.setProperty("--scroll-progress", String(Math.min(1, Math.max(0, scrollTop / scrollRange))));
   }
 
-  window.addEventListener("scroll", function () {
-    if (root.classList.contains("motion-paused")) return;
-    if (!scrollFrame) scrollFrame = window.requestAnimationFrame(updateScrollMotion);
-  }, { passive: true });
-  updateScrollMotion();
+  function renderScrollMotion() {
+    scrollFrame = 0;
+    var delta = targetScroll - renderedScroll;
+    renderedScroll += delta * 0.12;
+    if (Math.abs(delta) < 0.1) renderedScroll = targetScroll;
+    applyScrollMotion(renderedScroll);
+    if (renderedScroll !== targetScroll) {
+      scrollFrame = window.requestAnimationFrame(renderScrollMotion);
+    }
+  }
 
-  document.addEventListener("chel:motionchange", function (event) {
-    if (event.detail && event.detail.paused) revealHomeItems();
-  });
+  function requestScrollMotion() {
+    targetScroll = window.scrollY || document.documentElement.scrollTop || 0;
+    if (!scrollFrame) scrollFrame = window.requestAnimationFrame(renderScrollMotion);
+  }
+
+  window.addEventListener("scroll", requestScrollMotion, { passive: true });
+  applyScrollMotion(renderedScroll);
 
   var homeDock = document.querySelector(".portfolio-nav");
   var homeDockLink = homeDock ? homeDock.querySelector('a[href="#home"]') : null;
@@ -387,14 +392,8 @@
 
     var deltaX = pointerX - smoothPointerX;
     var deltaY = pointerY - smoothPointerY;
-    var shouldEasePointer = !reduceMotion.matches && !root.classList.contains("motion-paused");
-    if (shouldEasePointer) {
-      smoothPointerX = Math.round(smoothPointerX + deltaX * 0.05);
-      smoothPointerY = Math.round(smoothPointerY + deltaY * 0.05);
-    } else {
-      smoothPointerX = pointerX;
-      smoothPointerY = pointerY;
-    }
+    smoothPointerX = Math.round(smoothPointerX + deltaX * 0.05);
+    smoothPointerY = Math.round(smoothPointerY + deltaY * 0.05);
     var normalizedX = smoothPointerX / Math.max(window.innerWidth, 1) - 0.5;
     var normalizedY = smoothPointerY / Math.max(window.innerHeight, 1) - 0.5;
 
@@ -442,7 +441,7 @@
       pointerDetailsDirty = false;
     }
 
-    if (shouldEasePointer && (Math.abs(deltaX) > 0.5 || Math.abs(deltaY) > 0.5)) {
+    if (Math.abs(deltaX) > 0.5 || Math.abs(deltaY) > 0.5) {
       pointerFrame = window.requestAnimationFrame(renderPointerMotion);
     }
   }
@@ -466,9 +465,4 @@
     if (document.hidden) resetPointerMotion();
   });
 
-  document.addEventListener("chel:motionchange", function (event) {
-    if (event.detail && event.detail.reduced) {
-      resetPointerMotion();
-    }
-  });
 })();

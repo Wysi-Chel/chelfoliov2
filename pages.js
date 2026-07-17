@@ -34,7 +34,6 @@
 
   var revealItems = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
   var revealObserver = null;
-  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   function showRevealItem(item, immediate) {
     var delay = immediate ? 0 : parseInt(item.style.getPropertyValue("--reveal-delay"), 10) || 0;
@@ -56,11 +55,7 @@
   }
 
   function observeRevealItems() {
-    if (
-      typeof window.IntersectionObserver !== "function" ||
-      reducedMotion.matches ||
-      document.documentElement.classList.contains("motion-paused")
-    ) {
+    if (typeof window.IntersectionObserver !== "function") {
       showRevealItems();
       return;
     }
@@ -87,10 +82,6 @@
     if (item) showRevealItem(item, true);
   });
 
-  document.addEventListener("chel:motionchange", function (event) {
-    if (event.detail && event.detail.paused) showRevealItems();
-  });
-
   Array.prototype.slice.call(document.querySelectorAll("[data-filter-rail]")).forEach(function (rail) {
     var targetName = rail.getAttribute("data-filter-rail");
     var items = Array.prototype.slice.call(document.querySelectorAll('[data-filter-group="' + targetName + '"]'));
@@ -107,9 +98,84 @@
       items.forEach(function (item) {
         var categories = (item.getAttribute("data-category") || "").split(" ");
         item.hidden = value !== "all" && categories.indexOf(value) === -1;
+        var filteredVideo = item.querySelector("[data-video-preview]");
+        if (!filteredVideo) return;
+        if (item.hidden) pauseProjectVideo(filteredVideo);
+        else if (filteredVideo.dataset.videoInView === "true") playProjectVideo(filteredVideo);
       });
     });
   });
+
+  var projectVideos = Array.prototype.slice.call(document.querySelectorAll("[data-video-preview]"));
+
+  function loadProjectVideo(video) {
+    if (!video || video.dataset.videoLoaded === "true" || video.dataset.videoFailed === "true") return;
+    var source = video.getAttribute("data-src");
+    if (!source) return;
+    video.defaultMuted = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.src = source;
+    video.dataset.videoLoaded = "true";
+    video.load();
+  }
+
+  function playProjectVideo(video) {
+    if (!video || document.hidden || video.closest("[hidden]")) return;
+    loadProjectVideo(video);
+    var playAttempt = video.play();
+    if (playAttempt && typeof playAttempt.then === "function") {
+      playAttempt.then(function () {
+        video.classList.add("is-playing");
+      }).catch(function () {
+        video.classList.remove("is-playing");
+      });
+    }
+  }
+
+  function pauseProjectVideo(video) {
+    if (!video) return;
+    video.pause();
+    video.classList.remove("is-playing");
+  }
+
+  if (projectVideos.length) {
+    var videoObserver = typeof window.IntersectionObserver === "function"
+      ? new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            entry.target.dataset.videoInView = String(entry.isIntersecting);
+            if (entry.isIntersecting) playProjectVideo(entry.target);
+            else pauseProjectVideo(entry.target);
+          });
+        }, { threshold: 0.16, rootMargin: "160px 0px 120px" })
+      : null;
+
+    projectVideos.forEach(function (video) {
+      video.defaultMuted = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.addEventListener("error", function () {
+        video.classList.add("is-unavailable");
+        video.dataset.videoFailed = "true";
+        video.removeAttribute("src");
+        video.load();
+      });
+      video.addEventListener("mouseenter", function () { playProjectVideo(video); });
+      video.addEventListener("focusin", function () { playProjectVideo(video); });
+      video.addEventListener("mouseleave", function () {
+        if (video.dataset.videoInView !== "true") pauseProjectVideo(video);
+      });
+      if (videoObserver) videoObserver.observe(video);
+      else loadProjectVideo(video);
+    });
+
+    document.addEventListener("visibilitychange", function () {
+      projectVideos.forEach(function (video) {
+        if (document.hidden) pauseProjectVideo(video);
+        else if (video.dataset.videoInView === "true") playProjectVideo(video);
+      });
+    });
+  }
 
   var orbitPreview = document.querySelector("[data-orbit-preview]");
   var projectNodes = Array.prototype.slice.call(document.querySelectorAll("[data-project-node]"));

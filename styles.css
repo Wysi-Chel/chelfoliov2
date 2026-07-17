@@ -88,6 +88,13 @@ a {
   z-index: 1;
   width: 100%;
   height: 100%;
+  transition: filter 620ms ease, opacity 620ms ease;
+  will-change: filter;
+}
+
+.stars-reduced .star-field {
+  opacity: 0.68;
+  filter: saturate(0.84) brightness(0.86);
 }
 
 .aurora {
@@ -559,10 +566,6 @@ h1 em {
   margin-top: 42px;
 }
 
-.landing.motion-paused .star-field {
-  opacity: 0.82;
-}
-
 @media (max-width: 1180px) {
   .scene {
     height: max(820px, 100svh);
@@ -791,20 +794,5 @@ h1 em {
   .home-about-summary p {
     font-size: 15px;
     line-height: 1.72;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
   }
 }
