@@ -85,11 +85,13 @@
   Array.prototype.slice.call(document.querySelectorAll("[data-filter-rail]")).forEach(function (rail) {
     var targetName = rail.getAttribute("data-filter-rail");
     var items = Array.prototype.slice.call(document.querySelectorAll('[data-filter-group="' + targetName + '"]'));
+    var filterLayout = document.querySelector('[data-filter-layout="' + targetName + '"]');
 
     rail.addEventListener("click", function (event) {
       var button = event.target.closest("[data-filter]");
       if (!button) return;
       var value = button.getAttribute("data-filter");
+      if (filterLayout) filterLayout.setAttribute("data-layout-filter", value);
 
       rail.querySelectorAll("[data-filter]").forEach(function (chip) {
         chip.setAttribute("aria-pressed", String(chip === button));

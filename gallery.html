@@ -31,7 +31,9 @@
 
   <body class="inner-body">
     <header class="inner-header portfolio-header">
-      <a class="wordmark portfolio-brand" href="index.html" aria-label="Chel, home">chel.</a>
+      <a class="wordmark portfolio-brand" href="index.html" aria-label="Chel, home">
+        <span class="portfolio-brand__name">chel</span><span class="portfolio-brand__dot" aria-hidden="true">.</span>
+      </a>
 
       <nav class="inner-nav portfolio-nav" aria-label="Primary navigation">
         <a class="portfolio-nav__link portfolio-nav__link--home" href="index.html" aria-label="Home"><svg aria-hidden="true"><use href="assets/nav-icons.svg#home"></use></svg><span class="portfolio-nav__label">Home</span></a>
@@ -55,14 +57,18 @@
       <div class="dot-grid dot-grid--right" aria-hidden="true"></div>
 
       <main class="page-main">
-        <section class="inner-shell page-hero page-hero--wide" aria-labelledby="gallery-title">
-          <div class="reveal">
+        <section class="inner-shell page-hero page-hero--gallery" aria-labelledby="gallery-title">
+          <div class="gallery-hero__title reveal">
             <p class="page-kicker">Photography Archive</p>
             <h1 class="page-title" id="gallery-title">
               <span>Photograph</span>
               <span>— Gallery</span>
               <em>in orbit.</em>
             </h1>
+          </div>
+
+          <div class="gallery-hero__copy reveal">
+            <p class="gallery-hero__count"><strong>13</strong><span>Curated frames<br />from the archive</span></p>
             <p class="page-lead">
               A photo collection by Chel Gadores. Thirteen observations of light, place, texture, and the
               quiet details that ask to be remembered.
@@ -72,21 +78,6 @@
             </div>
           </div>
 
-          <figure class="glass-panel portrait-orbit-card reveal" aria-label="Featured photograph from Chel's archive">
-            <div class="orbit-stage">
-              <div class="orbit-ring" aria-hidden="true"></div>
-              <div class="orbit-core" aria-hidden="true"></div>
-              <img
-                class="about-portrait"
-                src="assets/live/gallery/img-01.jpg"
-                alt="Featured photograph from Chel Gadores' archive"
-              />
-              <span class="orbit-tag orbit-tag--one">Frame 01</span>
-              <span class="orbit-tag orbit-tag--two">Light study</span>
-              <span class="orbit-tag orbit-tag--three">13 frames</span>
-              <span class="orbit-tag orbit-tag--four">General Santos City</span>
-            </div>
-          </figure>
         </section>
 
         <section class="page-section page-section--compact" id="archive-grid" aria-labelledby="archive-title">
@@ -106,7 +97,7 @@
               <button class="filter-chip" type="button" data-filter="portrait" aria-pressed="false">Portrait</button>
             </div>
 
-            <div class="gallery-grid">
+            <div class="gallery-grid" data-filter-layout="gallery" data-layout-filter="all">
               <button
                 class="media-tile media-tile--wide reveal"
                 type="button"
