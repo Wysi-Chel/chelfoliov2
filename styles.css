@@ -397,16 +397,35 @@ h1 em {
     inset 0 0 18px rgba(70, 172, 234, 0.08);
 }
 
-.portrait-orbit::before {
+.portrait-orbit-runner {
   position: absolute;
-  top: 47px;
-  right: 58px;
+  z-index: 2;
+  inset: -1px;
+  border-radius: inherit;
+  animation: portrait-orbit-turn 28s linear infinite;
+}
+
+.portrait-orbit-runner::before {
+  position: absolute;
+  top: -1px;
+  left: 50%;
   width: 3px;
   height: 3px;
   border-radius: 50%;
   content: "";
   background: #b9dff8;
   box-shadow: 0 0 8px #87cfff;
+  transform: translateX(-50%);
+}
+
+@keyframes portrait-orbit-turn {
+  to { rotate: 1turn; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait-orbit-runner {
+    animation: none;
+  }
 }
 
 .portrait {

@@ -57,29 +57,41 @@
           </div>
 
           <div class="project-constellation glass-panel reveal" aria-label="Interactive project constellation">
-            <svg class="constellation-lines" viewBox="0 0 760 590" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M88 151L196 103L313 170L451 89L641 154L568 269L679 357L523 463L360 401L217 487L112 348L313 170L360 401L568 269L196 103" fill="none" stroke="#159eff" stroke-width="1" />
-              <path d="M20 298H740M378 18V572" fill="none" stroke="#70d0fc" stroke-width="0.5" stroke-dasharray="3 9" opacity=".28" />
+            <svg class="constellation-lines" preserveAspectRatio="none" aria-hidden="true">
+              <line class="constellation-axis" data-constellation-axis="horizontal"></line>
+              <line class="constellation-axis" data-constellation-axis="vertical"></line>
+              <g data-constellation-network></g>
             </svg>
             <span class="constellation-orbit" aria-hidden="true"></span>
             <span class="constellation-orbit constellation-orbit--two" aria-hidden="true"></span>
+            <span class="orbit-core orbit-core--timeline" aria-hidden="true"></span>
 
-            <button class="project-node" type="button" style="--x: 12%; --y: 25%;" aria-label="Preview Gallery V2" data-project-node data-image="assets/live/projects/galleryvv2.webp" data-title="Gallery V2" data-meta="01 / Web Development / 2026" data-description="A responsive masonry gallery with smooth visual filtering.">01</button>
-            <button class="project-node" type="button" style="--x: 27%; --y: 17%;" aria-label="Preview MP3 Player" data-project-node data-image="assets/live/projects/mp3_player.png" data-title="MP3 Player" data-meta="02 / Interactive App / 2026" data-description="A Vanilla JavaScript player with playlist and playback controls.">02</button>
-            <button class="project-node" type="button" style="--x: 42%; --y: 29%;" aria-label="Preview PPE Lapsing Schedule" data-project-node data-image="assets/live/projects/ppe_lapsing.webp" data-title="PPE Lapsing Schedule" data-meta="03 / Backend Development / 2026" data-description="A PHP inventory tool for PPE records and expiration alerts.">03</button>
-            <button class="project-node" type="button" style="--x: 61%; --y: 15%;" aria-label="Preview System Monitoring" data-project-node data-image="assets/live/projects/system_monitoring.webp" data-title="System Monitoring" data-meta="04 / Web Application / 2026" data-description="A private company monitoring system for Mitsubishi and Hyundai General Santos.">04</button>
-            <button class="project-node" type="button" style="--x: 86%; --y: 26%;" aria-label="Preview Expense Tracker" data-project-node data-image="assets/live/projects/expense_tracker.webp" data-title="Expense Tracker" data-meta="05 / Web Application / 2026" data-description="A browser-based budget tracker with visual charts and spending controls.">05</button>
-            <button class="project-node" type="button" style="--x: 75%; --y: 47%;" aria-label="Preview YouTube Thumbnail" data-project-node data-image="assets/live/projects/mock.webp" data-title="YouTube Thumbnail" data-meta="06 / Design Study / 2025" data-description="A high-contrast thumbnail study focused on hierarchy and subject emphasis.">06</button>
-            <button class="project-node" type="button" style="--x: 90%; --y: 66%;" aria-label="Preview Photo Retouch" data-project-node data-image="assets/live/projects/retouch.webp" data-title="Photo Retouch" data-meta="07 / Photo Editing / 2025" data-description="A cleanup and tonal-correction study with a natural finish.">07</button>
-            <button class="project-node" type="button" style="--x: 69%; --y: 79%;" aria-label="Preview Personal Portfolio" data-project-node data-image="assets/live/projects/tefolio.webp" data-title="Personal Portfolio" data-meta="08 / Web Development / 2024" data-description="A Next.js portfolio bringing projects, photography, and writing together.">08</button>
-            <button class="project-node" type="button" style="--x: 48%; --y: 68%;" aria-label="Preview Car Rental Website" data-project-node data-image="assets/live/projects/car-rental.webp" data-title="Car Rental Website" data-meta="09 / Web Design / 2024" data-description="A motion-led vehicle browsing concept with clear booking paths.">09</button>
+            <button class="project-node" type="button" style="--x: 12%; --y: 25%;" aria-label="Preview Gallery V2" data-project-node data-image="assets/live/projects/galleryvv2.webp" data-title="Gallery V2" data-meta="01 / Web Development / 2026" data-description="A responsive masonry gallery with smooth visual filtering." data-status="complete" data-energy="100" data-related="2,5,9">01</button>
+            <button class="project-node" type="button" style="--x: 27%; --y: 17%;" aria-label="Preview MP3 Player" data-project-node data-image="assets/live/projects/mp3_player.png" data-title="MP3 Player" data-meta="02 / Interactive App / 2026" data-description="A Vanilla JavaScript player with playlist and playback controls." data-status="complete" data-energy="96" data-related="1,3,7">02</button>
+            <button class="project-node" type="button" style="--x: 42%; --y: 29%;" aria-label="Preview PPE Lapsing Schedule" data-project-node data-image="assets/live/projects/ppe_lapsing.webp" data-title="PPE Lapsing Schedule" data-meta="03 / Backend Development / 2026" data-description="A PHP inventory tool for PPE records and expiration alerts." data-status="complete" data-energy="94" data-related="2,4,8">03</button>
+            <button class="project-node" type="button" style="--x: 61%; --y: 15%;" aria-label="Preview System Monitoring" data-project-node data-image="assets/live/projects/system_monitoring.webp" data-title="System Monitoring" data-meta="04 / Web Application / 2026" data-description="A private company monitoring system for Mitsubishi and Hyundai General Santos." data-status="complete" data-energy="98" data-related="3,5,9">04</button>
+            <button class="project-node" type="button" style="--x: 86%; --y: 26%;" aria-label="Preview Expense Tracker" data-project-node data-image="assets/live/projects/expense_tracker.webp" data-title="Expense Tracker" data-meta="05 / Web Application / 2026" data-description="A browser-based budget tracker with visual charts and spending controls." data-status="complete" data-energy="91" data-related="4,6,1">05</button>
+            <button class="project-node" type="button" style="--x: 75%; --y: 47%;" aria-label="Preview YouTube Thumbnail" data-project-node data-image="assets/live/projects/mock.webp" data-title="YouTube Thumbnail" data-meta="06 / Design Study / 2025" data-description="A high-contrast thumbnail study focused on hierarchy and subject emphasis." data-status="complete" data-energy="84" data-related="5,7,9">06</button>
+            <button class="project-node" type="button" style="--x: 90%; --y: 66%;" aria-label="Preview Photo Retouch" data-project-node data-image="assets/live/projects/retouch.webp" data-title="Photo Retouch" data-meta="07 / Photo Editing / 2025" data-description="A cleanup and tonal-correction study with a natural finish." data-status="complete" data-energy="88" data-related="6,8,2">07</button>
+            <button class="project-node" type="button" style="--x: 69%; --y: 79%;" aria-label="Preview Personal Portfolio" data-project-node data-image="assets/live/projects/tefolio.webp" data-title="Personal Portfolio" data-meta="08 / Web Development / 2024" data-description="A Next.js portfolio bringing projects, photography, and writing together." data-status="complete" data-energy="92" data-related="7,9,3">08</button>
+            <button class="project-node" type="button" style="--x: 48%; --y: 68%;" aria-label="Preview Car Rental Website" data-project-node data-image="assets/live/projects/car-rental.webp" data-title="Car Rental Website" data-meta="09 / Web Design / 2024" data-description="A motion-led vehicle browsing concept with clear booking paths." data-status="complete" data-energy="86" data-related="8,1,4,6">09</button>
 
-            <article class="orbit-preview glass-panel" data-orbit-preview aria-live="polite">
+            <article class="orbit-preview glass-panel" data-orbit-preview aria-live="polite" aria-hidden="true">
               <img src="assets/live/projects/galleryvv2.webp" alt="Gallery V2 project cover" />
-              <div>
-                <span class="project-meta" data-preview-meta>01 / Web Development / 2026</span>
+              <div class="orbit-preview__body">
+                <div class="orbit-preview__topline">
+                  <span class="orbit-status" data-preview-status>Complete</span>
+                  <span class="project-meta" data-preview-meta>01 / Web Development / 2026</span>
+                </div>
                 <h3 data-preview-title>Gallery V2</h3>
                 <p data-preview-description>A responsive masonry gallery with smooth visual filtering.</p>
+                <div class="orbit-energy">
+                  <div class="orbit-energy__label">
+                    <span>Orbit energy</span><strong data-preview-energy>100%</strong>
+                  </div>
+                  <span class="orbit-energy__track"><span data-preview-energy-bar></span></span>
+                </div>
+                <div class="orbit-connections" data-preview-connections></div>
               </div>
             </article>
 

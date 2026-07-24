@@ -324,6 +324,8 @@
   var activeButton = null;
   var nextGlassTarget = null;
   var activeGlassTarget = null;
+  var nextOrbitSurface = null;
+  var activeOrbitSurface = null;
 
   var auraLayers = [];
   Array.prototype.slice.call(document.querySelectorAll(".landing, .inner-page")).forEach(function (surface) {
@@ -339,7 +341,36 @@
   ));
 
   pointerCards.forEach(function (card) {
-    card.classList.add("pointer-reactive");
+    card.classList.add("pointer-reactive", "glow-card");
+    if (!card.querySelector(":scope > .glow-card-layer")) {
+      var glowLayer = document.createElement("span");
+      glowLayer.className = "glow-card-layer";
+      glowLayer.setAttribute("aria-hidden", "true");
+      card.appendChild(glowLayer);
+    }
+  });
+
+  var orbitSurfaces = Array.prototype.slice.call(document.querySelectorAll(
+    ".portrait-orbit, .orbit-stage, .project-constellation"
+  ));
+
+  orbitSurfaces.forEach(function (surface) {
+    var rings = surface.matches(".portrait-orbit")
+      ? [surface]
+      : Array.prototype.slice.call(surface.querySelectorAll(
+        ":scope > .orbit-ring, :scope > .constellation-orbit"
+      ));
+
+    surface._glowRings = rings;
+    rings.forEach(function (ring) {
+      ring.classList.add("orbit-glow-target");
+      if (!ring.querySelector(":scope > .orbit-glow-layer")) {
+        var orbitGlow = document.createElement("span");
+        orbitGlow.className = "orbit-glow-layer";
+        orbitGlow.setAttribute("aria-hidden", "true");
+        ring.appendChild(orbitGlow);
+      }
+    });
   });
 
   function resetCard(card) {
@@ -347,6 +378,37 @@
     card.classList.remove("is-pointer-active");
     card.style.setProperty("--tilt-x", "0deg");
     card.style.setProperty("--tilt-y", "0deg");
+  }
+
+  function resetOrbit(surface) {
+    if (!surface || !surface._glowRings) return;
+    surface._glowRings.forEach(function (ring) {
+      ring.classList.remove("is-orbit-active");
+    });
+  }
+
+  function findOrbitSurface(x, y, eventTarget) {
+    var closestSurface = eventTarget && eventTarget.closest
+      ? eventTarget.closest(".orbit-stage, .project-constellation")
+      : null;
+
+    if (closestSurface) return closestSurface;
+
+    for (var index = 0; index < orbitSurfaces.length; index += 1) {
+      var surface = orbitSurfaces[index];
+      if (!surface.matches(".portrait-orbit")) continue;
+      var bounds = surface.getBoundingClientRect();
+      if (
+        x >= bounds.left &&
+        x <= bounds.right &&
+        y >= bounds.top &&
+        y <= bounds.bottom
+      ) {
+        return surface;
+      }
+    }
+
+    return null;
   }
 
   function resetButton(button) {
@@ -359,6 +421,7 @@
     if (!target) return;
     target.style.setProperty("--glass-x", "50%");
     target.style.setProperty("--glass-y", "50%");
+    target.style.setProperty("--button-glow-hue", "205");
   }
 
   function resetPointerMotion() {
@@ -375,6 +438,9 @@
     resetGlassTarget(activeGlassTarget);
     activeGlassTarget = null;
     nextGlassTarget = null;
+    resetOrbit(activeOrbitSurface);
+    activeOrbitSurface = null;
+    nextOrbitSurface = null;
     pointerDetailsDirty = false;
     if (landing) {
       landing.style.setProperty("--portrait-shift-x", "0px");
@@ -418,8 +484,20 @@
       if (activeCard && cardBounds) {
         var localX = (pointerX - cardBounds.left) / Math.max(cardBounds.width, 1);
         var localY = (pointerY - cardBounds.top) / Math.max(cardBounds.height, 1);
+        var cardBase = parseFloat(
+          window.getComputedStyle(activeCard).getPropertyValue("--glow-base")
+        ) || 220;
+        var cardSpread = parseFloat(
+          window.getComputedStyle(activeCard).getPropertyValue("--glow-spread")
+        ) || 200;
         activeCard.style.setProperty("--tilt-x", String((0.5 - localY) * 3.2) + "deg");
         activeCard.style.setProperty("--tilt-y", String((localX - 0.5) * 4.2) + "deg");
+        activeCard.style.setProperty("--glow-x", String(pointerX - cardBounds.left) + "px");
+        activeCard.style.setProperty("--glow-y", String(pointerY - cardBounds.top) + "px");
+        activeCard.style.setProperty(
+          "--glow-hue",
+          String(cardBase + pointerX / Math.max(window.innerWidth, 1) * cardSpread)
+        );
         activeCard.classList.add("is-pointer-active");
       }
 
@@ -435,8 +513,26 @@
       if (activeGlassTarget !== nextGlassTarget) resetGlassTarget(activeGlassTarget);
       activeGlassTarget = nextGlassTarget;
       if (activeGlassTarget && glassBounds) {
-        activeGlassTarget.style.setProperty("--glass-x", String(pointerX - glassBounds.left) + "px");
+        var glassX = pointerX - glassBounds.left;
+        var glassProgress = glassX / Math.max(glassBounds.width, 1);
+        activeGlassTarget.style.setProperty("--glass-x", String(glassX) + "px");
         activeGlassTarget.style.setProperty("--glass-y", String(pointerY - glassBounds.top) + "px");
+        activeGlassTarget.style.setProperty("--button-glow-hue", String(195 + glassProgress * 70));
+      }
+
+      if (activeOrbitSurface !== nextOrbitSurface) resetOrbit(activeOrbitSurface);
+      activeOrbitSurface = nextOrbitSurface;
+      if (activeOrbitSurface && activeOrbitSurface._glowRings) {
+        activeOrbitSurface._glowRings.forEach(function (ring) {
+          var ringBounds = ring.getBoundingClientRect();
+          var ringX = pointerX - ringBounds.left;
+          var ringY = pointerY - ringBounds.top;
+          var ringProgress = ringX / Math.max(ringBounds.width, 1);
+          ring.style.setProperty("--glow-x", String(ringX) + "px");
+          ring.style.setProperty("--glow-y", String(ringY) + "px");
+          ring.style.setProperty("--glow-hue", String(195 + ringProgress * 90));
+          ring.classList.add("is-orbit-active");
+        });
       }
       pointerDetailsDirty = false;
     }
@@ -452,9 +548,11 @@
     nextCard = event.target.closest ? event.target.closest(".pointer-reactive") : null;
     nextButton = event.target.closest ? event.target.closest(".button, .page-button") : null;
     nextGlassTarget = event.target.closest ? event.target.closest(
-      ".button, .page-button, .command-trigger, .filter-chip, .project-node, " +
+      ".button, .page-button, .command-trigger, .filter-chip, .orbit-related-link, " +
+      ".project-node, .orbit-tag, " +
       ".lightbox-close, .lightbox-nav, .command-head button"
     ) : null;
+    nextOrbitSurface = findOrbitSurface(pointerX, pointerY, event.target);
     pointerDetailsDirty = true;
     if (!pointerFrame) pointerFrame = window.requestAnimationFrame(renderPointerMotion);
   }, { passive: true });
