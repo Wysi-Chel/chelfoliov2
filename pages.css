@@ -1302,6 +1302,78 @@
   transform: scale(1.018);
 }
 
+.project-cover--editing {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 3px;
+  padding: 3px;
+}
+
+.project-cover--apparel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 3px;
+  padding: 3px;
+}
+
+.project-cover--apparel-equal {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.project-cover--apparel .editing-frame:last-child img {
+  object-position: center;
+}
+
+.editing-frame {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  cursor: zoom-in;
+  border: 0;
+  border-radius: 4px;
+  background: #08111d;
+}
+
+.project-cover--editing .editing-frame img {
+  object-position: center;
+}
+
+.editing-frame span {
+  position: absolute;
+  z-index: 2;
+  right: 8px;
+  bottom: 7px;
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  color: rgba(238, 249, 255, 0.9);
+  border: 1px solid rgba(166, 224, 255, 0.35);
+  border-radius: 50%;
+  background: rgba(2, 8, 17, 0.72);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.editing-frame:focus-visible {
+  z-index: 3;
+  outline: 2px solid rgba(62, 177, 255, 0.95);
+  outline-offset: -3px;
+}
+
+.editing-frame:hover img,
+.editing-frame:focus-visible img {
+  filter: saturate(1) brightness(0.98) contrast(1.02);
+}
+
+.project-gallery-note {
+  color: var(--ice);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
 .project-copy {
   display: flex;
   flex: 1;
@@ -2516,6 +2588,15 @@
     height: 230px;
     min-height: 230px;
     flex-basis: 230px;
+  }
+
+  .project-cover--editing {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-cover--editing .editing-frame img {
+    object-position: center 48%;
   }
 
   .gallery-grid,
