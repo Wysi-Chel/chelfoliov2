@@ -633,9 +633,13 @@
   var lightbox = document.querySelector("[data-lightbox]");
   var mediaTiles = Array.prototype.slice.call(document.querySelectorAll("[data-lightbox-item]"));
   var lightboxIndex = 0;
+  var lightboxGroup = "";
 
   function visibleMedia() {
-    return mediaTiles.filter(function (tile) { return !tile.hidden; });
+    return mediaTiles.filter(function (tile) {
+      if (tile.hidden) return false;
+      return !lightboxGroup || tile.getAttribute("data-lightbox-group") === lightboxGroup;
+    });
   }
 
   function renderLightbox(index) {
@@ -660,6 +664,7 @@
   if (lightbox) {
     mediaTiles.forEach(function (tile) {
       tile.addEventListener("click", function () {
+        lightboxGroup = tile.getAttribute("data-lightbox-group") || "";
         lightboxIndex = visibleMedia().indexOf(tile);
         renderLightbox(lightboxIndex);
         lightbox.showModal();

@@ -7,7 +7,7 @@ A dependency-free, responsive portfolio built from the supplied homepage referen
 - `index.html` — landing page with the integrated About, practice, skills, and education sections
 - `about.html` — standalone profile route retained for compatibility
 - `work.html` — career timeline and disciplines
-- `projects.html` — interactive constellation and nine-project archive
+- `projects.html` — interactive constellation and twelve-project archive, including image-generation and apparel-design portfolios
 - `gallery.html` — filterable 13-image photography archive
 
 ## Run locally
