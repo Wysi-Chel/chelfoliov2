@@ -2716,6 +2716,7 @@
   height: 58px;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
+  margin: 0;
   padding: 0 20px;
   overflow: visible;
   pointer-events: none;
@@ -2901,6 +2902,8 @@
 
 .portfolio-header__tools {
   display: flex;
+  grid-column: auto;
+  grid-row: auto;
   justify-self: end;
   align-items: center;
   justify-content: flex-end;
@@ -3319,5 +3322,192 @@
   .portfolio-nav.primary-nav,
   .portfolio-nav.inner-nav {
     border: 1px solid CanvasText;
+  }
+}
+
+/* Homepage phone layout: keep the hero in document flow and the dock unobstructed. */
+@media (max-width: 768px) {
+  .home-body {
+    padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .home-body .landing {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .home-body .scene {
+    height: auto;
+    min-height: 0;
+  }
+
+  .home-body .hero {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    padding: 54px 20px 0;
+  }
+
+  .home-body .hero-copy {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: 560px;
+    margin-inline: auto;
+  }
+
+  .home-body h1 {
+    max-width: 100%;
+    font-size: clamp(41px, 11vw, 54px);
+    line-height: 0.97;
+    letter-spacing: -0.025em;
+  }
+
+  .home-body h1 span,
+  .home-body h1 em {
+    max-width: 100%;
+    text-wrap: balance;
+  }
+
+  .home-body h1 em {
+    margin-top: 0;
+    font-size: 1.06em;
+    transform: none;
+  }
+
+  .home-body .intro {
+    max-width: 520px;
+    margin-top: 24px;
+  }
+
+  .home-body .hero-actions {
+    display: grid;
+    width: 100%;
+    max-width: 410px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .home-body .hero-actions .button {
+    width: 100%;
+    min-width: 0;
+    padding-inline: 14px;
+  }
+
+  .home-body .portrait-composition {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    width: calc(100% + 40px);
+    height: clamp(420px, 122vw, 500px);
+    margin: 4px -20px 0;
+    overflow: hidden;
+  }
+
+  .home-body .portrait {
+    top: 12px;
+  }
+
+  .home-body .portrait-orbit {
+    top: 50px;
+  }
+
+  .portfolio-header .portfolio-brand {
+    display: none;
+  }
+
+  .portfolio-header.site-header,
+  .portfolio-header.inner-header {
+    right: 0;
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    left: 0;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    transform: none;
+  }
+
+  .home-about .inner-shell {
+    width: calc(100% - 40px);
+  }
+
+  .home-about-intro {
+    gap: 28px;
+    padding: 72px 0 58px;
+  }
+
+  .home-about-summary .page-button {
+    margin-top: 24px;
+  }
+
+  .home-about .page-section {
+    padding-block: 68px;
+  }
+
+  .home-about .page-section--compact {
+    padding-top: 20px;
+  }
+
+  .home-about .section-heading {
+    margin-bottom: 32px;
+  }
+
+  .home-about .skill-card,
+  .home-about .study-card,
+  .home-about .discipline-card {
+    min-height: 168px;
+    padding: 23px;
+  }
+
+  .home-about-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 32px;
+  }
+
+  .home-about-actions .page-button {
+    width: 100%;
+    padding-inline: 14px;
+  }
+}
+
+@media (min-width: 361px) and (max-width: 540px) {
+  .home-about .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .home-about .skill-card {
+    min-height: 178px;
+    padding: 20px;
+  }
+
+  .home-about .skill-card h3 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 360px) {
+  .home-body .hero {
+    padding-inline: 16px;
+  }
+
+  .home-body .hero-actions,
+  .home-about-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .home-body .portrait-composition {
+    width: calc(100% + 32px);
+    margin-inline: -16px;
+  }
+
+  .home-about .inner-shell {
+    width: calc(100% - 32px);
   }
 }
