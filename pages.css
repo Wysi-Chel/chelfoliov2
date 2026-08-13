@@ -846,24 +846,25 @@
 .logo-showcase {
   display: grid;
   align-items: center;
+  justify-content: center;
   justify-items: center;
-  gap: clamp(24px, 3.5vw, 54px);
-  padding: clamp(20px, 3vw, 38px) 0;
+  gap: 22px;
+  padding: 24px 0;
 }
 
 .logo-showcase--disciplines {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, 104px);
 }
 
 .logo-showcase--tools {
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(6, 104px);
 }
 
 .logo-item {
   position: relative;
   display: grid;
   width: 100%;
-  min-height: 118px;
+  min-height: 104px;
   place-items: center;
   cursor: help;
 }
@@ -2729,7 +2730,7 @@
 
   .logo-showcase--disciplines,
   .logo-showcase--tools {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, 104px);
   }
 
   .project-constellation {
@@ -2854,13 +2855,13 @@
   }
 
   .logo-showcase {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px 18px;
+    grid-template-columns: repeat(2, 88px);
+    gap: 14px;
     padding-block: 16px;
   }
 
   .logo-item {
-    min-height: 96px;
+    min-height: 88px;
   }
 
   .logo-item .card-logo {
