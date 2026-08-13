@@ -198,6 +198,7 @@
     ".home-about .section-heading > *, " +
     ".home-about .discipline-card, " +
     ".home-about .skill-card, " +
+    ".home-about .logo-item, " +
     ".home-about .study-card, " +
     ".home-about-actions"
   ));
