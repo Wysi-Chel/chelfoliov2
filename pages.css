@@ -909,6 +909,7 @@
 .card-logo--react { --logo-accent: #61dafb; --logo-glow: rgba(97, 218, 251, 0.24); }
 .card-logo--typescript { --logo-accent: #62a8e5; --logo-glow: rgba(49, 120, 198, 0.27); }
 .card-logo--layout { --logo-accent: #ff8bd1; --logo-glow: rgba(255, 94, 194, 0.22); }
+.card-logo--graphic { --logo-accent: #c894ff; --logo-glow: rgba(162, 89, 255, 0.24); }
 .card-logo--web { --logo-accent: #55e6ff; --logo-glow: rgba(0, 217, 255, 0.24); }
 .card-logo--camera { --logo-accent: #ffc76b; --logo-glow: rgba(255, 176, 71, 0.22); }
 .card-logo--support { --logo-accent: #82f2c2; --logo-glow: rgba(55, 224, 157, 0.22); }
