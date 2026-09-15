@@ -2216,6 +2216,25 @@ a.row:hover,
   }
 }
 
+/* ---------- Scroll reveal ---------- */
+
+/* script.js holds content below the fold back and lets it rise in as it scrolls into view. It moves
+   with `translate` rather than `transform`, so each element's own hover transforms stay untouched. */
+.reveal.is-pending {
+  opacity: 0;
+}
+
+.reveal.is-entering {
+  animation: reveal-rise 0.8s var(--ease) var(--reveal-delay, 0ms) backwards;
+}
+
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+}
+
 /* ---------- Motion preferences ---------- */
 
 /* The deck and development card motion is part of the design and stays on; everything
