@@ -2,297 +2,237 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>About — Chel Gadores</title>
     <meta
       name="description"
       content="Meet Chel Gadores, a General Santos City-based photo editor, web developer, photographer, graphic artist, and IT technical support professional."
     />
-    <meta name="theme-color" content="#030712" />
+    <meta name="theme-color" content="#030818" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <title>About Chel Gadores</title>
-    <link rel="preload" href="assets/chel-portrait.png" as="image" />
-    <link
-      rel="preload"
-      href="assets/fonts/dm-serif-display-regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="assets/fonts/dm-serif-display-italic.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    <link rel="preload" href="assets/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin />
+    <script>
+      (function () {
+        var theme = "dark";
+        try { theme = localStorage.getItem("chel-theme") || "dark"; } catch (error) {}
+        if (theme === "system") theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="pages.css" />
-    <style>
-      @media (max-width: 540px) {
-        .about-page .portrait-orbit-card {
-          min-height: 450px;
-        }
-      }
-    </style>
   </head>
 
-  <body class="inner-body about-page">
-    <header class="inner-header portfolio-header">
-      <a class="wordmark portfolio-brand" href="index.html" aria-label="Chel, home">
-        <span class="portfolio-brand__name">chel</span><span class="portfolio-brand__dot" aria-hidden="true">.</span>
-      </a>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><symbol id="icon-adobe" viewBox="0 0 64 64"><path d="M24.5 17.5a14 14 0 1 0 0 28h15a14 14 0 1 0 0-28 14 14 0 0 0-12 6.8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="5"/><path d="M39.5 46.5a14 14 0 1 0 0-28h-15a14 14 0 1 0 0 28 14 14 0 0 0 12-6.8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="5" opacity=".72"/></symbol><symbol id="icon-canva" viewBox="0 0 64 64"><circle cx="32" cy="32" r="25" fill="none" stroke="currentColor" stroke-width="3"/><path d="M43.5 21.5c-3-3.1-7-4.7-11.1-4.2-8.1 1-13.6 9-12 17.1 1.4 7 7.6 12.3 14.7 12.3 4.4 0 8.1-1.9 10.8-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="5"/><path d="M43 24c-2.5-1.8-5.6-2.7-8.7-2.2-5.4.9-9.2 6-8.5 11.5.7 5.2 5.1 9.1 10.2 9.1 2.6 0 4.9-.9 6.7-2.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.3" opacity=".7"/></symbol><symbol id="icon-email" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M3.5 5.5h17v13h-17zM4.5 6.5 12 12.6l7.5-6.1"/></symbol><symbol id="icon-figma" viewBox="0 0 64 64"><path d="M21 8h11v16H21a8 8 0 0 1 0-16Z" fill="currentColor"/><path d="M32 8h11a8 8 0 0 1 0 16H32Z" fill="currentColor" opacity=".72"/><path d="M21 24h11v16H21a8 8 0 0 1 0-16Z" fill="currentColor" opacity=".82"/><circle cx="40" cy="32" r="8" fill="currentColor" opacity=".58"/><path d="M21 40h11v8a8 8 0 1 1-11-7.4Z" fill="currentColor" opacity=".68"/></symbol><symbol id="icon-gallery" viewBox="0 0 24 24"><rect x="3.25" y="4.25" width="17.5" height="15.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.3" cy="9" r="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m4.2 17.3 4.25-4.25 3.05 2.8 2.2-2.05 6.1 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="icon-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .8a11.2 11.2 0 0 0-3.54 21.83c.56.1.77-.24.77-.54v-2.14c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.39-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.54 0-1.22.44-2.22 1.16-3-.12-.28-.5-1.43.11-2.97 0 0 .95-.3 3.08 1.14a10.7 10.7 0 0 1 5.62 0c2.14-1.45 3.08-1.14 3.08-1.14.61 1.54.23 2.69.11 2.97.72.78 1.16 1.78 1.16 3 0 4.3-2.63 5.25-5.14 5.53.4.35.76 1.04.76 2.09v3.14c0 .3.2.65.78.54A11.2 11.2 0 0 0 12 .8Z"/></symbol><symbol id="icon-graphic" viewBox="0 0 64 64"><path d="M17 48 22 29 42 9l13 13-20 20-18 6Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="3"/><path d="m22 29 13 13M42 9l13 13M17 48l10-10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/><circle cx="18" cy="49" r="3" fill="currentColor"/><path d="M11 55h42" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3"/></symbol><symbol id="icon-home" viewBox="0 0 24 24"><path d="M3.75 10.7 12 3.8l8.25 6.9v8.05a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.1 20.25v-6.2h5.8v6.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol><symbol id="icon-javascript" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="48" rx="5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M32 24v20c0 5-3 8-8 8-4 0-6.8-2-8.3-5.1M48.5 28.5c-1.8-3.2-4.2-4.7-7.4-4.7-3.8 0-6.4 2.2-6.4 5.5 0 3.8 2.8 5.2 6.8 7 4.2 1.9 6.5 3.6 6.5 7.6 0 4.7-3.7 7.7-8.7 7.7-4.4 0-7.6-2.1-9.4-5.9" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.6"/></symbol><symbol id="icon-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M5.3 7.9H1.7V22h3.6V7.9ZM5.6 3.6a2.1 2.1 0 1 0-4.2 0 2.1 2.1 0 0 0 4.2 0ZM22.6 14c0-4.25-2.27-6.23-5.3-6.23-2.44 0-3.54 1.34-4.15 2.28V7.9H9.56V22h3.59v-6.98c0-1.84.35-3.63 2.64-3.63 2.26 0 2.29 2.11 2.29 3.75V22h3.59l.93-8Z"/></symbol><symbol id="icon-projects" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.3" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.3" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.3" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.3" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol><symbol id="icon-react" viewBox="0 0 64 64"><circle cx="32" cy="32" r="4.2" fill="currentColor"/><ellipse cx="32" cy="32" rx="25" ry="10" fill="none" stroke="currentColor" stroke-width="2.7"/><ellipse cx="32" cy="32" rx="25" ry="10" fill="none" stroke="currentColor" stroke-width="2.7" transform="rotate(60 32 32)"/><ellipse cx="32" cy="32" rx="25" ry="10" fill="none" stroke="currentColor" stroke-width="2.7" transform="rotate(120 32 32)"/></symbol><symbol id="icon-resume" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M7.5 3.5h7l4 4v13h-11zM14.5 3.5v4h4M10.5 12h5M10.5 15.5h5"/></symbol><symbol id="icon-typescript" viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="48" rx="5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M17 25h21M27.5 25v27M50 29c-1.8-3.4-4.3-5-7.6-5-3.9 0-6.6 2.3-6.6 5.7 0 3.9 2.9 5.4 7 7.2 4.4 2 6.7 3.8 6.7 7.9 0 4.8-3.8 7.9-9 7.9-4.5 0-7.8-2.2-9.7-6.1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.6"/></symbol><symbol id="icon-web" viewBox="0 0 64 64"><rect x="7" y="10" width="50" height="44" rx="7" fill="none" stroke="currentColor" stroke-width="3"/><path d="M7 22h50M14 16h.1M20 16h.1M26 16h.1M27 31l-8 6 8 6M37 31l8 6-8 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/></symbol><symbol id="icon-work" viewBox="0 0 24 24"><rect x="3.25" y="6.75" width="17.5" height="12.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 6.75v-1.2A1.8 1.8 0 0 1 10.3 3.75h3.4a1.8 1.8 0 0 1 1.8 1.8v1.2M3.4 11.2c3.05 1.4 5.92 2.1 8.6 2.1s5.55-.7 8.6-2.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M10.75 12.2h2.5v2.2h-2.5z" fill="currentColor"/></symbol></svg>
 
-      <nav class="inner-nav portfolio-nav" aria-label="Primary navigation">
-        <a class="portfolio-nav__link portfolio-nav__link--home" href="index.html" aria-label="Home"><svg aria-hidden="true"><use href="assets/nav-icons.svg#home"></use></svg><span class="portfolio-nav__label">Home</span></a>
-        <span class="portfolio-nav__divider" aria-hidden="true"></span>
-        <a class="portfolio-nav__link" href="index.html#about" aria-current="page"><svg aria-hidden="true"><use href="assets/nav-icons.svg#about"></use></svg><span class="portfolio-nav__label">About</span></a>
-        <a class="portfolio-nav__link" href="work.html"><svg aria-hidden="true"><use href="assets/nav-icons.svg#work"></use></svg><span class="portfolio-nav__label">Work</span></a>
-        <a class="portfolio-nav__link" href="projects.html"><svg aria-hidden="true"><use href="assets/nav-icons.svg#projects"></use></svg><span class="portfolio-nav__label">Projects</span></a>
-        <a class="portfolio-nav__link" href="gallery.html"><svg aria-hidden="true"><use href="assets/nav-icons.svg#gallery"></use></svg><span class="portfolio-nav__label">Gallery</span></a>
-      </nav>
-
-      <div class="header-tools portfolio-header__tools">
-        <button class="command-trigger" type="button" data-command-trigger aria-label="Open quick navigation">Navigate&nbsp; <span aria-hidden="true">Ctrl K</span></button>
-        <button class="motion-toggle" type="button" data-star-toggle aria-label="Reduce star field" aria-pressed="false"><span aria-hidden="true"></span></button>
+    <nav class="sidebar" aria-label="Primary">
+      <a class="brand" href="index.html">Chel Gadores<span>.</span></a>
+      <div class="side-nav">
+        <div class="side-nav__group">
+          <a class="side-link" href="index.html"><svg aria-hidden="true"><use href="#icon-home"></use></svg>Home</a>
+          <a class="side-link" href="work.html"><svg aria-hidden="true"><use href="#icon-work"></use></svg>Work</a>
+          <a class="side-link" href="projects.html"><svg aria-hidden="true"><use href="#icon-projects"></use></svg>Projects</a>
+          <a class="side-link" href="gallery.html"><svg aria-hidden="true"><use href="#icon-gallery"></use></svg>Gallery</a>
+        </div>
+        <div class="side-nav__rule"></div>
+        <div class="side-nav__group">
+          <span class="side-nav__label">Tracks</span>
+          <a class="side-link" href="projects.html#development"><svg aria-hidden="true"><use href="#icon-web"></use></svg>Development</a>
+          <a class="side-link" href="projects.html#editing"><svg aria-hidden="true"><use href="#icon-graphic"></use></svg>Image editing</a>
+        </div>
+        <div class="side-nav__rule"></div>
+        <div class="side-nav__group">
+          <a class="side-link" href="about.html" aria-current="page">About</a>
+          <a class="side-link" href="work.html">Experience</a>
+          <a class="side-link" href="#skills">Toolkit</a>
+          <a class="side-link" href="#studies">Education</a>
+          <a class="side-link" href="index.html#contact">Contact</a>
+        </div>
       </div>
+      <button class="command-hint" type="button" data-command-open>
+        Quick nav <span class="command-hint__keys"><kbd data-mod-key>Ctrl</kbd>+<kbd>K</kbd></span>
+      </button>
+      <div class="sidebar__foot">
+        <div class="controls">
+          <div class="theme-switch" role="group" aria-label="Color theme">
+            <button class="theme-opt" type="button" data-theme-set="system" aria-label="System theme" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8 20h8M12 16v4" /></svg></button>
+            <button class="theme-opt" type="button" data-theme-set="light" aria-label="Light theme" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg></button>
+            <button class="theme-opt" type="button" data-theme-set="dark" aria-label="Deep blue theme" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg></button>
+          </div>
+          <button class="sound-toggle" type="button" data-sound-toggle data-cuelume-silent aria-pressed="false" aria-label="Enable interface sounds" title="Sounds off"><svg data-sound-on viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4z" /><path d="M15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10" /></svg><svg data-sound-off viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4z" /><path d="m16 9.5 5 5M21 9.5l-5 5" /></svg></button>
+        </div>
+        <p class="sidebar__note">For editing &amp; dev work, reach me at</p>
+        <a class="sidebar__email" href="mailto:chellegdrs@gmail.com"><svg aria-hidden="true"><use href="#icon-email"></use></svg>chellegdrs@gmail.com</a>
+      </div>
+    </nav>
+
+    <header class="topbar">
+      <a class="brand" href="index.html">Chel Gadores<span>.</span></a>
+      <button class="icon-button" type="button" data-menu-open aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16" /></svg>
+      </button>
     </header>
 
-    <div class="landing inner-page">
-      <canvas class="star-field" aria-hidden="true"></canvas>
-      <div class="aurora" aria-hidden="true"></div>
-      <div class="dot-grid dot-grid--left" aria-hidden="true"></div>
-      <div class="dot-grid dot-grid--right" aria-hidden="true"></div>
-
-      <main class="page-main" id="main-content">
-        <div class="inner-shell">
-          <section class="page-hero" aria-labelledby="about-title">
-            <div class="reveal">
-              <p class="page-kicker">01 / About</p>
-              <h1 class="page-title" id="about-title">
-                <span>Meet Chel</span>
-                <em>Gadores.</em>
-              </h1>
-              <p class="page-lead">
-                A General Santos City-based photo editor, web developer, and photographer with a passion for
-                design, layout, and software development. Chel is a Computer Engineering graduate working across
-                creative and technical disciplines.
-              </p>
-              <div class="action-row">
-                <a class="page-button page-button--primary" href="mailto:iam.chel1021@gmail.com">
-                  Email Chel <span aria-hidden="true">&#8599;</span>
-                </a>
-                <a
-                  class="page-button"
-                  href="assets/live/profile/gadores-resume.pdf"
-                  download="gadores-resume.pdf"
-                >
-                  Download resume <span aria-hidden="true">&#8595;</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="glass-panel portrait-orbit-card reveal" role="group" aria-label="Portrait and areas of practice">
-              <div class="orbit-stage">
-                <div class="orbit-ring" aria-hidden="true"></div>
-                <div class="orbit-core" aria-hidden="true"></div>
-                <img
-                  class="about-portrait"
-                  src="assets/chel-portrait.png"
-                  alt="Chel Gadores wearing black glasses and a dark blazer"
-                  width="1254"
-                  height="1254"
-                />
-                <button class="orbit-tag orbit-tag--one" type="button" data-orbit-content="Detailed retouching, cleanup, and tonal refinement." data-energy="96">Photo editing</button>
-                <button class="orbit-tag orbit-tag--two" type="button" data-orbit-content="Responsive interfaces and practical browser applications." data-energy="92">Web development</button>
-                <button class="orbit-tag orbit-tag--three" type="button" data-orbit-content="Light, place, and image-led visual storytelling." data-energy="88">Photography</button>
-                <button class="orbit-tag orbit-tag--four" type="button" data-orbit-content="Editorial composition and clear visual hierarchy." data-energy="94">Design &amp; layout</button>
-              </div>
-            </div>
-          </section>
-
-          <div class="metric-rail reveal" aria-label="Profile overview">
-            <div class="metric">
-              <strong>06</strong>
-              <span>Work entries</span>
-            </div>
-            <div class="metric">
-              <strong>06</strong>
-              <span>Technical skills</span>
-            </div>
-            <div class="metric">
-              <strong>02</strong>
-              <span>Languages</span>
-            </div>
-            <div class="metric">
-              <strong>02</strong>
-              <span>Study records</span>
-            </div>
-          </div>
-
-          <section class="page-section" aria-labelledby="story-title">
-            <div class="section-heading reveal">
-              <p class="panel-label">Profile signal</p>
-              <h2 class="section-title" id="story-title">A creative and <em>technical</em> practice.</h2>
-              <p class="section-intro">
-                Chel’s live portfolio describes a practice spanning visual design, software, photography, and
-                hands-on technical support.
-              </p>
-            </div>
-
-            <div class="story-grid">
-              <nav class="glass-panel story-index reveal" aria-label="About page chapters">
-                <a href="#base">01 / Base</a>
-                <a href="#practice">02 / Practice</a>
-                <a href="#direction">03 / Direction</a>
-              </nav>
-
-              <div class="story-copy">
-                <article class="story-chapter reveal" id="base">
-                  <p class="micro-label">01 / Base</p>
-                  <h3>General Santos City, Philippines</h3>
-                  <p>
-                    Chel is based in General Santos City in the Asia/Manila time zone. She speaks English and
-                    Tagalog.
-                  </p>
-                </article>
-
-                <article class="story-chapter reveal" id="practice">
-                  <p class="micro-label">02 / Practice</p>
-                  <h3>Images, interfaces, and support</h3>
-                  <p>
-                    Her portfolio identifies her as a layout and graphic artist, developer, and IT technical
-                    support professional. It also highlights photo editing, photography, web development, design,
-                    layout, and software development as core interests.
-                  </p>
-                </article>
-
-                <blockquote class="pull-quote reveal">
-                  “I try to find fun experiences and useful information in life.”
-                </blockquote>
-
-                <article class="story-chapter reveal" id="direction">
-                  <p class="micro-label">03 / Direction</p>
-                  <h3>Ready to contribute</h3>
-                  <p>
-                    As a Computer Engineering graduate, Chel aspires to work in an environment where she can
-                    contribute and help address difficulties.
-                  </p>
-                </article>
-              </div>
-            </div>
-          </section>
-
-          <section class="page-section page-section--compact" aria-labelledby="skills-title">
-            <div class="section-heading reveal">
-              <p class="panel-label">Capability map</p>
-              <h2 class="section-title" id="skills-title">Technical <em>skills.</em></h2>
-              <p class="section-intro">
-                Tools and technologies named on Chel’s live portfolio, presented as an evolving creative toolkit.
-              </p>
-            </div>
-
-            <div class="logo-showcase logo-showcase--tools" aria-label="Design and development tools">
-              <span class="logo-item reveal" role="img" aria-label="Adobe Creative Suite" title="Adobe Creative Suite"><span class="card-logo card-logo--adobe" aria-hidden="true"><svg focusable="false"><use href="assets/card-logos.svg#adobe"></use></svg></span></span>
-              <span class="logo-item reveal" role="img" aria-label="Canva" title="Canva"><span class="card-logo card-logo--canva" aria-hidden="true"><svg focusable="false"><use href="assets/card-logos.svg#canva"></use></svg></span></span>
-              <span class="logo-item reveal" role="img" aria-label="Figma" title="Figma"><span class="card-logo card-logo--figma" aria-hidden="true"><svg focusable="false"><use href="assets/card-logos.svg#figma"></use></svg></span></span>
-              <span class="logo-item reveal" role="img" aria-label="JavaScript" title="JavaScript"><span class="card-logo card-logo--javascript" aria-hidden="true"><svg focusable="false"><use href="assets/card-logos.svg#javascript"></use></svg></span></span>
-              <span class="logo-item reveal" role="img" aria-label="ReactJS" title="ReactJS"><span class="card-logo card-logo--react" aria-hidden="true"><svg focusable="false"><use href="assets/card-logos.svg#react"></use></svg></span></span>
-              <span class="logo-item reveal" role="img" aria-label="TypeScript" title="TypeScript"><span class="card-logo card-logo--typescript" aria-hidden="true"><svg focusable="false"><use href="assets/card-logos.svg#typescript"></use></svg></span></span>
-            </div>
-          </section>
-
-          <section class="page-section" aria-labelledby="experience-title">
-            <div class="section-heading reveal">
-              <p class="panel-label">Career timeline</p>
-              <h2 class="section-title" id="experience-title">Work <em>experience.</em></h2>
-              <p class="section-intro">
-                A factual timeline of the roles and dates published on Chel’s live portfolio.
-              </p>
-            </div>
-
-            <div class="section-frame reveal">
-              <p class="panel-label">Experience / 2020–present</p>
-              <div class="career-timeline">
-                <article class="timeline-entry">
-                  <p class="timeline-date">2026 — Present</p>
-                  <div class="timeline-content">
-                    <h3>MICEI General Santos City</h3>
-                    <p class="timeline-role">IT Technical Support</p>
-                  </div>
-                </article>
-                <article class="timeline-entry">
-                  <p class="timeline-date">2024 — Present</p>
-                  <div class="timeline-content">
-                    <h3>Upwork</h3>
-                    <p class="timeline-role">Freelancer</p>
-                  </div>
-                </article>
-                <article class="timeline-entry">
-                  <p class="timeline-date">2024 — Present</p>
-                  <div class="timeline-content">
-                    <h3>Self-Employed</h3>
-                    <p class="timeline-role">Crafter</p>
-                  </div>
-                </article>
-                <article class="timeline-entry">
-                  <p class="timeline-date">2024 — 2025</p>
-                  <div class="timeline-content">
-                    <h3>Thai Student</h3>
-                    <p class="timeline-role">Tutor</p>
-                  </div>
-                </article>
-                <article class="timeline-entry">
-                  <p class="timeline-date">April — May 2024</p>
-                  <div class="timeline-content">
-                    <h3>Internship Trainee</h3>
-                    <p class="timeline-role">Technical Assistant</p>
-                  </div>
-                </article>
-                <article class="timeline-entry">
-                  <p class="timeline-date">Nov 2020 — Feb 2021</p>
-                  <div class="timeline-content">
-                    <h3>Hiwinstar Restaurant</h3>
-                    <p class="timeline-role">Service Crew</p>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </section>
-
-          <section class="page-section page-section--compact" aria-labelledby="studies-title">
-            <div class="section-heading reveal">
-              <p class="panel-label">Studies</p>
-              <h2 class="section-title" id="studies-title">Learning and <em>leadership.</em></h2>
-              <p class="section-intro">
-                Chel’s academic record combines computer engineering, technical servicing, and student leadership.
-              </p>
-            </div>
-
-            <div class="studies-grid">
-              <article class="study-card reveal">
-                <p class="card-index">01 / Computer Engineering</p>
-                <h3>Holy Trinity College of General Santos City</h3>
-                <p>
-                  Studied Computer Engineering and graduated with a Leadership Award after leading the college’s
-                  engineering program in the Institute of Computer Engineers of the Philippines Student Edition
-                  (ICpEP.se) for two consecutive years.
-                </p>
-              </article>
-              <article class="study-card reveal">
-                <p class="card-index">02 / TVL</p>
-                <h3>The Heritage Academy of the Philippines</h3>
-                <p>Studied Computer Systems Servicing — TVL and graduated as class valedictorian.</p>
-              </article>
-            </div>
-          </section>
-
+    <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+      <div class="mobile-nav__head">
+        <a class="brand" href="index.html">Chel Gadores<span>.</span></a>
+        <button class="icon-button" type="button" data-menu-close aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+        </button>
+      </div>
+      <nav class="mobile-nav__body" aria-label="Mobile">
+        <div class="mobile-nav__group">
+          <a class="side-link" href="index.html"><svg aria-hidden="true"><use href="#icon-home"></use></svg>Home</a>
+          <a class="side-link" href="work.html"><svg aria-hidden="true"><use href="#icon-work"></use></svg>Work</a>
+          <a class="side-link" href="projects.html"><svg aria-hidden="true"><use href="#icon-projects"></use></svg>Projects</a>
+          <a class="side-link" href="gallery.html"><svg aria-hidden="true"><use href="#icon-gallery"></use></svg>Gallery</a>
         </div>
-      </main>
-
-      <footer class="site-footer"><div class="site-footer__inner"><p class="site-footer__copy"><span>© <span data-current-year>2026</span> /</span><strong>Chel Gadores</strong></p><nav class="site-footer__links" aria-label="Contact and social links"><a class="footer-icon-link" href="https://github.com/Wysi-Chel" target="_blank" rel="noreferrer" aria-label="GitHub" data-tooltip="GitHub"><svg aria-hidden="true"><use href="assets/footer-icons.svg#github"></use></svg></a><a class="footer-icon-link" href="https://www.linkedin.com/in/rachelle-gadores-589840248/" target="_blank" rel="noreferrer" aria-label="LinkedIn" data-tooltip="LinkedIn"><svg aria-hidden="true"><use href="assets/footer-icons.svg#linkedin"></use></svg></a><a class="footer-icon-link" href="mailto:iam.chel1021@gmail.com" aria-label="Email" data-tooltip="Email"><svg aria-hidden="true"><use href="assets/footer-icons.svg#email"></use></svg></a><a class="footer-icon-link" href="assets/live/profile/gadores-resume.pdf" download="gadores-resume.pdf" aria-label="Download résumé" data-tooltip="Résumé"><svg aria-hidden="true"><use href="assets/footer-icons.svg#resume"></use></svg></a></nav></div></footer>
+        <div class="side-nav__rule"></div>
+        <div class="mobile-nav__group">
+          <span class="side-nav__label">Tracks</span>
+          <a class="side-link" href="projects.html#development"><svg aria-hidden="true"><use href="#icon-web"></use></svg>Development</a>
+          <a class="side-link" href="projects.html#editing"><svg aria-hidden="true"><use href="#icon-graphic"></use></svg>Image editing</a>
+        </div>
+        <div class="side-nav__rule"></div>
+        <div class="mobile-nav__group">
+          <div class="controls">
+            <div class="theme-switch" role="group" aria-label="Color theme">
+              <button class="theme-opt" type="button" data-theme-set="system" aria-label="System theme" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8 20h8M12 16v4" /></svg></button>
+              <button class="theme-opt" type="button" data-theme-set="light" aria-label="Light theme" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg></button>
+              <button class="theme-opt" type="button" data-theme-set="dark" aria-label="Deep blue theme" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg></button>
+            </div>
+            <button class="sound-toggle" type="button" data-sound-toggle data-cuelume-silent aria-pressed="false" aria-label="Enable interface sounds" title="Sounds off"><svg data-sound-on viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4z" /><path d="M15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10" /></svg><svg data-sound-off viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4z" /><path d="m16 9.5 5 5M21 9.5l-5 5" /></svg></button>
+          </div>
+          <div>
+            <p class="sidebar__note">For editing &amp; dev work, reach me at</p>
+            <a class="sidebar__email" href="mailto:chellegdrs@gmail.com">chellegdrs@gmail.com</a>
+          </div>
+        </div>
+      </nav>
     </div>
 
+    <main class="main" id="main">
+      <div class="container">
+        <header class="page-head">
+          <p class="crumb"><a href="index.html">~</a> / about</p>
+          <h1 class="page-title">Meet Chel Gadores.</h1>
+          <p class="page-lead">
+            A General Santos City-based photo editor, web developer, and photographer with a passion for design,
+            layout, and software development. Chel is a Computer Engineering graduate working across creative and
+            technical disciplines.
+          </p>
+          <div class="actions" style="margin-top: 1.75rem">
+            <a class="button" href="mailto:chellegdrs@gmail.com">Email Chel</a>
+            <a class="button button--ghost" href="assets/live/profile/gadores-resume.pdf" download="gadores-resume.pdf" target="_blank">Download résumé</a>
+          </div>
+        </header>
+
+        <section class="stats" aria-label="Profile overview">
+          <a class="stat" href="work.html"><div class="stat__value">06</div><div class="stat__label">work entries</div></a>
+          <a class="stat" href="#skills"><div class="stat__value">06</div><div class="stat__label">technical skills</div></a>
+          <div class="stat"><div class="stat__value">02</div><div class="stat__label">languages</div></div>
+          <a class="stat" href="#studies"><div class="stat__value">02</div><div class="stat__label">study records</div></a>
+        </section>
+
+        <section class="section" id="base" aria-labelledby="base-title">
+          <div class="section-head">
+            <h2 class="section-title" id="base-title">01 — base</h2>
+          </div>
+          <h3 class="card-title">General Santos City, Philippines</h3>
+          <p class="prose" style="margin-top: 0.5rem">
+            Chel is based in General Santos City in the Asia/Manila time zone. She speaks English and Tagalog.
+          </p>
+        </section>
+
+        <section class="section" id="practice" aria-labelledby="practice-title">
+          <div class="section-head">
+            <h2 class="section-title" id="practice-title">02 — practice</h2>
+          </div>
+          <h3 class="card-title">Images, interfaces, and support</h3>
+          <p class="prose" style="margin-top: 0.5rem">
+            Her portfolio identifies her as a layout and graphic artist, developer, and IT technical support
+            professional. It also highlights photo editing, photography, web development, design, layout, and
+            software development as core interests.
+          </p>
+          <blockquote class="quote">“I try to find fun experiences and useful information in life.”</blockquote>
+          <div class="rows rows--hover">
+            <div class="row row--split"><span class="row__index">01</span><span class="row__title">Photo editing</span><span class="row__meta">Detailed retouching, cleanup, tonal refinement</span></div>
+            <div class="row row--split"><span class="row__index">02</span><span class="row__title">Web development</span><span class="row__meta">Responsive interfaces, practical browser apps</span></div>
+            <div class="row row--split"><span class="row__index">03</span><span class="row__title">Photography</span><span class="row__meta">Light, place, image-led visual storytelling</span></div>
+            <div class="row row--split"><span class="row__index">04</span><span class="row__title">Design &amp; layout</span><span class="row__meta">Editorial composition, clear visual hierarchy</span></div>
+          </div>
+        </section>
+
+        <section class="section" id="direction" aria-labelledby="direction-title">
+          <div class="section-head">
+            <h2 class="section-title" id="direction-title">03 — direction</h2>
+          </div>
+          <h3 class="card-title">Ready to contribute</h3>
+          <p class="prose" style="margin-top: 0.5rem">
+            As a Computer Engineering graduate, Chel aspires to work in an environment where she can contribute and
+            help address difficulties.
+          </p>
+        </section>
+
+        <section class="section" id="skills" aria-labelledby="skills-title">
+          <div class="section-head">
+            <h2 class="section-title" id="skills-title">04 — technical skills</h2>
+          </div>
+          <h3 class="subhead" style="margin-top: 0">Editing &amp; design</h3>
+          <div class="chips">
+            <span class="chip"><svg aria-hidden="true"><use href="#icon-adobe"></use></svg>Adobe Creative Suite</span>
+            <span class="chip"><svg aria-hidden="true"><use href="#icon-canva"></use></svg>Canva</span>
+            <span class="chip"><svg aria-hidden="true"><use href="#icon-figma"></use></svg>Figma</span>
+          </div>
+          <h3 class="subhead">Development</h3>
+          <div class="chips">
+            <span class="chip"><svg aria-hidden="true"><use href="#icon-javascript"></use></svg>JavaScript</span>
+            <span class="chip"><svg aria-hidden="true"><use href="#icon-react"></use></svg>ReactJS</span>
+            <span class="chip"><svg aria-hidden="true"><use href="#icon-typescript"></use></svg>TypeScript</span>
+          </div>
+        </section>
+
+        <section class="section" id="studies" aria-labelledby="studies-title">
+          <div class="section-head">
+            <h2 class="section-title" id="studies-title">05 — studies</h2>
+          </div>
+          <div class="cards cards--2">
+            <article class="soft-card">
+              <p class="soft-card__kicker">Computer Engineering</p>
+              <h3>Holy Trinity College of General Santos City</h3>
+              <p>
+                Studied Computer Engineering and graduated with a Leadership Award after leading the college’s
+                engineering program in the Institute of Computer Engineers of the Philippines Student Edition
+                (ICpEP.se) for two consecutive years.
+              </p>
+            </article>
+            <article class="soft-card">
+              <p class="soft-card__kicker">TVL</p>
+              <h3>The Heritage Academy of the Philippines</h3>
+              <p>Studied Computer Systems Servicing — TVL and graduated as class valedictorian.</p>
+            </article>
+          </div>
+          <div class="actions" style="margin-top: 1.75rem">
+            <a class="button" href="work.html">View career →</a>
+            <a class="button button--ghost" href="projects.html">Explore projects →</a>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <p>© <span data-year>2026</span> Chel Gadores</p>
+          <nav class="footer__links" aria-label="Contact and social links">
+            <a href="https://github.com/Wysi-Chel" target="_blank" rel="noreferrer" aria-label="GitHub"><svg aria-hidden="true"><use href="#icon-github"></use></svg></a>
+            <a href="https://www.linkedin.com/in/rachelle-gadores-589840248/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><svg aria-hidden="true"><use href="#icon-linkedin"></use></svg></a>
+            <a href="mailto:chellegdrs@gmail.com" aria-label="Email"><svg aria-hidden="true"><use href="#icon-email"></use></svg></a>
+            <a href="assets/live/profile/gadores-resume.pdf" download="gadores-resume.pdf" aria-label="Download résumé"><svg aria-hidden="true"><use href="#icon-resume"></use></svg></a>
+          </nav>
+        </footer>
+      </div>
+    </main>
+
     <script src="script.js"></script>
-    <script src="pages.js"></script>
+    <script src="assets/vendor/cuelume.js"></script>
+    <script src="sounds.js"></script>
   </body>
 </html>

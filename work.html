@@ -2,210 +2,254 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Chel Gadores' published career timeline, current practice, and creative disciplines."
-    />
-    <meta name="theme-color" content="#030712" />
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Work — Chel Gadores</title>
-    <link
-      rel="preload"
-      href="assets/fonts/dm-serif-display-regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="assets/fonts/dm-serif-display-italic.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    <meta name="description" content="Chel Gadores' career timeline: IT technical support, freelance design, tutoring, and creative practice." />
+    <meta name="theme-color" content="#030818" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="assets/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin />
+    <script>
+      (function () {
+        var theme = "dark";
+        try { theme = localStorage.getItem("chel-theme") || "dark"; } catch (error) {}
+        if (theme === "system") theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="pages.css" />
-    <style>
-      @media (max-width: 540px) {
-        .work-page .page-hero .orbit-tag--three,
-        .work-page .page-hero .orbit-tag--four {
-          bottom: 37%;
-        }
-      }
-    </style>
   </head>
 
-  <body class="inner-body work-page">
-    <header class="inner-header portfolio-header">
-      <a class="wordmark portfolio-brand" href="index.html" aria-label="Chel, home">
-        <span class="portfolio-brand__name">chel</span><span class="portfolio-brand__dot" aria-hidden="true">.</span>
-      </a>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><symbol id="icon-email" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M3.5 5.5h17v13h-17zM4.5 6.5 12 12.6l7.5-6.1"/></symbol><symbol id="icon-gallery" viewBox="0 0 24 24"><rect x="3.25" y="4.25" width="17.5" height="15.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.3" cy="9" r="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m4.2 17.3 4.25-4.25 3.05 2.8 2.2-2.05 6.1 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="icon-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .8a11.2 11.2 0 0 0-3.54 21.83c.56.1.77-.24.77-.54v-2.14c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.39-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.54 0-1.22.44-2.22 1.16-3-.12-.28-.5-1.43.11-2.97 0 0 .95-.3 3.08 1.14a10.7 10.7 0 0 1 5.62 0c2.14-1.45 3.08-1.14 3.08-1.14.61 1.54.23 2.69.11 2.97.72.78 1.16 1.78 1.16 3 0 4.3-2.63 5.25-5.14 5.53.4.35.76 1.04.76 2.09v3.14c0 .3.2.65.78.54A11.2 11.2 0 0 0 12 .8Z"/></symbol><symbol id="icon-graphic" viewBox="0 0 64 64"><path d="M17 48 22 29 42 9l13 13-20 20-18 6Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="3"/><path d="m22 29 13 13M42 9l13 13M17 48l10-10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/><circle cx="18" cy="49" r="3" fill="currentColor"/><path d="M11 55h42" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3"/></symbol><symbol id="icon-home" viewBox="0 0 24 24"><path d="M3.75 10.7 12 3.8l8.25 6.9v8.05a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.1 20.25v-6.2h5.8v6.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol><symbol id="icon-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M5.3 7.9H1.7V22h3.6V7.9ZM5.6 3.6a2.1 2.1 0 1 0-4.2 0 2.1 2.1 0 0 0 4.2 0ZM22.6 14c0-4.25-2.27-6.23-5.3-6.23-2.44 0-3.54 1.34-4.15 2.28V7.9H9.56V22h3.59v-6.98c0-1.84.35-3.63 2.64-3.63 2.26 0 2.29 2.11 2.29 3.75V22h3.59l.93-8Z"/></symbol><symbol id="icon-projects" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.3" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.3" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.3" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.3" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol><symbol id="icon-resume" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M7.5 3.5h7l4 4v13h-11zM14.5 3.5v4h4M10.5 12h5M10.5 15.5h5"/></symbol><symbol id="icon-web" viewBox="0 0 64 64"><rect x="7" y="10" width="50" height="44" rx="7" fill="none" stroke="currentColor" stroke-width="3"/><path d="M7 22h50M14 16h.1M20 16h.1M26 16h.1M27 31l-8 6 8 6M37 31l8 6-8 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/></symbol><symbol id="icon-work" viewBox="0 0 24 24"><rect x="3.25" y="6.75" width="17.5" height="12.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 6.75v-1.2A1.8 1.8 0 0 1 10.3 3.75h3.4a1.8 1.8 0 0 1 1.8 1.8v1.2M3.4 11.2c3.05 1.4 5.92 2.1 8.6 2.1s5.55-.7 8.6-2.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M10.75 12.2h2.5v2.2h-2.5z" fill="currentColor"/></symbol></svg>
 
-      <nav class="inner-nav portfolio-nav" aria-label="Primary navigation">
-        <a class="portfolio-nav__link portfolio-nav__link--home" href="index.html" aria-label="Home"><svg aria-hidden="true"><use href="assets/nav-icons.svg#home"></use></svg><span class="portfolio-nav__label">Home</span></a>
-        <span class="portfolio-nav__divider" aria-hidden="true"></span>
-        <a class="portfolio-nav__link" href="index.html#about"><svg aria-hidden="true"><use href="assets/nav-icons.svg#about"></use></svg><span class="portfolio-nav__label">About</span></a>
-        <a class="portfolio-nav__link" href="work.html" aria-current="page"><svg aria-hidden="true"><use href="assets/nav-icons.svg#work"></use></svg><span class="portfolio-nav__label">Work</span></a>
-        <a class="portfolio-nav__link" href="projects.html"><svg aria-hidden="true"><use href="assets/nav-icons.svg#projects"></use></svg><span class="portfolio-nav__label">Projects</span></a>
-        <a class="portfolio-nav__link" href="gallery.html"><svg aria-hidden="true"><use href="assets/nav-icons.svg#gallery"></use></svg><span class="portfolio-nav__label">Gallery</span></a>
-      </nav>
-
-      <div class="header-tools portfolio-header__tools">
-        <button class="command-trigger" type="button" data-command-trigger aria-label="Open quick navigation">Navigate&nbsp; <span aria-hidden="true">Ctrl K</span></button>
-        <button class="motion-toggle" type="button" data-star-toggle aria-label="Reduce star field" aria-pressed="false"><span aria-hidden="true"></span></button>
+    <nav class="sidebar" aria-label="Primary">
+      <a class="brand" href="index.html">Chel Gadores<span>.</span></a>
+      <div class="side-nav">
+        <div class="side-nav__group">
+          <a class="side-link" href="index.html"><svg aria-hidden="true"><use href="#icon-home"></use></svg>Home</a>
+          <a class="side-link" href="work.html" aria-current="page"><svg aria-hidden="true"><use href="#icon-work"></use></svg>Work</a>
+          <a class="side-link" href="projects.html"><svg aria-hidden="true"><use href="#icon-projects"></use></svg>Projects</a>
+          <a class="side-link" href="gallery.html"><svg aria-hidden="true"><use href="#icon-gallery"></use></svg>Gallery</a>
+        </div>
+        <div class="side-nav__rule"></div>
+        <div class="side-nav__group">
+          <span class="side-nav__label">Tracks</span>
+          <a class="side-link" href="projects.html#development"><svg aria-hidden="true"><use href="#icon-web"></use></svg>Development</a>
+          <a class="side-link" href="projects.html#editing"><svg aria-hidden="true"><use href="#icon-graphic"></use></svg>Image editing</a>
+        </div>
+        <div class="side-nav__rule"></div>
+        <div class="side-nav__group">
+          <a class="side-link" href="about.html">About</a>
+          <a class="side-link" href="#timeline">Experience</a>
+          <a class="side-link" href="index.html#toolkit">Toolkit</a>
+          <a class="side-link" href="index.html#education">Education</a>
+          <a class="side-link" href="index.html#contact">Contact</a>
+        </div>
       </div>
+      <button class="command-hint" type="button" data-command-open>
+        Quick nav <span class="command-hint__keys"><kbd data-mod-key>Ctrl</kbd>+<kbd>K</kbd></span>
+      </button>
+      <div class="sidebar__foot">
+        <div class="controls">
+          <div class="theme-switch" role="group" aria-label="Color theme">
+            <button class="theme-opt" type="button" data-theme-set="system" aria-label="System theme" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8 20h8M12 16v4" /></svg></button>
+            <button class="theme-opt" type="button" data-theme-set="light" aria-label="Light theme" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg></button>
+            <button class="theme-opt" type="button" data-theme-set="dark" aria-label="Deep blue theme" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg></button>
+          </div>
+          <button class="sound-toggle" type="button" data-sound-toggle data-cuelume-silent aria-pressed="false" aria-label="Enable interface sounds" title="Sounds off"><svg data-sound-on viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4z" /><path d="M15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10" /></svg><svg data-sound-off viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4z" /><path d="m16 9.5 5 5M21 9.5l-5 5" /></svg></button>
+        </div>
+        <p class="sidebar__note">For editing &amp; dev work, reach me at</p>
+        <a class="sidebar__email" href="mailto:chellegdrs@gmail.com"><svg aria-hidden="true"><use href="#icon-email"></use></svg>chellegdrs@gmail.com</a>
+      </div>
+    </nav>
+
+    <header class="topbar">
+      <a class="brand" href="index.html">Chel Gadores<span>.</span></a>
+      <button class="icon-button" type="button" data-menu-open aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16" /></svg>
+      </button>
     </header>
 
-    <div class="landing inner-page">
-      <canvas class="star-field" aria-hidden="true"></canvas>
-      <div class="aurora" aria-hidden="true"></div>
-      <div class="dot-grid dot-grid--left" aria-hidden="true"></div>
-      <div class="dot-grid dot-grid--right" aria-hidden="true"></div>
-
-      <main class="page-main" id="main-content">
-        <section class="inner-shell page-hero page-hero--wide" aria-labelledby="work-title">
-          <div class="reveal">
-            <p class="page-kicker">02 / Career archive</p>
-            <h1 class="page-title" id="work-title">
-              <span>Work in</span>
-              <em>motion.</em>
-            </h1>
-            <p class="page-lead">
-              From service and tutoring to independent
-              creative practice and technical support.
-            </p>
-            <div class="action-row">
-              <a class="page-button page-button--primary" href="#career-timeline">
-                View timeline <span aria-hidden="true">↓</span>
-              </a>
-              <a class="page-button" href="projects.html">
-                Explore projects <span aria-hidden="true">→</span>
-              </a>
+    <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+      <div class="mobile-nav__head">
+        <a class="brand" href="index.html">Chel Gadores<span>.</span></a>
+        <button class="icon-button" type="button" data-menu-close aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+        </button>
+      </div>
+      <nav class="mobile-nav__body" aria-label="Mobile">
+        <div class="mobile-nav__group">
+          <a class="side-link" href="index.html"><svg aria-hidden="true"><use href="#icon-home"></use></svg>Home</a>
+          <a class="side-link" href="work.html" aria-current="page"><svg aria-hidden="true"><use href="#icon-work"></use></svg>Work</a>
+          <a class="side-link" href="projects.html"><svg aria-hidden="true"><use href="#icon-projects"></use></svg>Projects</a>
+          <a class="side-link" href="gallery.html"><svg aria-hidden="true"><use href="#icon-gallery"></use></svg>Gallery</a>
+        </div>
+        <div class="side-nav__rule"></div>
+        <div class="mobile-nav__group">
+          <span class="side-nav__label">Tracks</span>
+          <a class="side-link" href="projects.html#development"><svg aria-hidden="true"><use href="#icon-web"></use></svg>Development</a>
+          <a class="side-link" href="projects.html#editing"><svg aria-hidden="true"><use href="#icon-graphic"></use></svg>Image editing</a>
+        </div>
+        <div class="side-nav__rule"></div>
+        <div class="mobile-nav__group">
+          <div class="controls">
+            <div class="theme-switch" role="group" aria-label="Color theme">
+              <button class="theme-opt" type="button" data-theme-set="system" aria-label="System theme" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8 20h8M12 16v4" /></svg></button>
+              <button class="theme-opt" type="button" data-theme-set="light" aria-label="Light theme" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg></button>
+              <button class="theme-opt" type="button" data-theme-set="dark" aria-label="Deep blue theme" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg></button>
             </div>
+            <button class="sound-toggle" type="button" data-sound-toggle data-cuelume-silent aria-pressed="false" aria-label="Enable interface sounds" title="Sounds off"><svg data-sound-on viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4z" /><path d="M15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10" /></svg><svg data-sound-off viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4z" /><path d="m16 9.5 5 5M21 9.5l-5 5" /></svg></button>
           </div>
-
-          <div
-            class="glass-panel orbit-stage reveal"
-            role="group"
-            aria-label="An orbital work signal connecting Chel's current technical support, freelance, and creative practice"
-          >
-            <div class="orbit-ring" aria-hidden="true"></div>
-            <span class="orbit-core" aria-hidden="true"></span>
-            <button class="orbit-tag orbit-tag--one" type="button" data-orbit-content="Current IT technical support focused on reliable systems and practical service." data-energy="100">MICEI · 2026</button>
-            <button class="orbit-tag orbit-tag--two" type="button" data-orbit-content="Independent creative and technical work for remote clients." data-energy="90">Upwork · 2024</button>
-            <button class="orbit-tag orbit-tag--three" type="button" data-orbit-content="People-focused troubleshooting, maintenance, and system care." data-energy="96">Technical support</button>
-            <button class="orbit-tag orbit-tag--four" type="button" data-orbit-content="Design, development, photography, and visual production." data-energy="92">Creative practice</button>
+          <div>
+            <p class="sidebar__note">For editing &amp; dev work, reach me at</p>
+            <a class="sidebar__email" href="mailto:chellegdrs@gmail.com">chellegdrs@gmail.com</a>
           </div>
-        </section>
-
-        <section class="inner-shell page-section" id="career-timeline" aria-labelledby="timeline-title">
-          <div class="section-heading reveal">
-            <p class="panel-label">Career log</p>
-            <h2 class="section-title" id="timeline-title">A factual <em>timeline.</em></h2>
-          </div>
-
-          <div class="section-frame reveal">
-            <p class="panel-label">2020 — Present</p>
-            <div class="career-timeline">
-              <article class="timeline-entry">
-                <p class="timeline-date">2026 - Present</p>
-                <div class="timeline-content">
-                  <h3>MICEI General Santos City</h3>
-                  <p class="timeline-role">IT Technical Support</p>
-                  <p>I provide technical assistance to employees by diagnosing and resolving hardware, software, network, printer, and system-related issues. I install, configure, maintain, and troubleshoot computers and other IT equipment, manage user accounts and access permissions, perform system updates and backups, document technical concerns and solutions, and ensure that all IT resources operate efficiently to support the organization’s daily operations.
-</p>
-                </div>
-              </article>
-
-              <article class="timeline-entry">
-                <p class="timeline-date">2024 - Present</p>
-                <div class="timeline-content">
-                  <h3>Upwork</h3>
-                  <p class="timeline-role">Freelancer</p>
-                  <p>I create visually appealing and effective designs based on each client’s needs, brand identity, and target audience.
-                    My work includes designing logos, social media graphics, promotional materials, posters, banners, layouts, and other
-                    digital or printed content. I communicate closely with clients, develop creative concepts, revise designs based on
-                    feedback, manage multiple projects and deadlines, and deliver high-quality final files that clearly communicate the
-                    client’s message.</p>
-                </div>
-              </article>
-
-              <article class="timeline-entry">
-                <p class="timeline-date">2024 - 2025</p>
-                <div class="timeline-content">
-                  <h3>Thai Student</h3>
-                  <p class="timeline-role">Tutor</p>
-                  <p>Provided personalized lessons to help students understand programming fundamentals, problem-solving techniques, and
-                    practical software development concepts. I prepared learning materials, explained complex topics through simple
-                    examples, guided students in writing and debugging code, assisted with projects and assignments, monitored their
-                    progress, and adjusted teaching methods based on each learner’s pace and skill level.</p>
-                </div>
-              </article>
-
-              <article class="timeline-entry">
-                <p class="timeline-date">2024</p>
-                <div class="timeline-content">
-                  <h3>Self-Employed</h3>
-                  <p class="timeline-role">Crafter</p>
-                  <p>Created handmade products and customized items based on customer preferences and design requirements. My
-                    responsibilities included planning creative concepts, selecting suitable materials, producing and assembling each
-                    item, maintaining quality and attention to detail, managing orders and deadlines, and communicating with customers to
-                    ensure that the finished products met their expectations.</p>
-                </div>
-              </article>
-
-              <article class="timeline-entry">
-                <p class="timeline-date">April - May 2024</p>
-                <div class="timeline-content">
-                  <h3>Internship Trainee</h3>
-                  <p class="timeline-role">Technical Assistant</p>
-                  <p>Assisted with various administrative tasks to support the office’s daily operations. My responsibilities included
-                    organizing and filing documents, encoding and updating records, preparing reports and correspondence, photocopying and
-                    printing materials, receiving and routing documents, assisting clients with basic inquiries, and performing other
-                    office duties assigned by supervisors while maintaining accuracy, confidentiality, and professionalism.</p>
-                </div>
-              </article>
-
-              <article class="timeline-entry">
-                <p class="timeline-date">November 2020 - February 2021</p>
-                <div class="timeline-content">
-                  <h3>Hiwinstar Restaurant</h3>
-                  <p class="timeline-role">Service Crew</p>
-                  <p>Performed various duties to support daily operations and provide customers with efficient and friendly service. My
-                    responsibilities included taking and serving orders, preparing tables, assisting with basic food preparation,
-                    processing payments, cleaning dining and kitchen areas, restocking supplies, handling customer inquiries, and
-                    coordinating with other staff members to maintain cleanliness, food quality, and smooth restaurant operations.</p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section class="inner-shell page-section page-section--compact" aria-labelledby="context-title">
-          <div class="section-heading reveal">
-            <p class="panel-label">Current context</p>
-            <h2 class="section-title" id="context-title">One practice, <em>four signals.</em></h2>
-            <p class="section-intro">
-            Chel’s professional identity brings together layout design, graphic arts, web development, and IT technical support. The
-            timeline also highlights her continued independent creative and development work alongside her technical support career.
-            </p>
-          </div>
-
-          <div class="logo-showcase logo-showcase--disciplines" aria-label="Professional disciplines">
-            <span class="logo-item reveal" role="img" aria-label="Layout" title="Layout"><span class="card-logo card-logo--layout" aria-hidden="true"><svg focusable="false"><use href="assets/card-logos.svg#layout"></use></svg></span></span>
-            <span class="logo-item reveal" role="img" aria-label="Graphic Artist" title="Graphic Artist"><span class="card-logo card-logo--graphic" aria-hidden="true"><svg focusable="false"><use href="assets/card-logos.svg#graphic"></use></svg></span></span>
-            <span class="logo-item reveal" role="img" aria-label="Web Development" title="Web Development"><span class="card-logo card-logo--web" aria-hidden="true"><svg focusable="false"><use href="assets/card-logos.svg#web"></use></svg></span></span>
-            <span class="logo-item reveal" role="img" aria-label="IT Technical Support" title="IT Technical Support"><span class="card-logo card-logo--support" aria-hidden="true"><svg focusable="false"><use href="assets/card-logos.svg#support"></use></svg></span></span>
-          </div>
-        </section>
-
-      </main>
-
-      <footer class="site-footer"><div class="site-footer__inner"><p class="site-footer__copy"><span>© <span data-current-year>2026</span> /</span><strong>Chel Gadores</strong></p><nav class="site-footer__links" aria-label="Contact and social links"><a class="footer-icon-link" href="https://github.com/Wysi-Chel" target="_blank" rel="noreferrer" aria-label="GitHub" data-tooltip="GitHub"><svg aria-hidden="true"><use href="assets/footer-icons.svg#github"></use></svg></a><a class="footer-icon-link" href="https://www.linkedin.com/in/rachelle-gadores-589840248/" target="_blank" rel="noreferrer" aria-label="LinkedIn" data-tooltip="LinkedIn"><svg aria-hidden="true"><use href="assets/footer-icons.svg#linkedin"></use></svg></a><a class="footer-icon-link" href="mailto:iam.chel1021@gmail.com" aria-label="Email" data-tooltip="Email"><svg aria-hidden="true"><use href="assets/footer-icons.svg#email"></use></svg></a><a class="footer-icon-link" href="assets/live/profile/gadores-resume.pdf" download="gadores-resume.pdf" aria-label="Download résumé" data-tooltip="Résumé"><svg aria-hidden="true"><use href="assets/footer-icons.svg#resume"></use></svg></a></nav></div></footer>
+        </div>
+      </nav>
     </div>
 
+    <main class="main" id="main">
+      <div class="container">
+        <header class="page-head">
+          <p class="crumb"><a href="index.html">~</a> / work</p>
+          <h1 class="page-title">Work in motion.</h1>
+          <p class="page-lead">From service and tutoring to independent creative practice and technical support.</p>
+        </header>
+
+        <section class="section" id="timeline" aria-labelledby="timeline-title">
+          <div class="section-head">
+            <h2 class="section-title" id="timeline-title">01 — experience</h2>
+            <span class="section-link">2020 — present</span>
+          </div>
+
+          <div class="timeline">
+            <article class="entry">
+              <p class="entry__date">2026 — Present</p>
+              <div>
+                <div class="entry__head"><h3 class="entry__role">IT Technical Support</h3><span class="tag tag--solid">current</span></div>
+                <p class="entry__org">MICEI General Santos City</p>
+                <p class="entry__text">
+                  I provide technical assistance to employees by diagnosing and resolving hardware, software, network,
+                  printer, and system-related issues. I install, configure, maintain, and troubleshoot computers and
+                  other IT equipment, manage user accounts and access permissions, perform system updates and backups,
+                  document technical concerns and solutions, and ensure that all IT resources operate efficiently to
+                  support the organization’s daily operations.
+                </p>
+              </div>
+            </article>
+
+            <article class="entry">
+              <p class="entry__date">2024 — Present</p>
+              <div>
+                <div class="entry__head"><h3 class="entry__role">Freelancer</h3><span class="tag tag--solid">current</span></div>
+                <p class="entry__org">Upwork</p>
+                <p class="entry__text">
+                  I create visually appealing and effective designs based on each client’s needs, brand identity, and
+                  target audience. My work includes designing logos, social media graphics, promotional materials,
+                  posters, banners, layouts, and other digital or printed content. I communicate closely with clients,
+                  develop creative concepts, revise designs based on feedback, manage multiple projects and deadlines,
+                  and deliver high-quality final files that clearly communicate the client’s message.
+                </p>
+              </div>
+            </article>
+
+            <article class="entry">
+              <p class="entry__date">2024 — 2025</p>
+              <div>
+                <div class="entry__head"><h3 class="entry__role">Tutor</h3></div>
+                <p class="entry__org">Thai Student</p>
+                <p class="entry__text">
+                  Provided personalized lessons to help students understand programming fundamentals, problem-solving
+                  techniques, and practical software development concepts. I prepared learning materials, explained
+                  complex topics through simple examples, guided students in writing and debugging code, assisted with
+                  projects and assignments, monitored their progress, and adjusted teaching methods based on each
+                  learner’s pace and skill level.
+                </p>
+              </div>
+            </article>
+
+            <article class="entry">
+              <p class="entry__date">2024</p>
+              <div>
+                <div class="entry__head"><h3 class="entry__role">Crafter</h3></div>
+                <p class="entry__org">Self-Employed</p>
+                <p class="entry__text">
+                  Created handmade products and customized items based on customer preferences and design requirements.
+                  My responsibilities included planning creative concepts, selecting suitable materials, producing and
+                  assembling each item, maintaining quality and attention to detail, managing orders and deadlines, and
+                  communicating with customers to ensure that the finished products met their expectations.
+                </p>
+              </div>
+            </article>
+
+            <article class="entry">
+              <p class="entry__date">April — May 2024</p>
+              <div>
+                <div class="entry__head"><h3 class="entry__role">Technical Assistant</h3></div>
+                <p class="entry__org">Internship Trainee</p>
+                <p class="entry__text">
+                  Assisted with various administrative tasks to support the office’s daily operations. My
+                  responsibilities included organizing and filing documents, encoding and updating records, preparing
+                  reports and correspondence, photocopying and printing materials, receiving and routing documents,
+                  assisting clients with basic inquiries, and performing other office duties assigned by supervisors
+                  while maintaining accuracy, confidentiality, and professionalism.
+                </p>
+              </div>
+            </article>
+
+            <article class="entry">
+              <p class="entry__date">Nov 2020 — Feb 2021</p>
+              <div>
+                <div class="entry__head"><h3 class="entry__role">Service Crew</h3></div>
+                <p class="entry__org">Hiwinstar Restaurant</p>
+                <p class="entry__text">
+                  Performed various duties to support daily operations and provide customers with efficient and friendly
+                  service. My responsibilities included taking and serving orders, preparing tables, assisting with basic
+                  food preparation, processing payments, cleaning dining and kitchen areas, restocking supplies, handling
+                  customer inquiries, and coordinating with other staff members to maintain cleanliness, food quality,
+                  and smooth restaurant operations.
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="context" aria-labelledby="context-title">
+          <div class="section-head">
+            <h2 class="section-title" id="context-title">02 — current context</h2>
+          </div>
+          <p class="prose">
+            Chel’s professional identity brings together layout design, graphic arts, web development, and IT
+            technical support. The timeline also highlights her continued independent creative and development work
+            alongside her technical support career.
+          </p>
+          <div class="rows rows--hover">
+            <div class="row row--split"><span class="row__index">01</span><span class="row__title">MICEI · 2026</span><span class="row__meta">Reliable systems, practical service</span></div>
+            <div class="row row--split"><span class="row__index">02</span><span class="row__title">Upwork · 2024</span><span class="row__meta">Creative and technical work for remote clients</span></div>
+            <div class="row row--split"><span class="row__index">03</span><span class="row__title">Technical support</span><span class="row__meta">Troubleshooting, maintenance, system care</span></div>
+            <div class="row row--split"><span class="row__index">04</span><span class="row__title">Creative practice</span><span class="row__meta">Design, development, photography, visual production</span></div>
+          </div>
+          <div class="actions" style="margin-top: 1.75rem">
+            <a class="button" href="projects.html">Explore projects →</a>
+            <a class="button button--ghost" href="assets/live/profile/gadores-resume.pdf" download="gadores-resume.pdf">Download résumé ↓</a>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <p>© <span data-year>2026</span> Chel Gadores</p>
+          <nav class="footer__links" aria-label="Contact and social links">
+            <a href="https://github.com/Wysi-Chel" target="_blank" rel="noreferrer" aria-label="GitHub"><svg aria-hidden="true"><use href="#icon-github"></use></svg></a>
+            <a href="https://www.linkedin.com/in/rachelle-gadores-589840248/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><svg aria-hidden="true"><use href="#icon-linkedin"></use></svg></a>
+            <a href="mailto:chellegdrs@gmail.com" aria-label="Email"><svg aria-hidden="true"><use href="#icon-email"></use></svg></a>
+            <a href="assets/live/profile/gadores-resume.pdf" download="gadores-resume.pdf" aria-label="Download résumé"><svg aria-hidden="true"><use href="#icon-resume"></use></svg></a>
+          </nav>
+        </footer>
+      </div>
+    </main>
+
     <script src="script.js"></script>
-    <script src="pages.js"></script>
+    <script src="assets/vendor/cuelume.js"></script>
+    <script src="sounds.js"></script>
   </body>
 </html>

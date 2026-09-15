@@ -1,567 +1,445 @@
-(function () {
+(() => {
   "use strict";
 
-  var landing = document.querySelector(".landing");
-  var canvas = document.querySelector(".star-field");
-  var toggle = document.querySelector("[data-star-toggle]");
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-  document.querySelectorAll("[data-current-year]").forEach(function (item) {
-    item.textContent = String(new Date().getFullYear());
-  });
+  /* ---------- Theme ---------- */
 
-  if (!landing || !canvas || !toggle) return;
+  const THEME_KEY = "chel-theme";
+  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-  var context = canvas.getContext("2d", { alpha: true });
-  var root = document.documentElement;
-  var stars = [];
-  var animationFrame = 0;
-  var isInnerPage = landing.classList.contains("inner-page");
-  var starsReduced = false;
-
-  root.classList.add("motion-enhanced");
-
-  try {
-    starsReduced = window.localStorage.getItem("chel-stars-reduced") === "true";
-    window.localStorage.removeItem("chel-stars-amplified");
-    window.localStorage.removeItem("chel-motion-preference");
-    window.localStorage.removeItem("chel-motion-paused");
-  } catch (error) {
-    starsReduced = false;
-  }
-  var previousTime = 0;
-
-  function getCanvasSize() {
-    return {
-      width: isInnerPage ? window.innerWidth : landing.clientWidth,
-      height: isInnerPage ? window.innerHeight : landing.clientHeight
-    };
-  }
-
-  function randomFactory(seed) {
-    var state = seed >>> 0;
-    return function () {
-      state = (state * 1664525 + 1013904223) >>> 0;
-      return state / 4294967296;
-    };
-  }
-
-  function makeStars(width, height) {
-    var random = randomFactory(starsReduced ? 75271 : 74531);
-    var baseCount = Math.min(310, Math.max(160, (width * height) / 5000));
-    var count = Math.round(starsReduced ? Math.max(72, baseCount * 0.46) : baseCount);
-    var result = [];
-
-    for (var index = 0; index < count; index += 1) {
-      var bright = random() > 0.86;
-      result.push({
-        x: random() * width,
-        y: random() * height,
-        radius: bright ? 1.15 + random() * 1.45 : 0.45 + random() * 0.82,
-        alpha: bright ? 0.58 + random() * 0.4 : 0.21 + random() * 0.46,
-        phase: random() * Math.PI * 2,
-        speed: 0.0003 + random() * 0.00055,
-        blue: random() > 0.72
-      });
-    }
-
-    return result;
-  }
-
-  function resizeCanvas() {
-    var size = getCanvasSize();
-    var width = size.width;
-    var height = size.height;
-    var ratio = Math.min(window.devicePixelRatio || 1, 2);
-
-    canvas.width = Math.round(width * ratio);
-    canvas.height = Math.round(height * ratio);
-    canvas.style.width = width + "px";
-    canvas.style.height = height + "px";
-    context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    stars = makeStars(width, height);
-    drawStars(performance.now());
-  }
-
-  function drawStars(time) {
-    var size = getCanvasSize();
-    var width = size.width;
-    var height = size.height;
-    context.clearRect(0, 0, width, height);
-
-    for (var index = 0; index < stars.length; index += 1) {
-      var star = stars[index];
-      var energy = starsReduced ? 0.72 : 1;
-      var radius = star.radius * (starsReduced ? 0.88 : 1);
-      var pulseSpeed = starsReduced ? 0.74 : 1;
-      var pulse = 0.68 + Math.sin(star.phase + time * star.speed * pulseSpeed) * 0.28;
-      var opacity = Math.min(1, Math.max(0.06, star.alpha * pulse * energy));
-
-      if (radius > 1.35) {
-        var glowRadius = radius * (starsReduced ? 3.8 : 4.6);
-        var glow = context.createRadialGradient(star.x, star.y, 0, star.x, star.y, glowRadius);
-        glow.addColorStop(0, "rgba(240,248,255," + Math.min(1, opacity * 1.5) + ")");
-        glow.addColorStop(0.22, "rgba(213,235,255," + opacity + ")");
-        glow.addColorStop(1, "rgba(112,173,224,0)");
-        context.fillStyle = glow;
-        context.beginPath();
-        context.arc(star.x, star.y, glowRadius, 0, Math.PI * 2);
-        context.fill();
-
-      } else {
-        context.fillStyle = star.blue
-          ? "rgba(143,196,235," + opacity + ")"
-          : "rgba(228,236,244," + opacity + ")";
-        context.beginPath();
-        context.arc(star.x, star.y, radius, 0, Math.PI * 2);
-        context.fill();
-      }
-    }
-  }
-
-  function animate(time) {
-    animationFrame = 0;
-    if (document.hidden) return;
-
-    if (time - previousTime > 30) {
-      drawStars(time);
-      previousTime = time;
-    }
-    animationFrame = window.requestAnimationFrame(animate);
-  }
-
-  function stopAnimation() {
-    if (!animationFrame) return;
-    window.cancelAnimationFrame(animationFrame);
-    animationFrame = 0;
-  }
-
-  function startAnimation() {
-    if (animationFrame || document.hidden) return;
-    animationFrame = window.requestAnimationFrame(animate);
-  }
-
-  function updateStarToggle() {
-    root.classList.toggle("stars-reduced", starsReduced);
-    landing.classList.toggle("stars-reduced", starsReduced);
-    toggle.setAttribute("aria-pressed", String(starsReduced));
-    var actionLabel = starsReduced ? "Restore standard star field" : "Reduce star field";
-    toggle.setAttribute("aria-label", actionLabel);
-    toggle.title = actionLabel;
-
-    document.dispatchEvent(new CustomEvent("chel:starchange", {
-      detail: { reduced: starsReduced }
-    }));
-  }
-
-  toggle.addEventListener("click", function () {
-    starsReduced = !starsReduced;
+  function storedTheme() {
     try {
-      window.localStorage.setItem("chel-stars-reduced", String(starsReduced));
+      return localStorage.getItem(THEME_KEY) || "dark";
     } catch (error) {
-      // The star-density control still works when storage is unavailable.
+      return "dark";
     }
-    updateStarToggle();
-    resizeCanvas();
-    startAnimation();
-  });
-
-  window.addEventListener("resize", resizeCanvas, { passive: true });
-  window.addEventListener("pagehide", function () {
-    stopAnimation();
-  });
-  window.addEventListener("pageshow", startAnimation);
-  document.addEventListener("visibilitychange", function () {
-    if (document.hidden) stopAnimation();
-    else startAnimation();
-  });
-
-  updateStarToggle();
-  resizeCanvas();
-  startAnimation();
-})();
-
-(function () {
-  "use strict";
-
-  var root = document.documentElement;
-
-  root.classList.add("motion-enhanced");
-
-  var existingRevealItems = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
-  existingRevealItems.forEach(function (item, index) {
-    item.style.setProperty("--reveal-delay", String(index % 4 * 55) + "ms");
-  });
-
-  var homeRevealItems = Array.prototype.slice.call(document.querySelectorAll(
-    ".home-about-intro > *, " +
-    ".home-about .metric, " +
-    ".home-about .section-heading > *, " +
-    ".home-about .discipline-card, " +
-    ".home-about .skill-card, " +
-    ".home-about .logo-item, " +
-    ".home-about .study-card, " +
-    ".home-about-actions"
-  ));
-
-  homeRevealItems.forEach(function (item, index) {
-    item.classList.add("scroll-reveal");
-    item.style.setProperty("--reveal-delay", String(index % 4 * 65) + "ms");
-  });
-
-  var revealObserver = null;
-
-  function showHomeItem(item, immediate) {
-    var delay = immediate ? 0 : parseInt(item.style.getPropertyValue("--reveal-delay"), 10) || 0;
-    if (!delay) {
-      item.classList.add("is-in-view");
-      return;
-    }
-    window.setTimeout(function () {
-      item.classList.add("is-in-view");
-    }, delay);
   }
 
-  function revealHomeItems() {
-    homeRevealItems.forEach(function (item) {
-      showHomeItem(item, true);
+  function applyTheme(preference) {
+    const resolved = preference === "system" ? (darkQuery.matches ? "dark" : "light") : preference;
+    document.documentElement.dataset.theme = resolved;
+    $$("[data-theme-set]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.themeSet === preference));
     });
-    if (revealObserver) {
-      revealObserver.disconnect();
-      revealObserver = null;
-    }
+    const meta = $('meta[name="theme-color"]');
+    if (meta) meta.content = resolved === "dark" ? "#030818" : "#ffffff";
   }
 
-  function observeHomeItems() {
-    if (typeof window.IntersectionObserver !== "function") {
-      revealHomeItems();
-      return;
+  $$("[data-theme-set]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const preference = button.dataset.themeSet;
+      try {
+        localStorage.setItem(THEME_KEY, preference);
+      } catch (error) {
+        /* storage unavailable: theme still applies for this page view */
+      }
+      applyTheme(preference);
+    });
+  });
+
+  darkQuery.addEventListener("change", () => {
+    if (storedTheme() === "system") applyTheme("system");
+  });
+
+  applyTheme(storedTheme());
+
+  /* ---------- Mobile menu ---------- */
+
+  const mobileNav = $("#mobile-nav");
+  const menuOpen = $("[data-menu-open]");
+
+  function setMenu(open) {
+    if (!mobileNav) return;
+    mobileNav.classList.toggle("is-open", open);
+    mobileNav.setAttribute("aria-hidden", String(!open));
+    mobileNav.inert = !open;
+    document.body.style.overflow = open ? "hidden" : "";
+    if (menuOpen) menuOpen.setAttribute("aria-expanded", String(open));
+    if (open) $("[data-menu-close]", mobileNav).focus();
+    else if (menuOpen) menuOpen.focus({ preventScroll: true });
+  }
+
+  if (mobileNav) {
+    mobileNav.inert = true;
+    menuOpen.addEventListener("click", () => setMenu(true));
+    $("[data-menu-close]", mobileNav).addEventListener("click", () => setMenu(false));
+    $$("a", mobileNav).forEach((link) => link.addEventListener("click", () => setMenu(false)));
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && mobileNav.classList.contains("is-open")) setMenu(false);
+    });
+  }
+
+  /* ---------- Command palette ---------- */
+
+  const destinations = [
+    ["00", "Home", "index.html"],
+    ["01", "About", "index.html#about"],
+    ["02", "Development work", "projects.html#development"],
+    ["03", "Image editing work", "projects.html#editing"],
+    ["04", "Experience", "work.html"],
+    ["05", "Photography gallery", "gallery.html"],
+    ["06", "Full profile", "about.html"],
+    ["07", "Download résumé", "assets/live/profile/gadores-resume.pdf"],
+    ["08", "Email Chel", "mailto:chellegdrs@gmail.com"],
+    ["09", "GitHub", "https://github.com/Wysi-Chel"],
+    ["10", "LinkedIn", "https://www.linkedin.com/in/rachelle-gadores-589840248/"]
+  ];
+
+  const palette = document.createElement("dialog");
+  palette.className = "palette";
+  palette.setAttribute("aria-label", "Quick navigation");
+  palette.innerHTML =
+    '<div class="palette__inner">' +
+    '<p class="palette__title">where to?</p>' +
+    '<input class="palette__input" type="text" placeholder="type a page, e.g. editing" autocomplete="off" spellcheck="false" aria-label="Filter destinations" aria-controls="palette-list" />' +
+    '<ul class="palette__list" id="palette-list" role="listbox"></ul>' +
+    '<p class="palette__hint"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>esc</kbd> close</span></p>' +
+    "</div>";
+  document.body.appendChild(palette);
+
+  const paletteInput = $(".palette__input", palette);
+  const paletteList = $(".palette__list", palette);
+  let paletteMatches = [];
+  let paletteIndex = 0;
+
+  function renderPalette() {
+    const query = paletteInput.value.trim().toLowerCase();
+    paletteMatches = destinations.filter(([, label]) => label.toLowerCase().includes(query));
+    paletteIndex = Math.min(paletteIndex, Math.max(paletteMatches.length - 1, 0));
+    paletteList.innerHTML = paletteMatches.length
+      ? paletteMatches
+          .map(
+            ([number, label, href], index) =>
+              '<li><a class="palette__item" role="option" href="' + href + '" aria-selected="' + (index === paletteIndex) + '"' +
+              (href.startsWith("http") ? ' target="_blank" rel="noreferrer"' : "") +
+              "><span>" + number + "</span><span>" + label + "</span><span>" + (href.startsWith("http") ? "↗" : "→") + "</span></a></li>"
+          )
+          .join("")
+      : '<li class="palette__empty">nothing matches that.</li>';
+  }
+
+  function openPalette() {
+    if (palette.open) return;
+    paletteInput.value = "";
+    paletteIndex = 0;
+    renderPalette();
+    palette.showModal();
+    paletteInput.focus();
+  }
+
+  paletteInput.addEventListener("input", () => {
+    paletteIndex = 0;
+    renderPalette();
+  });
+
+  paletteInput.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      if (!paletteMatches.length) return;
+      const step = event.key === "ArrowDown" ? 1 : -1;
+      paletteIndex = (paletteIndex + step + paletteMatches.length) % paletteMatches.length;
+      renderPalette();
+    }
+    if (event.key === "Enter") {
+      const active = $('[aria-selected="true"]', paletteList);
+      if (active) active.click();
+    }
+  });
+
+  palette.addEventListener("click", (event) => {
+    if (event.target === palette) palette.close();
+    if (event.target.closest("a")) palette.close();
+  });
+
+  $$("[data-command-open]").forEach((button) => button.addEventListener("click", openPalette));
+
+  if (/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)) {
+    $$("[data-mod-key]").forEach((key) => (key.textContent = "⌘"));
+  }
+
+  window.addEventListener("keydown", (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+      if (mobileNav && mobileNav.classList.contains("is-open")) setMenu(false);
+      openPalette();
+    }
+  });
+
+  /* ---------- Deck ---------- */
+
+  $$("[data-deck]").forEach((deck) => {
+    const cards = $$(".deck-card", deck);
+
+    // Deal the cards out of a stack the first time the deck scrolls into view.
+    if ("IntersectionObserver" in window) {
+      deck.classList.add("is-stacked");
+      const observer = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        observer.disconnect();
+        setTimeout(() => deck.classList.remove("is-stacked"), 120);
+      }, { threshold: 0.35 });
+      observer.observe(deck);
     }
 
-    revealObserver = new IntersectionObserver(function (entries, observer) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          showHomeItem(entry.target, false);
-          observer.unobserve(entry.target);
+    function activate(card) {
+      if (card.classList.contains("is-center")) return;
+      const center = $(".deck-card.is-center", deck);
+      const slot = card.classList.contains("is-left") ? "is-left" : "is-right";
+      center.classList.replace("is-center", slot);
+      card.classList.remove("is-left", "is-right");
+      card.classList.add("is-center");
+      cards.forEach((item) => item.setAttribute("aria-current", String(item === card)));
+      stopVideo($("video", center));
+    }
+
+    cards.forEach((card) => {
+      card.addEventListener("click", () => activate(card));
+      card.addEventListener("keydown", (event) => {
+        if (event.target !== card) return;
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          activate(card);
         }
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -7% 0px" });
-
-    homeRevealItems.forEach(function (item) {
-      revealObserver.observe(item);
     });
-  }
-
-  observeHomeItems();
-
-  document.addEventListener("focusin", function (event) {
-    var target = event.target.closest ? event.target.closest(".scroll-reveal") : null;
-    if (target) showHomeItem(target, true);
   });
 
-  var scrollFrame = 0;
-  var targetScroll = window.scrollY || document.documentElement.scrollTop || 0;
-  var renderedScroll = targetScroll;
+  /* ---------- Card motion ---------- */
 
-  function applyScrollMotion(scrollTop) {
-    var scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-    root.style.setProperty("--scroll-parallax", String((scrollTop * 0.075) % 72) + "px");
-    root.style.setProperty("--hero-scroll-lift", String(Math.max(scrollTop * -0.035, -24)) + "px");
-    root.style.setProperty("--aurora-scroll-y", String(Math.max(scrollTop * -0.018, -80)) + "px");
-    root.style.setProperty("--inner-copy-scroll-y", String(Math.max(scrollTop * -0.024, -32)) + "px");
-    root.style.setProperty("--inner-visual-scroll-y", String(Math.max(scrollTop * -0.04, -52)) + "px");
-    root.style.setProperty("--scroll-progress", String(Math.min(1, Math.max(0, scrollTop / scrollRange))));
-  }
+  $$("[data-card-motion]").forEach((grid) => {
+    if (!("IntersectionObserver" in window)) return;
+    const cards = $$(".project--motion", grid);
+    cards.forEach((card, index) => {
+      card.style.setProperty("--i", String(index));
+      card.style.setProperty("--tilt", index % 2 ? "4deg" : "-4deg");
+      card.classList.add("is-pending");
+    });
 
-  function renderScrollMotion() {
-    scrollFrame = 0;
-    var delta = targetScroll - renderedScroll;
-    renderedScroll += delta * 0.12;
-    if (Math.abs(delta) < 0.1) renderedScroll = targetScroll;
-    applyScrollMotion(renderedScroll);
-    if (renderedScroll !== targetScroll) {
-      scrollFrame = window.requestAnimationFrame(renderScrollMotion);
-    }
-  }
-
-  function requestScrollMotion() {
-    targetScroll = window.scrollY || document.documentElement.scrollTop || 0;
-    if (!scrollFrame) scrollFrame = window.requestAnimationFrame(renderScrollMotion);
-  }
-
-  window.addEventListener("scroll", requestScrollMotion, { passive: true });
-  applyScrollMotion(renderedScroll);
-
-  var homeDock = document.querySelector(".portfolio-nav");
-  var homeDockLink = homeDock ? homeDock.querySelector('a[href="#home"]') : null;
-  var aboutDockLink = homeDock ? homeDock.querySelector('a[href="#about"]') : null;
-  var aboutSection = document.querySelector("#about");
-
-  if (homeDockLink && aboutDockLink && aboutSection && typeof window.IntersectionObserver === "function") {
-    var navigationObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.target !== aboutSection) return;
-        if (entry.isIntersecting) {
-          homeDockLink.removeAttribute("aria-current");
-          aboutDockLink.setAttribute("aria-current", "page");
-        } else if (window.scrollY < aboutSection.offsetTop) {
-          aboutDockLink.removeAttribute("aria-current");
-          homeDockLink.setAttribute("aria-current", "page");
-        }
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      observer.disconnect();
+      cards.forEach((card) => {
+        card.classList.replace("is-pending", "is-entering");
+        card.addEventListener("animationend", () => card.classList.remove("is-entering"), { once: true });
       });
-    }, { threshold: 0, rootMargin: "-34% 0px -56% 0px" });
-    navigationObserver.observe(aboutSection);
-  }
-
-  var landing = document.querySelector(".landing:not(.inner-page)");
-  var pointerFrame = 0;
-  var pointerX = window.innerWidth / 2;
-  var pointerY = window.innerHeight / 2;
-  var smoothPointerX = pointerX;
-  var smoothPointerY = pointerY;
-  var pointerDetailsDirty = false;
-  var nextCard = null;
-  var activeCard = null;
-  var nextButton = null;
-  var activeButton = null;
-  var nextGlassTarget = null;
-  var activeGlassTarget = null;
-  var nextOrbitSurface = null;
-  var activeOrbitSurface = null;
-
-  var auraLayers = [];
-  Array.prototype.slice.call(document.querySelectorAll(".landing, .inner-page")).forEach(function (surface) {
-    var aura = document.createElement("div");
-    aura.className = "cursor-aura";
-    aura.setAttribute("aria-hidden", "true");
-    surface.prepend(aura);
-    auraLayers.push(aura);
+    }, { threshold: 0.15 });
+    observer.observe(grid);
   });
 
-  var pointerCards = Array.prototype.slice.call(document.querySelectorAll(
-    ".project-card, .media-tile, .skill-card, .study-card, .discipline-card"
-  ));
+  /* ---------- Video previews (load on demand, never autoplay) ---------- */
 
-  pointerCards.forEach(function (card) {
-    card.classList.add("pointer-reactive", "glow-card");
-    if (!card.querySelector(":scope > .glow-card-layer")) {
-      var glowLayer = document.createElement("span");
-      glowLayer.className = "glow-card-layer";
-      glowLayer.setAttribute("aria-hidden", "true");
-      card.appendChild(glowLayer);
+  function playVideo(video) {
+    if (!video || video.dataset.failed) return;
+    if (!video.src) {
+      video.src = video.dataset.src;
+      video.muted = true;
+    }
+    const media = video.closest(".media");
+    const attempt = video.play();
+    if (attempt) {
+      attempt
+        .then(() => {
+          video.classList.add("is-playing");
+          media.classList.add("is-playing");
+        })
+        .catch(() => {});
+    }
+  }
+
+  function stopVideo(video) {
+    if (!video) return;
+    video.pause();
+    video.classList.remove("is-playing");
+    const media = video.closest(".media");
+    if (media) media.classList.remove("is-playing");
+  }
+
+  $$("video[data-src]").forEach((video) => {
+    const card = video.closest(".project, .deck-card") || video.closest(".media");
+    const button = $(".media__play", video.closest(".media"));
+
+    video.addEventListener("error", () => {
+      video.dataset.failed = "true";
+      if (button) button.hidden = true;
+    });
+
+    card.addEventListener("pointerenter", (event) => {
+      if (event.pointerType !== "mouse") return;
+      if (card.classList.contains("deck-card") && !card.classList.contains("is-center")) return;
+      playVideo(video);
+    });
+    card.addEventListener("pointerleave", (event) => {
+      if (event.pointerType === "mouse") stopVideo(video);
+    });
+
+    if (button) {
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (video.paused) playVideo(video);
+        else stopVideo(video);
+      });
     }
   });
 
-  var orbitSurfaces = Array.prototype.slice.call(document.querySelectorAll(
-    ".portrait-orbit, .orbit-stage, .project-constellation"
-  ));
-
-  orbitSurfaces.forEach(function (surface) {
-    var rings = surface.matches(".portrait-orbit")
-      ? [surface]
-      : Array.prototype.slice.call(surface.querySelectorAll(
-        ":scope > .orbit-ring, :scope > .constellation-orbit"
-      ));
-
-    surface._glowRings = rings;
-    rings.forEach(function (ring) {
-      ring.classList.add("orbit-glow-target");
-      if (!ring.querySelector(":scope > .orbit-glow-layer")) {
-        var orbitGlow = document.createElement("span");
-        orbitGlow.className = "orbit-glow-layer";
-        orbitGlow.setAttribute("aria-hidden", "true");
-        ring.appendChild(orbitGlow);
-      }
-    });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) $$("video[data-src]").forEach(stopVideo);
   });
 
-  function resetCard(card) {
-    if (!card) return;
-    card.classList.remove("is-pointer-active");
-    card.style.setProperty("--tilt-x", "0deg");
-    card.style.setProperty("--tilt-y", "0deg");
-  }
+  /* ---------- Before / after ---------- */
 
-  function resetOrbit(surface) {
-    if (!surface || !surface._glowRings) return;
-    surface._glowRings.forEach(function (ring) {
-      ring.classList.remove("is-orbit-active");
-    });
-  }
+  $$(".compare").forEach((compare) => {
+    const range = $(".compare__range", compare);
+    const update = () => {
+      compare.style.setProperty("--pos", range.value + "%");
+      range.setAttribute("aria-valuetext", range.value + "% before, " + (100 - range.value) + "% after");
+    };
+    range.addEventListener("input", update);
+    update();
+  });
 
-  function findOrbitSurface(x, y, eventTarget) {
-    var closestSurface = eventTarget && eventTarget.closest
-      ? eventTarget.closest(".orbit-stage, .project-constellation")
-      : null;
+  /* ---------- Filters ---------- */
 
-    if (closestSurface) return closestSurface;
+  $$("[data-filters]").forEach((rail) => {
+    const name = rail.dataset.filters;
+    const items = $$('[data-group="' + name + '"]');
+    const buttons = $$("[data-filter]", rail);
+    const useHash = rail.hasAttribute("data-filter-hash");
 
-    for (var index = 0; index < orbitSurfaces.length; index += 1) {
-      var surface = orbitSurfaces[index];
-      if (!surface.matches(".portrait-orbit")) continue;
-      var bounds = surface.getBoundingClientRect();
-      if (
-        x >= bounds.left &&
-        x <= bounds.right &&
-        y >= bounds.top &&
-        y <= bounds.bottom
-      ) {
-        return surface;
+    function select(value, updateHash) {
+      buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.filter === value)));
+      items.forEach((item) => {
+        const categories = item.dataset.category.split(" ");
+        item.hidden = value !== "all" && !categories.includes(value);
+        if (item.hidden) $$("video", item).forEach(stopVideo);
+      });
+      if (useHash && updateHash) {
+        history.replaceState(null, "", value === "all" ? location.pathname + location.search : "#" + value);
       }
     }
 
-    return null;
-  }
+    buttons.forEach((button) => button.addEventListener("click", () => select(button.dataset.filter, true)));
 
-  function resetButton(button) {
-    if (!button) return;
-    button.style.setProperty("--magnetic-x", "0px");
-    button.style.setProperty("--magnetic-y", "0px");
-  }
-
-  function resetGlassTarget(target) {
-    if (!target) return;
-    target.style.setProperty("--glass-x", "50%");
-    target.style.setProperty("--glass-y", "50%");
-    target.style.setProperty("--button-glow-hue", "205");
-  }
-
-  function resetPointerMotion() {
-    if (pointerFrame) {
-      window.cancelAnimationFrame(pointerFrame);
-      pointerFrame = 0;
+    if (useHash) {
+      const fromHash = () => {
+        const value = location.hash.slice(1);
+        if (!buttons.some((button) => button.dataset.filter === value)) return;
+        select(value, false);
+        // Hiding the other track shifts the layout, so re-align with the requested section.
+        requestAnimationFrame(() => document.getElementById(value).scrollIntoView({ block: "start" }));
+      };
+      window.addEventListener("hashchange", fromHash);
+      fromHash();
     }
-    resetCard(activeCard);
-    resetButton(activeButton);
-    activeCard = null;
-    nextCard = null;
-    activeButton = null;
-    nextButton = null;
-    resetGlassTarget(activeGlassTarget);
-    activeGlassTarget = null;
-    nextGlassTarget = null;
-    resetOrbit(activeOrbitSurface);
-    activeOrbitSurface = null;
-    nextOrbitSurface = null;
-    pointerDetailsDirty = false;
-    if (landing) {
-      landing.style.setProperty("--portrait-shift-x", "0px");
-      landing.style.setProperty("--portrait-shift-y", "0px");
-    }
-  }
+  });
 
-  function renderPointerMotion() {
-    pointerFrame = 0;
+  /* ---------- Lightbox ---------- */
 
-    if (document.hidden) {
-      resetPointerMotion();
-      return;
-    }
+  const lightbox = $("[data-lightbox]");
 
-    var deltaX = pointerX - smoothPointerX;
-    var deltaY = pointerY - smoothPointerY;
-    smoothPointerX = Math.round(smoothPointerX + deltaX * 0.05);
-    smoothPointerY = Math.round(smoothPointerY + deltaY * 0.05);
-    var normalizedX = smoothPointerX / Math.max(window.innerWidth, 1) - 0.5;
-    var normalizedY = smoothPointerY / Math.max(window.innerHeight, 1) - 0.5;
+  if (lightbox) {
+    const image = $(".lightbox__img", lightbox);
+    const title = $(".lightbox__title", lightbox);
+    const meta = $(".lightbox__meta", lightbox);
+    const count = $(".lightbox__count", lightbox);
+    const original = $("[data-lb-original]", lightbox);
+    const zoom = $("[data-lb-zoom]", lightbox);
+    const stage = $(".lightbox__stage", lightbox);
+    const triggers = $$("[data-lightbox-item]");
+    let list = [];
+    let index = 0;
 
-    auraLayers.forEach(function (aura) {
-      aura.style.setProperty("--cursor-aura-x", String(smoothPointerX) + "px");
-      aura.style.setProperty("--cursor-aura-y", String(smoothPointerY) + "px");
-      aura.classList.add("is-active");
-    });
+    const pad = (value) => String(value).padStart(2, "0");
 
-    if (landing) {
-      landing.style.setProperty("--portrait-shift-x", String(normalizedX * 14) + "px");
-      landing.style.setProperty("--portrait-shift-y", String(normalizedY * 10) + "px");
-    }
-
-    if (pointerDetailsDirty) {
-      var cardBounds = nextCard ? nextCard.getBoundingClientRect() : null;
-      var buttonBounds = nextButton ? nextButton.getBoundingClientRect() : null;
-      var glassBounds = nextGlassTarget ? nextGlassTarget.getBoundingClientRect() : null;
-
-      if (activeCard !== nextCard) resetCard(activeCard);
-      activeCard = nextCard;
-      if (activeCard && cardBounds) {
-        var localX = (pointerX - cardBounds.left) / Math.max(cardBounds.width, 1);
-        var localY = (pointerY - cardBounds.top) / Math.max(cardBounds.height, 1);
-        var cardBase = parseFloat(
-          window.getComputedStyle(activeCard).getPropertyValue("--glow-base")
-        ) || 220;
-        var cardSpread = parseFloat(
-          window.getComputedStyle(activeCard).getPropertyValue("--glow-spread")
-        ) || 200;
-        activeCard.style.setProperty("--tilt-x", String((0.5 - localY) * 3.2) + "deg");
-        activeCard.style.setProperty("--tilt-y", String((localX - 0.5) * 4.2) + "deg");
-        activeCard.style.setProperty("--glow-x", String(pointerX - cardBounds.left) + "px");
-        activeCard.style.setProperty("--glow-y", String(pointerY - cardBounds.top) + "px");
-        activeCard.style.setProperty(
-          "--glow-hue",
-          String(cardBase + pointerX / Math.max(window.innerWidth, 1) * cardSpread)
-        );
-        activeCard.classList.add("is-pointer-active");
-      }
-
-      if (activeButton !== nextButton) resetButton(activeButton);
-      activeButton = nextButton;
-      if (activeButton && buttonBounds) {
-        var offsetX = (pointerX - (buttonBounds.left + buttonBounds.width / 2)) * 0.075;
-        var offsetY = (pointerY - (buttonBounds.top + buttonBounds.height / 2)) * 0.09;
-        activeButton.style.setProperty("--magnetic-x", String(Math.max(-4, Math.min(4, offsetX))) + "px");
-        activeButton.style.setProperty("--magnetic-y", String(Math.max(-3, Math.min(3, offsetY))) + "px");
-      }
-
-      if (activeGlassTarget !== nextGlassTarget) resetGlassTarget(activeGlassTarget);
-      activeGlassTarget = nextGlassTarget;
-      if (activeGlassTarget && glassBounds) {
-        var glassX = pointerX - glassBounds.left;
-        var glassProgress = glassX / Math.max(glassBounds.width, 1);
-        activeGlassTarget.style.setProperty("--glass-x", String(glassX) + "px");
-        activeGlassTarget.style.setProperty("--glass-y", String(pointerY - glassBounds.top) + "px");
-        activeGlassTarget.style.setProperty("--button-glow-hue", String(195 + glassProgress * 70));
-      }
-
-      if (activeOrbitSurface !== nextOrbitSurface) resetOrbit(activeOrbitSurface);
-      activeOrbitSurface = nextOrbitSurface;
-      if (activeOrbitSurface && activeOrbitSurface._glowRings) {
-        activeOrbitSurface._glowRings.forEach(function (ring) {
-          var ringBounds = ring.getBoundingClientRect();
-          var ringX = pointerX - ringBounds.left;
-          var ringY = pointerY - ringBounds.top;
-          var ringProgress = ringX / Math.max(ringBounds.width, 1);
-          ring.style.setProperty("--glow-x", String(ringX) + "px");
-          ring.style.setProperty("--glow-y", String(ringY) + "px");
-          ring.style.setProperty("--glow-hue", String(195 + ringProgress * 90));
-          ring.classList.add("is-orbit-active");
+    function setZoom(on, event) {
+      lightbox.classList.toggle("is-zoomed", on);
+      zoom.setAttribute("aria-pressed", String(on));
+      zoom.textContent = on ? "fit to screen" : "zoom 100%";
+      if (on && event && image.naturalWidth) {
+        const rect = image.getBoundingClientRect();
+        const rx = (event.clientX - rect.left) / rect.width;
+        const ry = (event.clientY - rect.top) / rect.height;
+        requestAnimationFrame(() => {
+          stage.scrollLeft = rx * image.naturalWidth - stage.clientWidth / 2;
+          stage.scrollTop = ry * image.naturalHeight - stage.clientHeight / 2;
         });
       }
-      pointerDetailsDirty = false;
     }
 
-    if (Math.abs(deltaX) > 0.5 || Math.abs(deltaY) > 0.5) {
-      pointerFrame = window.requestAnimationFrame(renderPointerMotion);
+    function show(nextIndex) {
+      index = (nextIndex + list.length) % list.length;
+      const item = list[index];
+      setZoom(false);
+      image.classList.add("is-loading");
+      image.src = item.dataset.full;
+      image.alt = item.dataset.title;
+      title.textContent = item.dataset.title;
+      meta.textContent = item.dataset.meta || "";
+      count.textContent = pad(index + 1) + " / " + pad(list.length);
+      original.href = item.dataset.original || item.dataset.full;
+      [list[index + 1], list[index - 1]].forEach((neighbour) => {
+        if (neighbour) new Image().src = neighbour.dataset.full;
+      });
     }
+
+    image.addEventListener("load", () => image.classList.remove("is-loading"));
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const group = trigger.dataset.lightboxItem;
+        list = triggers.filter((item) => item.dataset.lightboxItem === group && !item.closest("[hidden]"));
+        lightbox.classList.toggle("is-single", list.length < 2);
+        show(list.indexOf(trigger));
+        lightbox.showModal();
+      });
+    });
+
+    $("[data-lb-prev]", lightbox).addEventListener("click", () => show(index - 1));
+    $("[data-lb-next]", lightbox).addEventListener("click", () => show(index + 1));
+    $("[data-lb-close]", lightbox).addEventListener("click", () => lightbox.close());
+    zoom.addEventListener("click", () => setZoom(!lightbox.classList.contains("is-zoomed")));
+    image.addEventListener("click", (event) => setZoom(!lightbox.classList.contains("is-zoomed"), event));
+
+    lightbox.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft" && list.length > 1) show(index - 1);
+      if (event.key === "ArrowRight" && list.length > 1) show(index + 1);
+      if (event.key.toLowerCase() === "z") setZoom(!lightbox.classList.contains("is-zoomed"));
+    });
+
+    lightbox.addEventListener("close", () => setZoom(false));
+
+    let startX = null;
+    stage.addEventListener("pointerdown", (event) => {
+      if (event.pointerType !== "mouse") startX = event.clientX;
+    });
+    stage.addEventListener("pointerup", (event) => {
+      if (startX === null || lightbox.classList.contains("is-zoomed") || list.length < 2) return;
+      const delta = event.clientX - startX;
+      startX = null;
+      if (Math.abs(delta) > 50) show(index + (delta < 0 ? 1 : -1));
+    });
   }
 
-  document.addEventListener("mousemove", function (event) {
-    pointerX = event.clientX;
-    pointerY = event.clientY;
-    nextCard = event.target.closest ? event.target.closest(".pointer-reactive") : null;
-    nextButton = event.target.closest ? event.target.closest(".button, .page-button") : null;
-    nextGlassTarget = event.target.closest ? event.target.closest(
-      ".button, .page-button, .command-trigger, .filter-chip, .orbit-related-link, " +
-      ".project-node, .orbit-tag, " +
-      ".lightbox-close, .lightbox-nav, .command-head button"
-    ) : null;
-    nextOrbitSurface = findOrbitSurface(pointerX, pointerY, event.target);
-    pointerDetailsDirty = true;
-    if (!pointerFrame) pointerFrame = window.requestAnimationFrame(renderPointerMotion);
-  }, { passive: true });
+  /* ---------- Copy email ---------- */
 
-  document.documentElement.addEventListener("mouseleave", resetPointerMotion);
-  window.addEventListener("blur", resetPointerMotion);
-  document.addEventListener("visibilitychange", function () {
-    if (document.hidden) resetPointerMotion();
+  $$("[data-copy]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const label = button.textContent;
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy);
+        button.textContent = "Copied";
+        if (window.siteSound) window.siteSound.play("success");
+      } catch (error) {
+        button.textContent = "Press Ctrl+C";
+        const range = document.createRange();
+        range.selectNodeContents(button.previousElementSibling);
+        getSelection().removeAllRanges();
+        getSelection().addRange(range);
+      }
+      setTimeout(() => (button.textContent = label), 1800);
+    });
   });
 
+  $$("[data-year]").forEach((node) => (node.textContent = String(new Date().getFullYear())));
 })();
