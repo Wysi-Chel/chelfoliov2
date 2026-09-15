@@ -28,8 +28,9 @@
       button.setAttribute("aria-pressed", String(enabled));
       button.setAttribute("aria-label", enabled ? "Mute interface sounds" : "Enable interface sounds");
       button.title = enabled ? "Sounds on" : "Sounds off";
-      button.querySelector("[data-sound-on]").hidden = !enabled;
-      button.querySelector("[data-sound-off]").hidden = enabled;
+      // SVG elements have no `hidden` property, so toggle the attribute itself.
+      button.querySelector("[data-sound-on]").toggleAttribute("hidden", !enabled);
+      button.querySelector("[data-sound-off]").toggleAttribute("hidden", enabled);
     });
     if (enabled && announce) cuelume.play("chime");
   }
@@ -50,7 +51,7 @@
       cues.cuelumePress ||= "press";
       cues.cuelumeRelease ||= "release";
       if (node.matches("[data-lb-close], [data-menu-close]")) cues.cuelumeRelease = "droplet";
-      else if (node.matches("[data-command-open], [data-menu-open], [data-lightbox-item]")) cues.cuelumeRelease = "bloom";
+      else if (node.matches("[data-command-open], [data-menu-open], [data-lightbox-item], [data-video-open]")) cues.cuelumeRelease = "bloom";
     });
   }
 
