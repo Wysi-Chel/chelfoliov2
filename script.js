@@ -72,6 +72,127 @@
     });
   }
 
+  /* ---------- Smooth scroll ---------- */
+
+  // Wheel scrolling glides toward where it is heading instead of jumping in notches, and links to a
+  // section of the same page ease there. Touch keeps its native momentum, and visitors who ask for
+  // less motion keep the browser's own scrolling.
+  const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const fineQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const WHEEL_EASE = 200; // ms to close about two thirds of the remaining distance
+  let scrollCurrent = 0;
+  let scrollTarget = 0;
+  let scrollTime = 0;
+  let scrollFrame = 0;
+  let scrollGlide = null;
+
+  const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const maxScroll = () => document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+  function stopSmoothScroll() {
+    cancelAnimationFrame(scrollFrame);
+    scrollFrame = 0;
+    scrollGlide = null;
+  }
+
+  // An inner panel that can still move in this direction gets the wheel instead of the page.
+  function canScrollInside(node, delta) {
+    for (; node && node !== document.body; node = node.parentElement) {
+      if (!/auto|scroll|overlay/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+      if (delta > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+    }
+    return false;
+  }
+
+  // A glide to a section follows a timed ease; the wheel chases its target with a steady ease-out.
+  function scrollStep() {
+    // Something else moved the page (scrollbar, keys, the browser), so let it lead.
+    if (Math.abs(window.scrollY - scrollCurrent) > 2) {
+      scrollFrame = 0;
+      scrollGlide = null;
+      return;
+    }
+    const now = performance.now();
+    if (scrollGlide) {
+      const progress = Math.min(1, (now - scrollGlide.start) / scrollGlide.duration);
+      scrollCurrent = progress === 1 ? scrollTarget : scrollGlide.from + (scrollTarget - scrollGlide.from) * easeInOut(progress);
+      if (progress === 1) scrollGlide = null;
+    } else {
+      scrollCurrent += (scrollTarget - scrollCurrent) * (1 - Math.exp(-Math.min(now - scrollTime, 64) / WHEEL_EASE));
+      if (Math.abs(scrollTarget - scrollCurrent) < 0.5) scrollCurrent = scrollTarget;
+    }
+    scrollTime = now;
+    window.scrollTo({ top: scrollCurrent, behavior: "instant" });
+    scrollFrame = scrollGlide || scrollCurrent !== scrollTarget ? requestAnimationFrame(scrollStep) : 0;
+  }
+
+  function startScroll() {
+    if (scrollFrame) return;
+    scrollCurrent = scrollTarget = window.scrollY;
+    scrollTime = performance.now();
+    scrollFrame = requestAnimationFrame(scrollStep);
+  }
+
+  // Lands a section just below the scroll padding, where a plain anchor jump would put it.
+  function scrollToSection(section) {
+    if (motionQuery.matches) {
+      section.scrollIntoView({ block: "start" });
+      return;
+    }
+    const padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+    const top = Math.round(Math.min(maxScroll(), Math.max(0, section.getBoundingClientRect().top + window.scrollY - padding)));
+    // A repeat request for the same spot (a link that also switches the project filters) keeps the glide going.
+    if (scrollGlide && Math.abs(scrollTarget - top) < 1) return;
+    startScroll();
+    const distance = Math.abs(top - scrollCurrent);
+    if (distance < 1) return;
+    scrollGlide = { from: scrollCurrent, start: performance.now(), duration: Math.min(1400, 500 + distance * 0.25) };
+    scrollTarget = top;
+  }
+
+  window.addEventListener(
+    "wheel",
+    (event) => {
+      if (motionQuery.matches || !fineQuery.matches || event.defaultPrevented || event.ctrlKey || event.shiftKey) return;
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      // Open dialogs and the mobile menu handle their own scrolling while the page stays put.
+      if (document.querySelector("dialog[open]") || document.body.style.overflow === "hidden") return;
+      const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1);
+      if (canScrollInside(event.target, delta)) return;
+      event.preventDefault();
+      startScroll();
+      // The wheel takes over from a section glide wherever the page happens to be.
+      if (scrollGlide) {
+        scrollGlide = null;
+        scrollTarget = scrollCurrent;
+      }
+      scrollTarget = Math.min(maxScroll(), Math.max(0, scrollTarget + delta));
+    },
+    { passive: false }
+  );
+
+  const pagePath = (path) => path.replace(/index\.html$/, "");
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest('a[href*="#"]');
+    // Keyboard activation (detail 0) keeps the native jump, which also moves focus into the section.
+    if (!link || event.defaultPrevented || event.detail === 0 || event.button > 0) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target) return;
+    if (link.origin !== location.origin || pagePath(link.pathname) !== pagePath(location.pathname)) return;
+    const section = link.hash && document.getElementById(decodeURIComponent(link.hash.slice(1)));
+    if (!section || motionQuery.matches) return;
+    event.preventDefault();
+    if (link.hash !== location.hash) {
+      history.pushState(null, "", link.hash);
+      // pushState is silent, so let hash listeners such as the project filters catch up.
+      window.dispatchEvent(new HashChangeEvent("hashchange"));
+    }
+    scrollToSection(section);
+  });
+
+  window.addEventListener("pointerdown", stopSmoothScroll);
+  window.addEventListener("keydown", stopSmoothScroll);
+
   /* ---------- Command palette ---------- */
 
   const destinations = [
@@ -228,6 +349,64 @@
     }, { threshold: 0.15 });
     observer.observe(grid);
   });
+
+  /* ---------- Scroll reveal ---------- */
+
+  // Content below the fold rises into place as it scrolls into view. Whatever is on screen at load
+  // arrives with the page itself, and the deck and development cards keep their own entrances.
+  const REVEAL = [
+    ".stats > .stat",
+    ".section-head",
+    ".track-head",
+    ".subhead",
+    ".section > .card-title",
+    ".prose",
+    ".quote",
+    ".rows > .row",
+    ".chips > .chip",
+    ".cards > .soft-card",
+    ".timeline > .entry",
+    ".shots > .shot",
+    ".editing-feature > *",
+    ".project-grid > .project:not(.project--motion)",
+    ".masonry > .tile",
+    ".deck-hint",
+    ".contact > *",
+    ".section > .actions",
+    ".footer"
+  ].join(", ");
+
+  if ("IntersectionObserver" in window && !motionQuery.matches) {
+    const revealer = new IntersectionObserver(
+      (entries) => {
+        let order = 0;
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const node = entry.target;
+          revealer.unobserve(node);
+          // Items that arrive together follow one another in.
+          node.style.setProperty("--reveal-delay", Math.min(order++, 6) * 70 + "ms");
+          node.classList.replace("is-pending", "is-entering");
+          node.addEventListener("animationend", function settle(event) {
+            if (event.target !== node) return;
+            node.removeEventListener("animationend", settle);
+            node.classList.remove("reveal", "is-entering");
+            node.style.removeProperty("--reveal-delay");
+          });
+        });
+      },
+      { rootMargin: "0px 0px -32px 0px" }
+    );
+
+    // Measure everything before marking anything, so the page only lays out once. A target inside
+    // another target moves with its parent.
+    $$(REVEAL)
+      .filter((node) => !node.parentElement.closest(REVEAL) && node.getBoundingClientRect().top > window.innerHeight)
+      .forEach((node) => {
+        node.classList.add("reveal", "is-pending");
+        revealer.observe(node);
+      });
+  }
 
   /* ---------- Video previews (load on demand, never autoplay) ---------- */
 
@@ -604,7 +783,7 @@
         if (!buttons.some((button) => button.dataset.filter === value)) return;
         select(value, false);
         // Hiding the other track shifts the layout, so re-align with the requested section.
-        requestAnimationFrame(() => document.getElementById(value).scrollIntoView({ block: "start" }));
+        requestAnimationFrame(() => scrollToSection(document.getElementById(value)));
       };
       window.addEventListener("hashchange", fromHash);
       fromHash();
